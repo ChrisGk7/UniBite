@@ -10,7 +10,7 @@ CREATE TABLE user(
   name varchar(63) DEFAULT NULL,
   reg_date datetime NOT NULL DEFAULT current_timestamp(),
 
-  PRIMARY KEY (email),
+ 
   PRIMARY KEY (username)
 );
 
@@ -24,14 +24,14 @@ CREATE TABLE student (
   postcode INT(11) NOT NULL,
   mobile varchar(14) NOT NULL,
 
-  FOREIGN KEY (username) REFERENCES users(username)
+  FOREIGN KEY (username) REFERENCES user(username)
   ON UPDATE CASCADE ON DELETE CASCADE ,
 
   FOREIGN KEY (email) REFERENCES user(email)
   ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE cook (
+CREATE TABLE cook(
   email varchar(63) NOT NULL UNIQUE,
   username varchar(63) NOT NULL UNIQUE,
   street text NOT NULL,
@@ -40,10 +40,10 @@ CREATE TABLE cook (
   postcode INT(11) NOT NULL,
   mobile varchar(14) NOT NULL,
 
-  FOREIGN KEY (email) REFERENCES users(email)
+  FOREIGN KEY (email) REFERENCES user(email)
   ON UPDATE CASCADE ON DELETE CASCADE,
         
-  FOREIGN KEY (username) REFERENCES users(username)
+  FOREIGN KEY (username) REFERENCES user(username)
   ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -51,10 +51,10 @@ CREATE TABLE admin (
   email varchar(63) NOT NULL UNIQUE,
   username varchar(63) NOT NULL UNIQUE,
 
-  FOREIGN KEY (username) REFERENCES users(username)
+  FOREIGN KEY (username) REFERENCES user(username)
   ON UPDATE CASCADE ON DELETE CASCADE,
 
-  FOREIGN KEY (email) REFERENCES users(email)
+  FOREIGN KEY (email) REFERENCES user(email)
   ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -107,7 +107,7 @@ CREATE TABLE request(
   
 
   
-  FOREIGN KEY (stu_usernanme) REFERENCES student(username)
+  FOREIGN KEY (stu_username) REFERENCES student(username)
   ON UPDATE CASCADE ON DELETE CASCADE,
 
   FOREIGN KEY (cook_username) REFERENCES cook(username)
