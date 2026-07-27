@@ -15,9 +15,9 @@ CREATE TABLE user(
 );
 
 CREATE TABLE student (
-  email varchar(63) NOT NULL UNIQUE,
   username varchar(63) NOT NULL UNIQUE,
-  credits int(5),
+  email varchar(63) NOT NULL UNIQUE,
+  credits int(5) NOT NULL DEFAULT 5,
   street text NOT NULL,
   number INT(5) NOT NULL,
   city text NOT NULL,
@@ -32,8 +32,8 @@ CREATE TABLE student (
 );
 
 CREATE TABLE cook(
-  email varchar(63) NOT NULL UNIQUE,
   username varchar(63) NOT NULL UNIQUE,
+  email varchar(63) NOT NULL UNIQUE,
   street text NOT NULL,
   number int(5) NOT NULL,
   city text NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE admin (
 );
 
 
-CREATE TABLE dishes(
+CREATE TABLE dish(
   id int(30) NOT NULL AUTO_INCREMENT UNIQUE,
   cook varchar(63) NOT NULL,
   title varchar(255) NOT NULL,
@@ -80,9 +80,9 @@ CREATE TABLE student_cook_dish_relation (
   stu_usernanme varchar(63) NOT NULL,
   dish_id int(30) NOT NULL,
   cook_username varchar(63),
-  status enum('pending_assignment','active','being_examinated','finished','canceled') DEFAULT 'pending_assignment',
+  status enum('pending_assignment','active','finished','canceled') DEFAULT 'pending_assignment',
   json JSON DEFAULT NULL,
-  rating enum('1','2','3','4','5'),
+  rating enum('1','2','3','4','5') NOT NULL ,
 
   PRIMARY KEY (id),
 
@@ -119,5 +119,6 @@ CREATE TABLE request(
 
 
 
-
+INSERT INTO user VALUES('admin','admin@unibite.com','admin','Chris Gkreko','DEFAULT'),
+INSERT INTO admin VALUES ('admin@unibite.com','admin');
 
