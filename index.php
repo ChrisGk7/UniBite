@@ -3,9 +3,37 @@
     session_start();
     include("header.html");
     include("database.php");
-    
-?>
 
+    // Clear any stale session before evaluating this request.
+    unset($_SESSION['username']);
+
+    $loginError = "";
+
+    if (isset($_POST["login"])) {
+        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+        // Don't sanitize the password before checking it — altering the raw
+        // characters here would make password_verify() fail even for a
+        // correct password if it contains special characters.
+        $password = $_POST["password"] ?? "";
+
+        $user = get_user_by_username($username, $conn);
+
+        if (!$user) {
+            $loginError = "User '$username' is not in the database.";
+        } elseif (!password_verify($password, $user["pass"])) {
+            $loginError = "Incorrect password.";
+        } else {
+            // Success: set the session and redirect.
+            // This MUST happen before any HTML/echo output below,
+            // otherwise header() will fail with "headers already sent".
+            $_SESSION["username"] = $username;
+            header('Location: student.php');
+            //link_user_to_session($username, session_id(), $conn);
+            exit;
+        }
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,103 +44,38 @@
     <script src="form.js" defer> </script>
 </head>
 <body>
-    <!--<form action="index.php" method="post">
-        <label>Username: </label><br>
-        <input type="text" name="username" ><br>
-        <label>Password: </label><br>
-        <input type="password" name="password"><br>
-        <input type="submit" name="login" value="Log in">
-   
-             <div class="container">-->
-    <div id="login_page"> 
+    <div id="login_page">
         <div class="form_area">
             <p class="title">UNIBITE</p>
             <form id="loginForm" action="index.php" method="post" novalidate>
+                <?php if ($loginError): ?>
+                    <p class="server-error" role="alert"><?= htmlspecialchars($loginError) ?></p>
+                <?php endif; ?>
                 <div class="form_group">
                     <label class="sub_title" for="username">Username</label>
-                    <input id="username" placeholder="Enter your username" class="form_style" type="text" name="username" autocomplete="username" required>
-                    <span class="error-message"></span>
+                    <input id="username" data-error="Please enter a valid username" class="form_style" type="text" name="username" autocomplete="username" required>
+                    <span class="error-message" aria-live="polite"></span>
                 </div>
                 <div class="form_group">
                     <label class="sub_title" for="password">Password</label>
-                    <input id="password" placeholder="Enter your password" class="form_style" type="password" name="password" autocomplete="current-password" required>
-                    <span class="error-message"></span>
+                    <input id="password" data-error="Please enter a valid password" class="form_style" type="password" name="password" autocomplete="current-password" required>
+                    <span class="error-message" aria-live="polite"></span>
                 </div>
-                <div Class="form_group"> 
+                <div class="form_group">
                     <button class="btn" type="submit" name="login">SIGN IN</button>
                 </div>
-                    <div Class="form_group">    
-                    <button class="btn" type="button" onclick="window.location.href='register_user_student.php'">SIGN UP</button></p>
+                <div class="form_group">
+                    <button class="btn" type="button" onclick="window.location.href='register_user_student.php'">SIGN UP</button>
                 </div>
             </form>
         </div>
     </div>
 </body>
 </html>
-
 <?php
-    
-    unset($_SESSION['username']);
-    
-
-    if (isset($_POST["login"])){
-        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-        // $_POST["email"];
-        // $password = $_POST["password"];
-
-        if (empty($username)){
-            echo "<div>Please Enter Username</div>";
-        }
-        elseif (empty($password)){
-            echo "<div>Please Enter Password</div>";
-        }
-        else{
-
-            // FOR TESTING ONLY DELETE LATER
-            echo "Username is: {$username} and your Password is: {$password}<br>";
-
-            if (check_user_in_db($username, $conn)){
-                echo "User '$username' is in the Database<br>";
-                //$type = check_user_type($username, $conn);
-                $_SESSION["username"] = $username;
-
-               // jump_to_site($type);
-                /*
-                $user_row = mysqli_fetch_assoc(get_rows_from_table_where("user", "email", $email, $conn));
-                $hash = password_hash($password, PASSWORD_DEFAULT);
-                echo $hash;
-                if ($hash == $user_row["pass"]){
-                    jump_to_site($type);
-
-                }
-                else{
-                    echo "Wrong Password";
-                }
-                */
-
-               // echo"$type";
-                
-                
-            }
-            else{
-                echo "User '$username' is not in the Database<br>";
-                echo "Would you like to ";
-                echo "<a href='register_user_student.php' title='Sign Up'>Sign up</a>?";
-            }
-        }    
-    }
-
-?>
-
-<?php
-    //mysqli_close($conn);
-    
-    try{
+    try {
         mysqli_close($conn);
+    } catch (TypeError $e) {
+        // ignore if $conn is not a valid connection
     }
-    catch(TypeError){
-        echo "";
-    }
-    
 ?>

@@ -94,15 +94,15 @@
         {
         border-color:purple !important;
         }
-    .error-message
+     .error-message
         {
         color: purple !important;
         font-size: 12px;
         margin-top: 5px;
         }    
-     .error-message :empty
+       .error-message:empty
         {
         display: none !important;
         }
-        
-        
+         
+          

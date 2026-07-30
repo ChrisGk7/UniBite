@@ -4,7 +4,12 @@
     $db_user = "root";
     $db_password = "";
     $db_name = "unibite_db"; // change this
-    $conn;
+    
+
+    // Without this, mysqli_query() just returns false on error instead of
+    // throwing — which means the try/catch(mysqli_sql_exception) blocks
+    // elsewhere in this codebase never actually catch anything.
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
     try{
         $conn = mysqli_connect($db_server, 
@@ -14,11 +19,23 @@
 
     }
     
-    catch(mysqli_sql_exception){
+    catch(mysqli_sql_exception $e){
         echo "Could not connect to the Database";
     }
 
 
+     function get_user_by_username($username, $conn){
+ 
+        $sql = "SELECT username, email, pass, name, reg_date FROM user WHERE username = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+ 
+        return $row ?: null;
+    }
     // returns true if the email is registered in the database
     function check_user_in_db($username, $conn){
         
@@ -184,4 +201,4 @@
     }
 
 
-?>
+?>s

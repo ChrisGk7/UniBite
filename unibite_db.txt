@@ -82,7 +82,7 @@ CREATE TABLE student_cook_dish_relation (
   cook_username varchar(63),
   status enum('pending_assignment','active','finished','canceled') DEFAULT 'pending_assignment',
   json JSON DEFAULT NULL,
-  rating enum('1','2','3','4','5') NOT NULL ,
+  rating enum('1','2','3','4','5',pendind) DEFAULT 'pending' NOT NULL ,
 
   PRIMARY KEY (id),
 
@@ -92,7 +92,7 @@ CREATE TABLE student_cook_dish_relation (
   FOREIGN KEY (cook_username) REFERENCES cook(username)
   ON UPDATE CASCADE ON DELETE CASCADE,
 
-  FOREIGN KEY (dish_id) REFERENCES dishes(id)
+  FOREIGN KEY (dish_id) REFERENCES dish(id)
   ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -113,12 +113,12 @@ CREATE TABLE request(
   FOREIGN KEY (cook_username) REFERENCES cook(username)
   ON UPDATE CASCADE ON DELETE CASCADE,
 
-  FOREIGN KEY (dish_id) REFERENCES dishes(id)
+  FOREIGN KEY (dish_id) REFERENCES dish(id)
   ON UPDATE CASCADE ON DELETE CASCADE 
 ); 
 
 
 
-INSERT INTO user VALUES('admin','admin@unibite.com','admin','Chris Gkreko','DEFAULT'),
+INSERT INTO user VALUES('admin','admin@unibite.com','admin','Chris Gkreko','DEFAULT');
 INSERT INTO admin VALUES ('admin@unibite.com','admin');
 
