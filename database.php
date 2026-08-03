@@ -4,11 +4,9 @@
     $db_user = "root";
     $db_password = "";
     $db_name = "unibite_db"; // change this
-    
+   
 
-    // Without this, mysqli_query() just returns false on error instead of
-    // throwing — which means the try/catch(mysqli_sql_exception) blocks
-    // elsewhere in this codebase never actually catch anything.
+
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
     try{
@@ -201,4 +199,4 @@
     }
 
 
-?>s
+?>

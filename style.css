@@ -1,5 +1,9 @@
 /* Login Page */
-    #login_page .container
+
+
+
+        
+    .container
         {
         display: flex;
         align-items: center;
@@ -8,7 +12,7 @@
         text-align: center;
         }
 
-    #login_page .form_area 
+    .form_area 
         {
         
         display: flex;
@@ -26,7 +30,7 @@
         left: 50px;  
         }
 
-    #login_page .title 
+    .title 
         {
         color: #3c5102;
         font-family: Sans-serif; 
@@ -35,7 +39,7 @@
         margin-top: 20px;
         }
 
-    #login_page .sub_title
+    .sub_title
         {
         font-family: Sans-serif;
         font-weight: 600;
@@ -43,7 +47,7 @@
         align-self: flex-start;
         }
 
-    #login_page .form_group 
+    .form_group 
         {
         display: flex;
         flex-direction: column;
@@ -51,7 +55,7 @@
         margin: 10px;
         }
 
-    #login_page .form_style 
+    .form_style 
         {
         outline: none;
         border: 2px solid #264143;
@@ -62,29 +66,32 @@
         font-size: 15px;
         }
 
-     #login_page .form_style:focus, #login_page .btn:focus 
+    .form_style:focus, .btn:focus 
         {
         transform: translateY(4px);
         box-shadow: 1px 2px 0px 0px #E99F4C;
         }
 
-   #login_page .btn {
-    padding: 15px;
-    margin: 25px auto;              
-    width: 290px;
-    font-size: 15px;
-    background: #DE5499;
-    border-radius: 10px;
-    font-weight: 800;
-    box-shadow: 3px 3px 0px 0px #E99F4C;
-   }
+    .btn
+        {
+        border: none;
+        color: #fff;
+        padding: 15px;
+        margin: 25px auto;              
+        width: 290px;
+        font-size: 15px;
+        background: #DE5499;
+        border-radius: 10px;
+        font-weight: 800;
+        box-shadow: 3px 3px 0px 0px #E99F4C;
+        }
 
-    #login_page .btn:hover 
+    .btn:hover 
         {
         opacity: .9;
         }
 
-    #login_page .link 
+    .link 
         {
         font-weight: 800;
         color: #264143;
@@ -94,15 +101,13 @@
         {
         border-color:purple !important;
         }
-     .error-message
+    .error-message
         {
         color: purple !important;
         font-size: 12px;
         margin-top: 5px;
         }    
-       .error-message:empty
+    .error-message:empty
         {
         display: none !important;
         }
-         
-          
