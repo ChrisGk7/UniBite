@@ -1,5 +1,5 @@
 <?php
-include ("database.php" );
+require_once("database.php");
 // ---- Default (empty) error messages for every field ----
 $error_reg_username  = "";
 $error_reg_name      = "";

@@ -1,19 +1,23 @@
-const signinContainer = document.getElementById('signinContainer');
-const signupContainer = document.getElementById('signupContainer');
-const signinButton = document.getElementById('signinButton');
-const signupButton = document.getElementById('signupButton');
+const signinform = document.getElementById('signinContainer');
+const signupform = document.getElementById('signupContainer');
+const gotosigninButton = document.getElementById('gotosigninButton');
+const gotosignupButton = document.getElementById('gotosignupButton');
 
-signupButton.addEventListener('click', function () {
-    signinContainer.style.display = "none";
-    signupContainer.style.display = "block";
+gotosignupButton.addEventListener('click', function () {
+    signinform.style.display = "none";
+    signupform.style.display = "block";
 });
 
-signinButton.addEventListener('click', function (event) {
-    // signinButton is a submit button on the sign-in form, so only
-    // toggle containers here if it's being clicked from the sign-up
-    // side (it isn't currently, but this guards against future markup
-    // changes). Normal sign-in submits proceed as usual.
+gotosigninButton.addEventListener('click', function () {
+    signupform.style.display = "none";
+    signinform.style.display = "block";
 });
+    
+// signinButton.addEventListener('click', function (event) {
+//     event.preventDefault(); // Prevent the default form submission
+//     signinform.style.display = "block";
+//     signupform.style.display = "none";
+// });
 
 function validateField(field) {
     const errorElement = field.parentElement.querySelector(".error-message");

@@ -1,6 +1,6 @@
 
 <?php
-include ("register_user_student.php");
+require_once("register_user_student.php");
 include ("header.html");
 ?>
 
@@ -14,12 +14,12 @@ include ("header.html");
     
 </head>
 <body>
-    <div id="signupContainer" class="container" style="display: <?php echo $show_signup ? 'block' : 'none'; ?>;">
-        <div class="form_area">
+    <div id="signupContainer" class="form_area" style="display: none;">
+        
             <p class="title">UNIBITE</p>
             <p class="title">Register</p>
           
-            <form id="signupForm" action="index.php" method="post" style="display: <?php echo $show_signup ? 'block' : 'none'; ?>;" novalidate>
+            <form id="signupForm" action="index.php" method="post"  novalidate>
 
                 <div class="form_group">
                     <label class="sub_title" for="reg_username">Username</label>
@@ -71,18 +71,20 @@ include ("header.html");
                     <input id="reg_cell" data-error="Please enter a valid mobile number" class="form_style" type="text" name="cell" value="<?php echo htmlspecialchars($old['cell']); ?>" placeholder="694XXXXXXX" autocomplete="tel" required>
                     <span class="error-message" aria-live="polite"><?php echo htmlspecialchars($error_reg_cell); ?></span>
                 </div>
-                <?php if ($signin_general_error): ?>
-                <p class="error-message" aria-live="polite"><?php echo htmlspecialchars($signin_general_error); ?></p>
-                <?php endif; ?>
+                
                 <div class="form_group">
-                    <button id="signupSubmitButton" class="btn" type="submit" name="register">SIGN UP</button>
+                    <button id="signupButton" class="btn" type="submit" >SIGN UP</button>
                 </div>
+                <div class="form_group">
+                    <button id="gotosigninButton" class="btn" type="button" >SIGN IN</button>
+                </div>
+                 
             </form>
-        </div>
+        
     </div>
 
-    <div id="signinContainer" class="container" style="display: <?php echo $show_signup ? 'none' : 'block'; ?>;">
-        <div class="form_area">
+    <div id="signinContainer" class="form_area">
+        
             <p class="title">UNIBITE</p>
             
             <form id="signinForm" action="index.php" method="post" novalidate>
@@ -104,13 +106,14 @@ include ("header.html");
                     <button id="signinButton" class="btn" type="submit" name="login">SIGN IN</button>
                 </div>
                 <div class="form_group">
-                    <button id="signupButton" class="btn" type="button">SIGN UP</button>
+                    <button id="gotosignupButton" class="btn" type="button">SIGN UP</button>
                 </div>
             </form>
-        </div>
+        
     </div>
 
     <script src="form.js" defer></script>
 </body>
 
 </html>
+
