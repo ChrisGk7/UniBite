@@ -26,10 +26,10 @@ function validateField(field) {
     if (!field.validity.valid) {
         errorElement.textContent = field.dataset.error || 'This field is not valid.';
         return false;
-    } else {
+    } 
         errorElement.textContent = "";
         return true;
-    }
+    
 }
 
 
@@ -65,3 +65,29 @@ document.querySelectorAll('form').forEach(function (form) {
         // server-side validation/processing.
     });
 });
+// Password match validation
+const password1Field = document.getElementById('reg_password1');
+const password2Field = document.getElementById('reg_password2'); 
+
+
+
+
+  function checkPasswordMatch() {
+    if (!password1Field || !password2Field) return;
+
+    // Only validate match if the confirmation field has text in it
+    if (password2Field.value.trim() !== '') {
+        if (password1Field.value !== password2Field.value) {
+            password2Field.setCustomValidity("Passwords do not match");
+        } else {
+            password2Field.setCustomValidity("");
+        }
+        validateField(password2Field);
+    }
+}
+
+// Re-check whenever either password field changes
+if (password1Field && password2Field) {
+    password1Field.addEventListener('input', checkPasswordMatch);
+    password2Field.addEventListener('input', checkPasswordMatch);
+}
