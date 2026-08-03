@@ -14,7 +14,7 @@ include ("header.html");
     
 </head>
 <body>
-    <div id="signupContainer" class="form_area" style="display: none;">
+    <div id="signupContainer" class="form_area hidden" >
         
             <p class="title">UNIBITE</p>
             <p class="title">Register</p>

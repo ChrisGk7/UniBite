@@ -4,13 +4,13 @@ const gotosigninButton = document.getElementById('gotosigninButton');
 const gotosignupButton = document.getElementById('gotosignupButton');
 
 gotosignupButton.addEventListener('click', function () {
-    signinform.style.display = "none";
-    signupform.style.display = "block";
+    signinform.classList.add('hidden');
+    signupform.classList.remove('hidden');
 });
 
 gotosigninButton.addEventListener('click', function () {
-    signupform.style.display = "none";
-    signinform.style.display = "block";
+    signupform.classList.add('hidden');
+    signinform.classList.remove('hidden');
 });
     
 // signinButton.addEventListener('click', function (event) {
