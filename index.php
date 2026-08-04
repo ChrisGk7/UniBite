@@ -66,7 +66,7 @@ include ("header.html");
                 </div>
                 <div class="form_group">
                     <label class="sub_title" for="reg_cell">Mobile Number</label>
-                    <input id="reg_cell" type="number" data-error="Please enter a valid mobile number" class="form_style" name="cell" value="<?php echo htmlspecialchars($old['cell']); ?>" placeholder="694XXXXXXX" autocomplete="tel" required>
+                    <input id="reg_cell" type="tel" data-error="Please enter a valid mobile number" class="form_style" name="cell" value="<?php echo htmlspecialchars($old['cell']); ?>" placeholder="694XXXXXXX" autocomplete="tel" required>
                     <span class="error-message" aria-live="polite"></span>
                 </div>
                 

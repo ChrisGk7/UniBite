@@ -63,43 +63,30 @@
 
     function register_user($username, $email, $pass, $name, $conn){
         $hash = password_hash($pass, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO user VALUES ('$username','$email', '$hash', '$name', DEFAULT)";
-        mysqli_query($conn, $sql);
+        $sql = "INSERT INTO user (username, email, pass, name) VALUES ('$username','$email', '$hash', '$name')";
+        $result = mysqli_query($conn, $sql);
+        
+        return $result;
     }
     
-    function register_student($username, $email, $street, $number, $city, $postcode, $mobile, $conn){
-        $sql = "INSERT INTO student VALUES('$username', '$email', DEFAULT, '$street', '$number', '$city', '$postcode','$mobile')";
-        mysqli_query($conn, $sql);
+    function register_student($username, $email, $street, $snumber, $city, $postcode, $mobile, $conn){
+        $sql = "INSERT INTO student (username, email, street, number, city, postcode, mobile) VALUES ('$username', '$email', '$street', '$snumber', '$city', '$postcode','$mobile')";
+        $result = mysqli_query($conn, $sql);
+        return $result;
     }
 
-    function register_cook($username, $email, $street, $number,$city, $postcode, $mobile, $conn){
-        $sql = "INSERT INTO cook VALUES('$username', '$email', '$street', '$number', '$city', '$postcode','$mobile' )";
-        mysqli_query($conn, $sql);
+    function register_cook($username, $email, $street, $snumber,$city, $postcode, $mobile, $conn){
+        $sql = "INSERT INTO cook (username, email, street, number, city, postcode, mobile) VALUES ('$username', '$email', '$street', '$snumber', '$city', '$postcode','$mobile' )";
+        $result = mysqli_query($conn, $sql);
+        return $result;
     }
 
-    function register_secretary($email, $conn){
-        $sql = "INSERT INTO secretary VALUES('$email')";
-        mysqli_query($conn, $sql);
-    }
+    
 
     // login logic
 
-    function jump_to_site($type){
-        // fix with enums
-        if ($type == "student"){
-            header("Location: student.php");
-        }
-        elseif ($type == "teacher"){
-            header("Location: teacher.php");
-        }
-        elseif ($type == "secretary"){
-            header("Location: secretary.php");
-        }
-        else{
-            // This should never occure
-            echo "Unexpected User Type";
-        }
-    }
+    
+    
 
     // retrieve all rows from a table
 
