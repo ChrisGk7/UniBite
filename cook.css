@@ -1,0 +1,410 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-orange: #f4511e;
+    --primary-orange-dark: #d93d0b;
+
+    --accent-yellow: #f9b233;
+
+    --dark: #201a17;
+    --dark-soft: #4d433e;
+
+    --cream: #fff8ef;
+    --light-orange: #fff0e6;
+    --white: #ffffff;
+
+    --danger: #d93636;
+    --danger-dark: #b82626;
+
+    --border: #eaded5;
+    --shadow: 0 12px 35px rgba(48, 32, 20, 0.1);
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--cream);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--dark);
+    color: var(--white);
+
+    padding: 28px 20px;
+
+    text-align: center;
+
+    border-bottom: 5px solid var(--primary-orange);
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+main {
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 40px auto;
+}
+
+section h2 {
+    font-size: 2rem;
+    margin-bottom: 22px;
+    color: var(--dark);
+}
+
+section h2::after {
+    content: "";
+    display: block;
+
+    width: 1050px;
+    height: 5px;
+
+    margin-top: 0.1px;
+
+    background-color: var(--primary-orange);
+    border-radius: 10px;
+}
+
+.new-listing {
+    background-color: var(--white);
+
+    padding: 30px;
+    margin-bottom: 40px;
+
+    border-radius: 22px;
+
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+#listingForm {
+    display: grid;
+    gap: 12px;
+}
+
+#listingForm label {
+    margin-top: 8px;
+
+    font-weight: 700;
+    color: var(--dark-soft);
+}
+
+#listingForm input,
+#listingForm textarea {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    font-size: 1rem;
+    font-family: inherit;
+
+    background-color: #fffdfb;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#listingForm textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+#listingForm input:focus,
+#listingForm textarea:focus {
+    border-color: var(--primary-orange);
+
+    box-shadow: 0 0 0 4px rgba(244, 81, 30, 0.12);
+}
+
+
+#listingForm button,
+#newListingBtn {
+    width: fit-content;
+
+    margin-top: 16px;
+    padding: 13px 25px;
+
+    border: none;
+    border-radius: 30px;
+
+    background-color: var(--primary-orange);
+    color: var(--white);
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#listingForm button:hover,
+#newListingBtn:hover {
+    background-color: var(--primary-orange-dark);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(244, 81, 30, 0.25);
+}
+
+hr {
+    border: none;
+    height: 1px;
+
+    margin: 40px 0;
+
+    background-color: var(--border);
+}
+
+
+.my-listings {
+    padding-bottom: 40px;
+}
+
+#listingsContainer {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(270px, 1fr));
+
+    gap: 25px;
+}
+
+
+
+.listing-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 260px;
+
+    padding: 25px;
+
+    background-color: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.listing-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 6px;
+
+    background: linear-gradient(
+        90deg,
+        var(--primary-orange),
+        var(--accent-yellow)
+    );
+}
+
+.listing-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 18px 40px rgba(48, 32, 20, 0.15);
+}
+
+.listing-card h3 {
+    margin: 8px 0 15px;
+
+    font-size: 1.35rem;
+    color: var(--dark);
+}
+
+.listing-card p {
+    margin-bottom: 12px;
+    color: var(--dark-soft);
+}
+
+.listing-card button {
+    padding: 10px 17px;
+    margin-top: 10px;
+    margin-right: 7px;
+
+    border: none;
+    border-radius: 25px;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.listing-card button:hover {
+    transform: translateY(-2px);
+}
+
+
+.editBtn {
+    background-color: var(--accent-yellow);
+    color: var(--dark);
+}
+
+.editBtn:hover {
+    background-color: #e5a01f;
+}
+
+
+/* Διαγραφή */
+
+.deleteBtn {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+.deleteBtn:hover {
+    background-color: var(--danger-dark);
+}
+
+@media (max-width: 768px) {
+
+    header h1 {
+        font-size: 1.7rem;
+    }
+
+    main {
+        width: 92%;
+        margin-top: 25px;
+    }
+
+    .new-listing {
+        padding: 22px;
+        border-radius: 17px;
+    }
+
+    #listingsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    #listingForm button,
+    #newListingBtn {
+        width: 100%;
+    }
+
+    .listing-card button {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    
+
+}
+
+
+
+.modal {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 450px;
+
+    background-color: var(--white);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    box-shadow: var(--shadow);
+
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    color: var(--dark-soft);
+    margin-bottom: 25px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-buttons button {
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 25px;
+
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#cancelDelete {
+    background-color: var(--border);
+    color: var(--dark);
+}
+
+#confirmDelete {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+
+.listing-image {
+    width: 100%;
+    height: 180px;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+    margin-bottom: 15px;
+}
