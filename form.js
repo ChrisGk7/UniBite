@@ -24,7 +24,13 @@ function validateField(field) {
     if (!errorElement) return true;
 
     if (!field.validity.valid) {
-        errorElement.textContent = field.dataset.error || 'This field is not valid.';
+        
+        if(field.validity.customError) {
+            errorElement.textContent = field.validationMessage;
+        }
+        else {
+            errorElement.textContent = field.dataset.error || 'This field is not valid.';
+        }
         return false;
     } 
         errorElement.textContent = "";
@@ -65,7 +71,7 @@ document.querySelectorAll('form').forEach(function (form) {
         // server-side validation/processing.
     });
 });
-// Password match validation
+// ............Password match validation....................
 const password1Field = document.getElementById('reg_password1');
 const password2Field = document.getElementById('reg_password2'); 
 
@@ -90,4 +96,32 @@ const password2Field = document.getElementById('reg_password2');
 if (password1Field && password2Field) {
     password1Field.addEventListener('input', checkPasswordMatch);
     password2Field.addEventListener('input', checkPasswordMatch);
+}
+
+//...........Username availability check....................
+const regUsernameField = document.getElementById('reg_username');
+
+if (regUsernameField) {
+    regUsernameField.addEventListener('blur', async function () {
+        const username = this.value.trim();
+        if (!username) return;
+
+        try {
+            const response = await fetch(`check_username.php?username=${encodeURIComponent(username)}`);
+            const data = await response.json();
+
+            if (data.exists) {
+                // Set the custom validation message on the input
+                this.setCustomValidity("Username is already taken.");
+            } else {
+                this.setCustomValidity("");
+            }
+            
+            // Re-run validateField to draw the text into the <span class="error-message">
+            validateField(this);
+
+        } catch (error) {
+            console.error("Error checking username availability:", error);
+        }
+    });
 }
