@@ -66,6 +66,7 @@
 
 </main>
 
+
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <h2>Διαγραφή αγγελίας</h2>
@@ -82,9 +83,43 @@
 </div>
 
 
+<div id="editModal" class="modal">
+    
+    <div class="edit-modal-content">
+
+        <h2>Επεξεργασία Αγγελίας</h2>
+        <form id="editForm">
+
+            <label>Τίτλος</label>
+            <input type="text" id="editTitle">
+
+            <label>Φωτογραφία</label>
+            <input type="file" id="editImage">
+
+            <label>Σημειώσεις</label>
+            <textarea id="editNotes"></textarea>
+
+            <label>Αλλεργιογόνα</label>
+            <input type="text" id="editAllegerns">
+
+
+            <div class="edit-modal-buttons">
+                
+                <button type="submit" id="saveEdit">Αποθήκευση Αλλαγών</button>
+
+                <button type="button" id="cancelEdit">Ακύρωση</button>
+
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 <script src="cook.js"></script>
 
 </body>
 
 </html>
-

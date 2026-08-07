@@ -13,6 +13,19 @@ let listingToDelete= null;
 
 
 
+const editModal=document.getElementById("editModal");
+const editForm=document.getElementById("editForm");
+
+const editTitle=document.getElementById("editTitle");
+const editNotes=document.getElementById("editNotes");
+const editImage=document.getElementById("editImage");
+const editAllegerns=document.getElementById("editAllegerns");
+const cancelEdit=document.getElementById("cancelEdit");
+let listingToEdit=null;
+
+
+
+
 //Δημιουργία Αγγελίας
 
 listingForm.addEventListener("submit", function(event){
@@ -85,51 +98,75 @@ listingForm.addEventListener("submit", function(event){
 
 });
 
-
 listingContainer.addEventListener("click", function(event){
 
 //ΚΟΥΜΠΙ ΕΠΕΞΕΡΓΑΣΙΑΣ
  if(event.target.classList.contains("editBtn")){
-    const listing = event.target.closest(".listing-card");
+    listingToEdit= event.target.closest(".listing-card");
 
-    const titleElement = listing.querySelector("h3");
+    const titleElement = listingToEdit.querySelector("h3");
+    const paragraphs = listingToEdit.querySelectorAll("p");
 
-    const paragraphs = listing.querySelectorAll("p");
+    editTitle.value = titleElement.textContent;
 
-    const notesElement = paragraphs[0];
-    const allergernsElement = paragraphs[1];
+    editNotes.value=paragraphs[0].textContent;
 
-    const newTitle = prompt(
-        "Νέος Τίτλος: ",titleElement.textContent
-    );
+    editAllegerns.value= paragraphs[1].textContent.replace("Αλλεργιογόνα: ", "");
 
-    if(newTitle !==null && newTitle.trim() !==""){
-        titleElement.textContent = newTitle.trim();
-    }
-
-
-    const newNotes = prompt(
-        "Νέες σημειώσεις: ",notesElement.textContent
-    );
-
-    if(newNotes!==null){
-        notesElement.textContent= newNotes.trim() !=="" ? newNotes.trim() : "Δεν υπάρχουν σημειώσεις";
-    }
-
-
-    const currentAllergerns = allergernsElement.textContent.replace("Αλλεργιογόνα: ","");
-
-
-    const newAllergerns = prompt(
-        "Νέα αλλεργιογόνα: ", currentAllergerns
-    );
-
-    if(newAllergerns !== null){
-        allergernsElement.textContent= newAllergerns.trim()!=="" ? "Αλλεργιογόνα: " + newAllergerns.trim() : "Δεν υπάρχουν αλλεργιογόνα.";
-
-    }
+    editModal.style.display = "flex";
 
  }
+
+//canceledit
+cancelEdit.addEventListener("click", function(){
+
+    editModal.style.display="none";
+    listingToEdit=null;
+
+})
+
+//SaveEdit
+editForm.addEventListener("submit", function(event){
+    event.preventDefault();
+
+    const newTitle = editTitle.value.trim();
+    const newNotes = editNotes.value.trim();
+    const newAllegerns = editAllegerns.value.trim();
+    const titleElement=listingToEdit.querySelector("h3");
+    const paragraphs= listingToEdit.querySelectorAll("p");
+    const notesElement= paragraphs[0];
+    const allergernsElement = paragraphs[1];
+
+    titleElement.textContent= newTitle;
+
+    if(!newTitle){
+        alert("Παρακαλώ δώσε έναν νέο τίτλο: ");
+        return;
+    }
+
+    
+
+    if(newNotes !==""){
+        notesElement.textContent= newNotes;
+    }
+    else{
+        notesElement.textContent="Δεν υπάρχουν σημειώσεις.";
+    }
+
+    if(newAllegerns!==""){
+        allergernsElement.textContent="Αλλεργιογόνα: "+ newAllegerns;
+    }
+    else{
+        allergernsElement.textContent="Δεν υπάρχουν αλλεργιογόνα. ";
+    }
+
+    editModal.style.display="none";
+
+    listingToEdit=null;
+
+});
+
+
 
 //ΚΟΥΜΠΙ ΔΙΑΓΡΑΦΗΣ
 if(event.target.classList.contains("deleteBtn")){
@@ -140,12 +177,9 @@ if(event.target.classList.contains("deleteBtn")){
 
 }
 
-
 });
-//Παραθυρο για την διαγραφη
 
-
-//cancel
+//canceldel
 cancelDelete.addEventListener("click", function(){
     deleteModal.style.display = "none";
 
@@ -153,7 +187,7 @@ cancelDelete.addEventListener("click", function(){
 
 });
 
-//confirm
+//confirmdel
 confirmDelete.addEventListener("click", function(){
     if(listingToDelete){
         listingToDelete.remove();
@@ -161,4 +195,7 @@ confirmDelete.addEventListener("click", function(){
         deleteModal.style.display = "none";
     }
 });
+
+
+
 

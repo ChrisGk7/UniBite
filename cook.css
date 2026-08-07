@@ -398,13 +398,112 @@ hr {
 }
 
 
-.listing-image {
+.edit-modal-content {
+    width: 90%;
+    max-width: 650px;
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    background-color: var(--white);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    box-shadow: var(--shadow);
+}
+
+
+.edit-modal-content h2 {
+    margin-bottom: 20px;
+}
+
+
+#editForm {
+    display: grid;
+    gap: 12px;
+}
+
+
+#editForm label {
+    margin-top: 8px;
+
+    font-weight: 700;
+
+    color: var(--dark-soft);
+}
+
+
+#editForm input,
+#editForm textarea {
     width: 100%;
-    height: 180px;
 
-    object-fit: cover;
+    padding: 13px 15px;
 
-    border-radius: 14px;
+    font-size: 1rem;
 
-    margin-bottom: 15px;
+    font-family: inherit;
+
+    background-color: #fffdfb;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    outline: none;
+}
+
+
+#editForm textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+
+#editForm input:focus,
+#editForm textarea:focus {
+    border-color: var(--primary-orange);
+
+    box-shadow: 0 0 0 4px rgba(244, 81, 30, 0.12);
+}
+
+
+.edit-modal-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 15px;
+}
+
+
+#saveEdit,
+#cancelEdit {
+    padding: 12px 22px;
+
+    border: none;
+
+    border-radius: 25px;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+#saveEdit {
+    background-color: var(--primary-orange);
+
+    color: var(--white);
+}
+
+
+#cancelEdit {
+    background-color: var(--border);
+
+    color: var(--dark);
 }
