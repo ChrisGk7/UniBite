@@ -1,0 +1,127 @@
+/* Login Page */
+.background
+    {
+    background-image: url("images/background.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+
+
+
+
+}
+
+
+        
+    .container
+        {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        }
+    .form_area.hidden 
+        {
+        display: none !important;
+        }
+    .form_area 
+        {
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #EDDCD9;
+        height: min-content;
+        width: min-content;
+        border: 2px solid #264143;
+        border-radius: 20px;
+        box-shadow: 3px 4px 0px 1px #E99F4C;
+        position: relative;
+        top: 30px;
+        left: 50px;  
+        }
+
+    .title 
+        {
+        color: #3c5102;
+        font-family: Sans-serif; 
+        font-weight: 900;
+        font-size: 1.5em;
+        margin-top: 20px;
+        align-items: center;
+        }
+
+    .sub_title
+        {
+        font-family: Sans-serif;
+        font-weight: 600;
+        margin: 5px 0;
+        align-self: flex-start;
+        }
+
+    .form_group 
+        {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        margin: 10px;
+        }
+
+    .form_style 
+        {
+        outline: none;
+        border: 2px solid #264143;
+        box-shadow: 3px 4px 0px 1px #E99F4C;
+        width: 290px;
+        padding: 12px 10px;
+        border-radius: 4px;
+        font-size: 15px;
+        }
+
+    .form_style:focus, .btn:focus 
+        {
+        transform: translateY(4px);
+        box-shadow: 1px 2px 0px 0px #E99F4C;
+        }
+
+    .btn
+        {
+        border: none;
+        color: #fff;
+        padding: 15px;
+        margin: 25px auto;              
+        width: 290px;
+        font-size: 15px;
+        background: #DE5499;
+        border-radius: 10px;
+        font-weight: 800;
+        box-shadow: 3px 3px 0px 0px #E99F4C;
+        }
+
+    .btn:hover 
+        {
+        opacity: .9;
+        }
+
+    .link 
+        {
+        font-weight: 800;
+        color: #264143;
+        padding: 5px;
+        }
+    input:user-invalid 
+        {
+        border-color:purple !important;
+        }
+    .error-message
+        {
+        color: purple !important;
+        font-size: 12px;
+        margin-top: 5px;
+        }    
+    .error-message:empty
+        {
+        display: none !important;
+        }
