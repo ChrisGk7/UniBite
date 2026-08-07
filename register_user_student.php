@@ -65,9 +65,7 @@ if (isset($_POST['login'])) {
             header("Location: student.php");
             exit();
         } else {
-            // Deliberately vague: don't reveal whether the username or
-            // the password was the one that was wrong.
-            $signin_general_error = "Invalid username or password.";
+           $error_message = "Invalid username or password.";
         }
     }
 

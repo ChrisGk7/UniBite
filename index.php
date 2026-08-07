@@ -89,7 +89,7 @@ include ("header.html");
 
                 <div class="form_group">
                     <label class="sub_title" for="signin_username">Username</label>
-                    <input id="signin_username" data-error="Please enter a valid username" class="form_style" type="text" name="username"  autocomplete="username" required>
+                    <input id="signin_username" data-error="Please enter a valid username" class="form_style" type="text" name="username" value="<?php echo htmlspecialchars($old['signin_username']); ?>" autocomplete="username" required>
                     <span class="error-message" aria-live="polite"></span>
                 </div>
                 <div class="form_group">
@@ -97,7 +97,11 @@ include ("header.html");
                     <input id="signin_password" data-error="Please enter a valid password" class="form_style" type="password" name="password" autocomplete="current-password" required>
                     <span class="error-message" aria-live="polite"></span>
                 </div>
-                
+                <?php if (isset($error_message)): ?>
+                    <div class="form_group">
+                        <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
+                    </div>
+                <?php endif; ?>
                 <div class="form_group">
                     <button id="signinButton" class="btn" type="submit" name="login">SIGN IN</button>
                 </div>
