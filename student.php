@@ -6,11 +6,23 @@ include("database.php");
 if (!isset($_SESSION['username'])) {
     header("Location: index.php");
     exit();
+    
 }
+$student = get_user_by_username($_SESSION['username'], $conn);
 ?>
 <html>
+<head>
+   
+    <link rel="stylesheet" href="cook.css">
+</head>
+<body>
 
 <h1>Student Dashboard</h1>
+<p>Welcome, <?php echo htmlspecialchars($student['name']); ?>!</p>
 
-<button onclick="window.location.href='logout.php'">Logout</button>
+<button  class="editBtn" onclick="window.location.href='logout.php'">Logout</button>
+<button id="adddishBtn" class="editBtn" onclick="window.location.href='cook.html'">Add Dish </button>
+</body>
 </html>
+
+<script src="student.js" defer></script>

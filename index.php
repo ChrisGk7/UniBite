@@ -1,6 +1,6 @@
 <?php
 require_once("register_user_student.php");
-include ("header.html");
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +14,10 @@ include ("header.html");
 </head>
 <body>
     <div id="signupContainer" class="form_area hidden" >
-            <p class="title">UNIBITE</p>
+            <button class="logo" data-text="Awesome" onclick="window.location.href='index.php'">
+            <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
+            </button>
             <p class="title">Register</p>
             <form id="signupForm" action="index.php" method="post"  novalidate>
 
@@ -82,7 +85,12 @@ include ("header.html");
 
     <div id="signinContainer" class="form_area">
         
-            <p class="title">UNIBITE</p>
+            
+            <button class="logo" data-text="Awesome" onclick="window.location.href='index.php'">
+            <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
+            </button>
+
             
             <form id="signinForm" action="index.php" method="post" novalidate>
 
