@@ -1,4 +1,3 @@
-
 <?php
 require_once("register_user_student.php");
 include ("header.html");
@@ -116,4 +115,3 @@ include ("header.html");
 </body>
 
 </html>
-
