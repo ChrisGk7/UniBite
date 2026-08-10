@@ -76,7 +76,7 @@ CREATE TABLE dish(
   pickup_location varchar(255) NOT NULL,   
   pickup_time datetime NOT NULL,           
 
-  --for the map view / distance sorting
+  
   latitude decimal(10,7) DEFAULT NULL,
   longitude decimal(10,7) DEFAULT NULL,
 
