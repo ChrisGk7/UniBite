@@ -94,7 +94,7 @@ listingForm.addEventListener("submit", function(event){
 
     listingContainer.appendChild(article)
 
-    listingForm.reset();
+    //listingForm.reset();
 
 });
 

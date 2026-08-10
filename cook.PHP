@@ -1,7 +1,5 @@
 <?php
 
-//connect to database.php
-
 require_once "database.php";
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
@@ -15,15 +13,27 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     $portions = (int) $_POST["portions"];
 
     $photo_url=null;//gia twra
+    
     $cook="testcook";
+  
+    //photo save to uploads folder
+   $photo_url = null;
 
+if (!empty($_FILES["image"]["name"])) {
 
+    $file_name = $_FILES["image"]["name"];
+
+    $photo_url = "uploads/" . $file_name;
+
+    move_uploaded_file(
+        $_FILES["image"]["tmp_name"],
+        $photo_url
+    );
+}
     create_dish($cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$portions,$conn);
 
     echo "Η Αγγελία αποθηκεύτηκε!";
-
 }
-
 
 ?>
 
@@ -58,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             <input type="text" id="title" name="title">
 
             <label>Φωτογραφία</label>
-            <input type="file" id="image" name="image">
+            <input type="file" id="image" name="image" accept="image/*">
 
             <label>Σημειώσεις</label>
             <textarea id="notes" name="description"></textarea>
