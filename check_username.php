@@ -10,7 +10,7 @@ if (empty($username)) {
     exit;
 }
 
-// check_user_in_db expects ($username, $conn)
+
 $exists = check_user_in_db($username, $conn);
 
 echo json_encode(['exists' => (bool)$exists]);

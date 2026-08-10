@@ -13,15 +13,21 @@ $student = get_user_by_username($_SESSION['username'], $conn);
 <html>
 <head>
    
-    <link rel="stylesheet" href="cook.css">
+    <link rel="stylesheet" href="studentd.css">
 </head>
 <body>
-
-<h1>Student Dashboard</h1>
-<p>Welcome, <?php echo htmlspecialchars($student['name']); ?>!</p>
-
-<button  class="editBtn" onclick="window.location.href='logout.php'">Logout</button>
-<button id="adddishBtn" class="editBtn" onclick="window.location.href='cook.html'">Add Dish </button>
+<div class="logo-container">
+    <button class="logo" data-text="Awesome" onclick="window.location.href='logout.php'">
+        <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
+        <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
+    </button>
+</div>
+        <div class="dashboard-container">
+            <h1>Student Dashboard</h1>
+            <p>Welcome, <?php echo htmlspecialchars($student['name']); ?>!</p>
+        </div>
+<button  class="btn" onclick="window.location.href='logout.php'">Logout</button>
+<button id="adddishBtn" class="btn" onclick="window.location.href='cook.html'">Add Dish </button>
 </body>
 </html>
 
