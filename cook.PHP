@@ -1,3 +1,35 @@
+<?php
+
+//connect to database.php
+
+require_once "database.php";
+
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+     $title = trim($_POST["title"]);
+    $description = trim($_POST["description"]);
+    $allergens = trim($_POST["allergens"]);
+
+    $pickup_location = trim($_POST["pickup_location"]);
+    $pickup_time = $_POST["pickup_time"];
+
+    $portions = (int) $_POST["portions"];
+
+    $photo_url=null;//gia twra
+    $cook="testcook";
+
+
+    create_dish($cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$portions,$conn);
+
+    echo "Η Αγγελία αποθηκεύτηκε!";
+
+}
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 
 <html>
@@ -21,18 +53,29 @@
         
         <h2>Νέα Αγγελία</h2>
 
-        <form id="listingForm">
+        <form id="listingForm"  method="POST" enctype="multipart/form-data">
             <label>Τίτλος</label>
-            <input type="text" id="title">
+            <input type="text" id="title" name="title">
 
             <label>Φωτογραφία</label>
-            <input type="file" id="image">
+            <input type="file" id="image" name="image">
 
             <label>Σημειώσεις</label>
-            <textarea id="notes"></textarea>
+            <textarea id="notes" name="description"></textarea>
 
             <label>Αλλεργιογόνα</label>
-            <input type="text" id="allergerns" placeholder="πχ, Γλουτένη, Γάλα">
+            <input type="text" id="allergerns" name="allergens" placeholder="πχ, Γλουτένη, Γάλα">
+
+            <label>Μερίδες</label>
+            <input type="number" id="portions" name="portions" min="1" required>
+
+            <label>Τοποθεσία Παραλαβής</label>
+            <input type="text" id="pickupLocation" name="pickup_location">
+
+            <label>Ώρα Παραλαβής</label>
+            <input type="number" id="pickupTime" name="pickup_time">
+
+            
 
             <button type="submit">Δημιουργία Αγγελίας</button>
         </form>

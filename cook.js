@@ -29,7 +29,7 @@ let listingToEdit=null;
 //Δημιουργία Αγγελίας
 
 listingForm.addEventListener("submit", function(event){
-    event.preventDefault();
+    //event.preventDefault();
 
     const title = titleInput.value.trim();
     const notes = notesInput.value.trim();
@@ -127,7 +127,7 @@ cancelEdit.addEventListener("click", function(){
 
 //SaveEdit
 editForm.addEventListener("submit", function(event){
-    event.preventDefault();
+    //event.preventDefault();
 
     const newTitle = editTitle.value.trim();
     const newNotes = editNotes.value.trim();

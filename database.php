@@ -133,13 +133,6 @@
         mysqli_query($conn, $sql);
     }
 
-    // dish logic
-
-    function create_dish($cook, $title, $description, $portions, $credit_cost, $conn){
-        $sql = "INSERT INTO dish VALUES(DEFAULT, '$cook', '$title', '$description', '$portions', '$credit_cost', DEFAULT)";
-        mysqli_query($conn, $sql);
-    }
-
     function add_to_student_cook_relation($stu_username, $dish_id, $cook_username, $conn){
         $sql = "INSERT INTO student_cook_relation VALUES(DEFAULT, '$stu_username', '$dish_id', '$cook_username', DEFAULT, DEFAULT, DEFAULT)";
         mysqli_query($conn, $sql);
@@ -184,6 +177,22 @@
 
         }
     }
+
+
+//
+
+function create_dish($cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$portions,$conn){
+    $sql="INSERT INTO dish(cook,title,description,allergens,photos_url,pickup_location,pickup_time,portions)VALUES(?,?,?,?,?,?,?,?)";
+    $stmt= mysqli_prepare($conn,$sql);
+
+    mysqli_stmt_bind_param($stmt,"sssssssi",$cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$portions);
+
+
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}   
+
+
 
 
 ?>
