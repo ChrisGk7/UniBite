@@ -262,8 +262,38 @@
         mysqli_query($conn, $sql);
     }
 
-    
+    function add_examiner_to_thesis($thesis_id, $teacher_email, $student_email, $conn){
+        
+        // get the student thesis relation row and check for examiner availiability
 
-    
+        $sql = "SELECT * FROM student_thesis_relation WHERE stu_email = '".$student_email."' AND thesis_id = '".$thesis_id."' AND status = 'pending_assignment'";
+        $thesis_relation_row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+
+        if (!$thesis_relation_row["teach1_email"]){
+            $sql = "UPDATE student_thesis_relation SET teach1_email = '".$teacher_email."' WHERE stu_email = '".$student_email."' AND thesis_id = '".$thesis_id."' AND status = 'pending_assignment'";
+        }
+        elseif (!$thesis_relation_row["teach2_email"]){
+            $sql = "UPDATE student_thesis_relation SET teach2_email = '".$teacher_email."' WHERE stu_email = '".$student_email."' AND thesis_id = '".$thesis_id."' AND status = 'pending_assignment'";
+        }
+        mysqli_query($conn, $sql);
+
+    }
+
+    function auto_cancel_requests($thesis_id, $student_email, $conn) {
+
+        $sql = "SELECT * FROM student_thesis_relation WHERE stu_email = '".$student_email."' AND thesis_id = '".$thesis_id."' AND status = 'pending_assignment'";
+        $thesis_relation_row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+
+        if ($thesis_relation_row["teach1_email"] && $thesis_relation_row["teach2_email"]){
+            update_table_row_condition("student_thesis_relation", "status", "active", "stu_email = '".$student_email."' AND thesis_id = '".$thesis_id."' AND status = 'pending_assignment'", $conn);
+            
+            // once the thesis is accepted auto decline all the other requests
+
+            $sql = "UPDATE request SET status = 'declined', reply_datetime = CURRENT_TIMESTAMP() WHERE stu_email = '".$student_email."' AND thesis_id = '".$thesis_id."' AND status = 'pending'";
+            mysqli_query($conn, $sql);
+
+        }
+    }
+
 
 ?>

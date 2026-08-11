@@ -68,20 +68,11 @@ CREATE TABLE dish(
   id int(30) NOT NULL AUTO_INCREMENT UNIQUE,
   cook varchar(63) NOT NULL,
   title varchar(255) NOT NULL,
-  description varchar(255) NOT NULL,      
-  allergens text NOT NULL,                
-  photos_url varchar(255) DEFAULT NULL,   
-
-
-  pickup_location varchar(255) NOT NULL,   
-  pickup_time datetime NOT NULL,           
-
-  
-  latitude decimal(10,7) DEFAULT NULL,
-  longitude decimal(10,7) DEFAULT NULL,
-
-  portions int(2) NOT NULL,           
-  credits_per_portion int(2) NOT NULL DEFAULT 1,
+  description varchar(255) NOT NULL,
+  allergens text NOT NULL,
+  photos_url varchar (255) NOT NULL DEFAULT 'C:\xampp\htdocs\unibite', 
+  portions int(2) NOT NULL,
+  credit_cost int (2) NOT NULL DEFAULT 1,
 
   reg_date datetime NOT NULL DEFAULT current_timestamp(),
 
