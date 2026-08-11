@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("database.php");
-
+include("header.html");
 // Require a logged-in session to view this page
 if (!isset($_SESSION['username'])) {
     header("Location: index.php");

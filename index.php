@@ -15,14 +15,15 @@ require_once("register_user_student.php");
 <body>
     <div id="signupContainer" class="form_area hidden" >
             <p class="title">Welcome to </p>
-             <div class="form_group"> 
+            <div class="form_group"> 
             <button class="logo" data-text="Awesome" onclick="window.location.href='index.php'">
             <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
             <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
             </button>
+            </div>
             <p class="title">Sign Up</p>
             <form id="signupForm" action="index.php" method="post"  novalidate>
-            </div>
+            
                 <div class="form_group">
                     <label class="sub_title" for="reg_username">Username</label>
                     <input id="reg_username" data-error="Please enter a valid username" class="form_style" type="text" name="username" value="<?php echo htmlspecialchars($old['username']); ?>" autocomplete="username" required>
