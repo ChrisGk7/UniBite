@@ -507,3 +507,18 @@ hr {
 
     color: var(--dark);
 }
+
+input:user-invalid,
+textarea:user-invalid {
+    border-color: purple !important;
+}
+
+.error-message {
+    color: purple !important;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.error-message:empty {
+    display: none !important;
+}

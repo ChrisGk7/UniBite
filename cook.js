@@ -24,12 +24,64 @@ const cancelEdit=document.getElementById("cancelEdit");
 let listingToEdit=null;
 
 
+//Validation checkup
+function validateField(field) {
+
+    const errorElement = field.nextElementSibling;
+
+    if (!field.validity.valid) {
+        errorElement.textContent =
+            field.dataset.error || "This field is not valid.";
+
+        return false;
+    }
+
+    errorElement.textContent = "";
+    return true;
+}
 
 
+
+function validateForm() {
+
+    const fields = listingForm.querySelectorAll(
+        "input[required], textarea[required]"
+    );
+
+    let isValid = true;
+
+    fields.forEach(function(field) {
+
+        if (!validateField(field)) {
+            isValid = false;
+        }
+
+    });
+
+    return isValid;
+}
+
+
+const fields = listingForm.querySelectorAll(
+    "input[required], textarea[required]"
+);
+
+fields.forEach(function(field) {
+
+    field.addEventListener("blur", function() {
+        validateField(field);
+    });
+
+});
 //Δημιουργία Αγγελίας
 
 listingForm.addEventListener("submit", function(event){
     //event.preventDefault();
+
+    if (!validateForm()) {
+        event.preventDefault();
+        return;
+    }
 
     const title = titleInput.value.trim();
     const notes = notesInput.value.trim();
@@ -97,6 +149,8 @@ listingForm.addEventListener("submit", function(event){
     //listingForm.reset();
 
 });
+
+
 
 listingContainer.addEventListener("click", function(event){
 
