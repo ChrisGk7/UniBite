@@ -16,9 +16,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     $cook="testcook";
   
-    //photo save to uploads folder
+    
    $photo_url = null;
-
+//photo save to uploads folder
 if (!empty($_FILES["image"]["name"])) {
 
     $file_name = $_FILES["image"]["name"];
@@ -83,7 +83,7 @@ if (!empty($_FILES["image"]["name"])) {
             <input type="text" id="pickupLocation" name="pickup_location">
 
             <label>Ώρα Παραλαβής</label>
-            <input type="number" id="pickupTime" name="pickup_time">
+            <input type="datetime-local" id="pickupTime" name="pickup_time" required>
 
             
 
