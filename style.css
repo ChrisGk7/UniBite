@@ -1,0 +1,435 @@
+body {
+    margin: 0;
+    background-color: #fffdf7;
+    font-family: Arial, sans-serif;
+    color: #222;
+}
+
+/* SECOND NAVBAR */
+
+.secondary-navbar {
+    background-color: #fffaf3;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 12px 0;
+}
+
+
+/* Keeps all buttons next to each other and centered */
+
+.secondary-nav-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Orange buttons */
+
+.secondary-nav-links a {
+    display: inline-block;
+
+    padding: 10px 18px;
+
+    background-color: #f97316;
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    border-radius: 9999px;
+
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    transition:
+        background-color 0.2s,
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+
+/* Hover */
+
+.secondary-nav-links a:hover {
+    background-color: #ea580c;
+    color: white;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Keyboard focus */
+
+.secondary-nav-links a:focus {
+    outline: none;
+
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.25);
+}
+
+
+/* -------------------------
+   Top navbar
+------------------------- */
+
+.top-header {
+    background-color: #fffdf7;
+    width: 100%;
+}
+
+.top-navbar {
+    width: 100%;
+    padding: 18px clamp(24px, 4vw, 70px);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+.brand {
+    text-decoration: none;
+    color: #f97316;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.top-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Base style for both buttons */
+.top-nav-actions a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 9px 18px;
+
+    border-radius: 9999px;
+
+    transition:
+        background-color 0.2s,
+        color 0.2s,
+        transform 0.2s;
+}
+
+/* Contact button */
+.top-nav-actions a:not(.login-link) {
+    color: #f97316;
+    border: 2px solid #f97316;
+    background-color: transparent;
+}
+
+.top-nav-actions a:not(.login-link):hover {
+    background-color: #fff0e5;
+    transform: translateY(-1px);
+}
+
+/* Login button */
+.top-nav-actions .login-link {
+    color: white;
+    border: 2px solid #f97316;
+    background-color: #f97316;
+}
+
+.top-nav-actions .login-link:hover {
+    background-color: #ea580c;
+    border-color: #ea580c;
+    transform: translateY(-1px);
+}
+/* -------------------------
+   Main content & Welcome selection
+------------------------- */
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 24px;
+}
+
+.welcome-section {
+    margin-bottom: 40px;
+}
+
+.welcome-section h1 {
+    margin: 0 0 24px 0;
+    font-size: 36px;
+    font-weight: 700;
+    color: #222;
+}
+
+.search-box {
+    max-width: 550px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 14px 18px;
+
+    border: 1px solid #ddd;
+    border-radius: 12px;
+
+    background-color: white;
+    color: #222;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+    outline: none;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+
+/* -------------------------
+   Food Categories
+------------------------- */
+
+.categories-section {
+    margin-top: 20px;
+}
+
+.categories-section h2 {
+    margin: 0 0 24px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #222;
+}
+
+.categories-container {
+    display: flex;
+    gap: 20px;
+
+    overflow-x: auto;
+
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.category-item {
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.category-box {
+    width: 90px;
+    height: 90px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #fffaf3;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+
+    font-size: 36px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+}
+
+.category-box:hover {
+    background-color: #fff0e5;
+    border-color: #f97316;
+
+    transform: translateY(-3px);
+}
+
+.category-item p {
+    margin: 10px 0 0 0;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: #444;
+}
+
+/* -------------------------
+   Popular Dishes
+------------------------- */
+
+.popular-section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.popular-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.popular-header h2 {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.view-all {
+    text-decoration: none;
+
+    color: #f97316;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+
+/* Card layout */
+
+.food-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 24px;
+}
+
+
+/* Individual card */
+
+.food-card {
+    background-color: white;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.food-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Food image area */
+
+.food-card-image {
+    height: 190px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #fffaf3;
+
+    font-size: 64px;
+}
+
+
+/* Card text */
+
+.food-card-content {
+    padding: 20px;
+}
+
+.food-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 15px;
+}
+
+.food-card-top h3 {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.food-card-top p {
+    margin: 6px 0 0 0;
+
+    font-size: 14px;
+
+    color: #777;
+}
+
+.rating {
+    color: #f59e0b;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+}
+
+
+/* Price + button */
+
+.food-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 24px;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+.add-button {
+    border: none;
+    border-radius: 8px;
+
+    padding: 10px 16px;
+
+    background-color: #f97316;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+}
+
+.add-button:hover {
+    background-color: #ea580c;
+}
