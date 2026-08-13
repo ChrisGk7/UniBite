@@ -1,16 +1,40 @@
 /* Login Page */
-.background
-    {
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
     background-image: url("images/background.jpg");
     background-size: cover;
     background-position: center;
-    height: 100vh;
-
-
-
-
+    background-repeat: no-repeat;
+    background-color: var(--cream);
+    min-height: 100vh;
 }
 
+:root {
+    --primary-orange: #f4511e;
+    --primary-orange-dark: #d93d0b;
+
+    --accent-yellow: #f9b233;
+
+    --dark: #201a17;
+    --dark-soft: #4d433e;
+
+    --cream: #fff8ef;
+    --light-orange: #fff0e6;
+    --white: #ffffff;
+
+    --danger: #d93636;
+    --danger-dark: #b82626;
+
+    --border: #eaded5;
+    --shadow: 0 12px 35px rgba(48, 32, 20, 0.1);
+}
 
         
     .container
@@ -32,12 +56,12 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: #EDDCD9;
+        background-color: var(--cream);
         height: min-content;
         width: min-content;
-        border: 2px solid #264143;
+        border: 2px solid var(--dark-soft);
         border-radius: 20px;
-        box-shadow: 3px 4px 0px 1px #E99F4C;
+        box-shadow: 3px 4px 0px 1px var(--primary-orange);
         position: relative;
         top: 30px;
         left: 50px;  
@@ -45,7 +69,7 @@
 
     .title 
         {
-        color: #3c5102;
+        color: var(--dark);
         font-family: Sans-serif; 
         font-weight: 900;
         font-size: 1.5em;
@@ -72,8 +96,8 @@
     .form_style 
         {
         outline: none;
-        border: 2px solid #264143;
-        box-shadow: 3px 4px 0px 1px #E99F4C;
+        border: 2px solid var(--dark-soft);
+        box-shadow: 3px 4px 0px 1px var(--primary-orange);
         width: 290px;
         padding: 12px 10px;
         border-radius: 4px;
@@ -83,26 +107,29 @@
     .form_style:focus, .btn:focus 
         {
         transform: translateY(4px);
-        box-shadow: 1px 2px 0px 0px #E99F4C;
+        box-shadow: 1px 2px 0px 0px var(--primary-orange);
         }
 
     .btn
         {
         border: none;
-        color: #fff;
+        color: var(--white);
         padding: 15px;
         margin: 25px auto;              
         width: 290px;
         font-size: 15px;
-        background: #DE5499;
+        background: var(--primary-orange);
         border-radius: 10px;
         font-weight: 800;
-        box-shadow: 3px 3px 0px 0px #E99F4C;
+        box-shadow: 3px 3px 0px 0px var(--accent-yellow);
         }
 
     .btn:hover 
         {
-        opacity: .9;
+            background: var(--accent-yellow);
+            box-shadow: 1px 2px 0px 0px var(--primary-orange);
+            transform: translateY(4px);
+            opacity: .9;
         }
 
     .link 
@@ -113,11 +140,11 @@
         }
     input:user-invalid 
         {
-        border-color:purple !important;
+        border-color:var(--primary-orange-dark) !important;
         }
     .error-message
         {
-        color: purple !important;
+        color: var(--primary-orange-dark) !important;
         font-size: 12px;
         margin-top: 5px;
         }    
@@ -125,3 +152,48 @@
         {
         display: none !important;
         }
+
+
+    /* === removing default button style ===*/
+.logo {
+  margin: 0;
+  height: auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+/* button styling */
+.logo {
+  --border-right: 6px;
+  --text-stroke-color:var(--dark);
+  --animation-color: var(--primary-orange);
+  --fs-size: 2em;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-size: var(--fs-size);
+  font-family: "Arial";
+  position: relative;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+/* this is the text, when you hover on button */
+.hover-text {
+  position: absolute;
+  box-sizing: border-box;
+  content: attr(data-text);
+  color: var(--animation-color);
+  width: 0%;
+  inset: 0;
+  border-right: var(--border-right) solid var(--animation-color);
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-text-stroke: 1px var(--animation-color);
+}
+/* hover */
+.logo:hover .hover-text {
+  width: 100%;
+  filter: drop-shadow(0 0 23px var(--animation-color))
+}
