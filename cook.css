@@ -86,7 +86,7 @@ section h2::after {
     border: 1px solid var(--border);
 }
 
-#listingForm {
+.listingForm {
     display: grid;
     gap: 12px;
 }
@@ -507,3 +507,18 @@ hr {
 
     color: var(--dark);
 }
+
+ input:user-invalid 
+        {
+        border-color:var(--primary-orange-dark) !important;
+        }
+    .error-message
+        {
+        color: var(--primary-orange-dark) !important;
+        font-size: 12px;
+        margin-top: 5px;
+        }    
+    .error-message:empty
+        {
+        display: none !important;
+        }

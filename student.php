@@ -28,16 +28,47 @@ $student = get_user_by_username($_SESSION['username'], $conn);
     <link rel="stylesheet" href="studentd.css">
 </head>
 <body>
+    <header>
+        <button class="logo" data-text="Awesome" onclick="window.location.href='student.php'">
+            <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
+        </button>
 
-    <div class="dashboard-container">
+         
+    </header>
+
+    <!-- <div class="dashboard-container">
         <h1>  <button class="logo" data-text="Awesome" onclick="window.location.href='logout.php'">
             <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
             <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
             </button>
         </h1>
       
-    </div>
-      <div class="welcome-message">
+    </div> -->
+       <nav class="secondary-navbar">
+
+            <ul class="secondary-nav-links">
+
+                <li>
+                    <button class="adddishBtn" href="student.php">Home</button>
+                </li>
+
+                <li>
+                    <a href="menu.php">Menu</a>
+                </li>
+
+                <li>
+                    <a href="restaurants.php">Restaurants</a>
+                </li>
+
+                <li>
+                    <a href="about.php">About</a>
+                </li>
+
+            </ul>
+
+            </nav>  
+    <div class="welcome-message">
             <p>Welcome, <?php echo htmlspecialchars($student['name']); ?>!</p>
         </div>
 
@@ -58,6 +89,6 @@ $student = get_user_by_username($_SESSION['username'], $conn);
 
    
     <script src="map.js" defer></script>
-    <script src="student.js" defer></script>
+    
 </body>
 </html>

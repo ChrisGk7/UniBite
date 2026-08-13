@@ -164,8 +164,8 @@
 </div>
 
 <script src="cook.js"></script> 
-<!-- <script src="form.js"></script>  -->
 
+<script src="form.js"></script>
 
 </body>
 
