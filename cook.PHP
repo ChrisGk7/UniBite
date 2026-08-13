@@ -65,25 +65,26 @@ if (!empty($_FILES["image"]["name"])) {
 
         <form id="listingForm"  method="POST" enctype="multipart/form-data">
             <label>Τίτλος</label>
-            <input type="text" id="title" name="title">
+            <input type="text" id="title" data-error="Please enter a title" name="title" required>
+            <span class="error-message" aria-live="polite"></span>
 
             <label>Φωτογραφία</label>
-            <input type="file" id="image" name="image" accept="image/*">
+            <input type="file" id="image" name="image" accept="image/*" required>
 
             <label>Σημειώσεις</label>
-            <textarea id="notes" name="description"></textarea>
+            <textarea id="notes" name="description" required></textarea>
 
             <label>Αλλεργιογόνα</label>
-            <input type="text" id="allergerns" name="allergens" placeholder="πχ, Γλουτένη, Γάλα">
+            <input type="text" id="allergerns" name="allergens" placeholder="πχ, Γλουτένη, Γάλα" required>
 
             <label>Μερίδες</label>
             <input type="number" id="portions" name="portions" min="1" required>
 
             <label>Τοποθεσία Παραλαβής</label>
-            <input type="text" id="pickupLocation" name="pickup_location">
+            <input type="text" id="pickupLocation" name="pickup_location" required>
 
             <label>Ώρα Παραλαβής</label>
-            <input type="number" id="pickupTime" name="pickup_time">
+            <input type="number" id="pickupTime" name="pickup_time" required>
 
             
 
@@ -172,6 +173,8 @@ if (!empty($_FILES["image"]["name"])) {
 </div>
 
 <script src="cook.js"></script>
+<script src="form.js"></script>
+
 
 </body>
 
