@@ -1,39 +1,7 @@
 <?php
 
-require_once "database.php";
 
-if($_SERVER["REQUEST_METHOD"]=="POST"){
-     $title = trim($_POST["title"]);
-    $description = trim($_POST["description"]);
-    $allergens = trim($_POST["allergens"]);
 
-    $pickup_location = trim($_POST["pickup_location"]);
-    $pickup_time = $_POST["pickup_time"];
-
-    $portions = (int) $_POST["portions"];
-
-    $photo_url=null;//gia twra
-    
-    $cook="testcook";
-  
-    //photo save to uploads folder
-   $photo_url = null;
-
-if (!empty($_FILES["image"]["name"])) {
-
-    $file_name = $_FILES["image"]["name"];
-
-    $photo_url = "uploads/" . $file_name;
-
-    move_uploaded_file(
-        $_FILES["image"]["tmp_name"],
-        $photo_url
-    );
-}
-    create_dish($cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$portions,$conn);
-
-    echo "Η Αγγελία αποθηκεύτηκε!";
-}
 
 ?>
 
@@ -63,32 +31,46 @@ if (!empty($_FILES["image"]["name"])) {
         
         <h2>Νέα Αγγελία</h2>
 
-        <form id="listingForm"  method="POST" enctype="multipart/form-data">
+        <form id="listingForm"  method="POST" enctype="multipart/form-data" novalidate>
+        <div class="form-group">
             <label>Τίτλος</label>
-            <input type="text" id="title" data-error="Please enter a title" name="title" required>
+            <input type="text" id="title" name="title" required data-error="Please enter a title.">
             <span class="error-message" aria-live="polite"></span>
-
+        </div>
+        <div class="form-group">
             <label>Φωτογραφία</label>
-            <input type="file" id="image" name="image" accept="image/*" required>
-
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+        <div class="form-group">
             <label>Σημειώσεις</label>
-            <textarea id="notes" name="description" required></textarea>
-
+            <textarea id="notes" name="description" required data-error="Please enter notes."></textarea>
+            <span class="error-message" aria-live="polite" ></span>
+        </div>
+        <div class="form-group">    
             <label>Αλλεργιογόνα</label>
-            <input type="text" id="allergerns" name="allergens" placeholder="πχ, Γλουτένη, Γάλα" required>
-
+            <input type="text" id="allergerns" name="allergens" placeholder="πχ, Γλουτένη, Γάλα" required  data-error="Please enter the allergerns.">
+            <span class="error-message" aria-live="polite"></span>
+        </div>
+         <div class="form-group">
             <label>Μερίδες</label>
-            <input type="number" id="portions" name="portions" min="1" required>
-
+            <input type="number" id="portions" name="portions" min="1" required data-error="Please enter portions.">
+            <span class="error-message" aria-live="polite"></span>
+        </div>
+        <div class="form-group">
             <label>Τοποθεσία Παραλαβής</label>
-            <input type="text" id="pickupLocation" name="pickup_location" required>
-
+            <input type="text" id="pickupLocation" name="pickup_location" required data-error="Please enter the pickup location.">
+            <span class="error-message" aria-live="polite" ></span>
+        </div>
+        <div>
+        <div class="form-group">
             <label>Ώρα Παραλαβής</label>
-            <input type="number" id="pickupTime" name="pickup_time" required>
-
+            <input type="datetime-local" id="pickupTime" name="pickup_time" required data-error="Please enter the pickup time.">
+            <span class="error-message" aria-live="polite"></span>
+        <div>
             
-
+        <div class="form-group">
             <button type="submit">Δημιουργία Αγγελίας</button>
+        </div>
         </form>
 
     </section>
@@ -156,6 +138,15 @@ if (!empty($_FILES["image"]["name"])) {
             <label>Αλλεργιογόνα</label>
             <input type="text" id="editAllegerns">
 
+            <label>Μερίδες</label>
+            <input type="number" id="editPortions" min="1">
+
+            <label>Τοποθεσία Παραλαβής</label>
+            <input type="text" id="editPickupLocation">
+
+            <label>Ώρα Παραλαβής</label>
+            <input type="datetime-local" id="editPickupTime">
+
 
             <div class="edit-modal-buttons">
                 
@@ -172,8 +163,8 @@ if (!empty($_FILES["image"]["name"])) {
 
 </div>
 
-<script src="cook.js"></script>
-<script src="form.js"></script>
+<script src="cook.js"></script> 
+<!-- <script src="form.js"></script>  -->
 
 
 </body>
