@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$student = get_user_by_username($_SESSION['username'], $conn);
+$student = get_student_by_username($_SESSION['username'], $conn);
 
 
 ?>
@@ -45,7 +45,7 @@ $student = get_user_by_username($_SESSION['username'], $conn);
         </h1>
       
     </div> -->
-       <nav class="secondary-navbar">
+       <!-- <nav class="secondary-navbar">
 
             <ul class="secondary-nav-links">
 
@@ -67,13 +67,13 @@ $student = get_user_by_username($_SESSION['username'], $conn);
 
             </ul>
 
-            </nav>  
+            </nav>   -->
     <div class="welcome-message">
             <p>Welcome, <?php echo htmlspecialchars($student['name']); ?>!</p>
         </div>
 
     <button class="btn" onclick="window.location.href='logout.php'">Logout</button>
-    <button id="adddishBtn" class="btn" onclick="window.location.href='cook.php'">Add Dish</button>
+    <button id="adddishBtn" class="btn" onclick="window.location.href='cook.PHP'">Add Dish</button>
 
     <div class="listing-card">
         <h2>Available Dishes</h2>

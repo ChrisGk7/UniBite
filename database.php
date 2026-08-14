@@ -247,17 +247,104 @@
 
     // dish logic
 
-    function create_dish($cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$portions,$conn){
-    $sql="INSERT INTO dish(cook,title,description,allergens,photos_url,pickup_location,pickup_time,portions)VALUES(?,?,?,?,?,?,?,?)";
+    function create_dish($cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$latitude,$longitude,$portions,$conn){
+    $sql="INSERT INTO dish(cook,title,description,allergens,photos_url,pickup_location,pickup_time,latitude,longitude,portions)VALUES(?,?,?,?,?,?,?,?,?,?)";
     $stmt= mysqli_prepare($conn,$sql);
 
-    mysqli_stmt_bind_param($stmt,"sssssssi",$cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$portions);
+    mysqli_stmt_bind_param($stmt,"sssssssddi",$cook,$title,$description,$allergens,$photo_url,$pickup_location,$pickup_time,$latitude,$longitude,$portions);
 
+    $result = mysqli_stmt_execute($stmt);
+    $new_id = mysqli_insert_id($conn);
+    mysqli_stmt_close($stmt);
+    return $result ? $new_id : false;
+}
+//READ function for listings
+
+    function get_dishes_by_cook($cook,$conn){
+        $sql = "SELECT* FROM dish
+                where cook= ?
+                ORDER BY reg_date DESC";
+
+        $stmt = mysqli_prepare($conn,$sql);
+
+        mysqli_stmt_bind_param($stmt,"s",$cook);
+
+        mysqli_stmt_execute($stmt);
+        $result= mysqli_stmt_get_result($stmt);
+
+        $dishes = [];
+
+        while($row=mysqli_fetch_assoc($result)){
+            $dishes[]=$row;
+        }
+
+        mysqli_stmt_close($stmt);
+        return $dishes;
+    }
+
+
+    //delete listing function
+
+     function del_dish($dish_id, $cook,$conn){
+
+    $sql = "DELETE FROM dish
+            where id= ?
+            AND cook= ?";
+
+    $stmt= mysqli_prepare($conn,$sql);
+
+    mysqli_stmt_bind_param($stmt, "is", $dish_id,$cook);
 
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-}   
+    $affected_rows = mysqli_stmt_affected_rows($stmt);
 
+    mysqli_stmt_close($stmt);
+
+    return $affected_rows > 0;
+
+    }
+
+    //UPDATE listing function
+
+    function update_dish($dish_id, $cook, $title, $description, $allergens, $photo_url, $portions, $pickup_location, $pickup_time, $latitude, $longitude, $conn) {
+
+    // Verify the dish actually belongs to this cook BEFORE updating.
+    // Checking this separately (rather than relying on affected_rows after
+    // the UPDATE) avoids a false "failure" when someone edits without
+    // actually changing any values - affected_rows is 0 in that case too,
+    // even though the request was legitimate.
+    $check_sql = "SELECT 1 FROM dish WHERE id = ? AND cook = ?";
+    $check_stmt = mysqli_prepare($conn, $check_sql);
+    mysqli_stmt_bind_param($check_stmt, "is", $dish_id, $cook);
+    mysqli_stmt_execute($check_stmt);
+    $owns_dish = mysqli_num_rows(mysqli_stmt_get_result($check_stmt)) > 0;
+    mysqli_stmt_close($check_stmt);
+
+    if (!$owns_dish) {
+        return false;
+    }
+
+    if ($photo_url !== null) {
+
+        $sql = "UPDATE dish SET title = ?, description = ?, allergens = ?, photos_url = ?, portions = ?, pickup_location = ?, pickup_time = ?, latitude = ?, longitude = ? WHERE id = ? AND cook = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "ssssissddis", $title, $description, $allergens, $photo_url, $portions, $pickup_location, $pickup_time, $latitude, $longitude, $dish_id, $cook);
+
+    } else {
+
+        $sql = "UPDATE dish SET title = ?, description = ?, allergens = ?, portions = ?, pickup_location = ?, pickup_time = ?, latitude = ?, longitude = ? WHERE id = ? AND cook = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "sssissddis", $title, $description, $allergens, $portions, $pickup_location, $pickup_time, $latitude, $longitude, $dish_id, $cook);
+    }
+
+    $result = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    return $result;
+}
    
 
     function acc_decl_request($student_username, $cook_username, $dish_id, $status, $conn){
