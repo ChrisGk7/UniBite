@@ -1,3 +1,9 @@
+<?php
+
+require_once "db.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +28,12 @@
             </a>
 
             <div class="top-nav-actions">
+
+            <!-- Welcome message -->
+            <span class="welcome-message">
+                Welcome back, <strong>Alex</strong> 👋
+            </span>
+
 
             <a href="#">
                 Contact
@@ -78,11 +90,17 @@
         </h1>
 
         <div class="search-box">
-            <input
-                type="text"
-                placeholder="Search for food..."
-                class="search-input"
-            >
+
+        <input
+            type="text"
+            placeholder="Search for food..."
+            class="search-input"
+        >
+
+        <button type="button" class="search-button">
+            Search
+        </button>
+
         </div>
 
     </section>
@@ -152,138 +170,17 @@
 <section class="popular-section">
 
     <div class="popular-header">
-        <h2>Popular Dishes</h2>
-
-        <a href="#" class="view-all">
-            View all
-        </a>
+        <h2>Available Dishes</h2>
     </div>
 
-
-    <div class="food-grid">
-
-        <!-- Food Card 1 -->
-        <div class="food-card">
-
-            <div class="food-card-image">
-                🍔
-            </div>
-
-            <div class="food-card-content">
-
-                <div class="food-card-top">
-
-                    <div>
-                        <h3>Classic Burger</h3>
-                        <p>Burger · Fast Food</p>
-                    </div>
-
-                    <span class="rating">
-                        ★ 4.8
-                    </span>
-
-                </div>
-
-                <div class="food-card-bottom">
-
-                    <span class="price">
-                        €8.50
-                    </span>
-
-                    <button class="add-button">
-                        Add to cart
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Food Card 2 -->
-        <div class="food-card">
-
-            <div class="food-card-image">
-                🍕
-            </div>
-
-            <div class="food-card-content">
-
-                <div class="food-card-top">
-
-                    <div>
-                        <h3>Margherita Pizza</h3>
-                        <p>Pizza · Italian</p>
-                    </div>
-
-                    <span class="rating">
-                        ★ 4.9
-                    </span>
-
-                </div>
-
-                <div class="food-card-bottom">
-
-                    <span class="price">
-                        €10.00
-                    </span>
-
-                    <button class="add-button">
-                        Add to cart
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Food Card 3 -->
-        <div class="food-card">
-
-            <div class="food-card-image">
-                🍣
-            </div>
-
-            <div class="food-card-content">
-
-                <div class="food-card-top">
-
-                    <div>
-                        <h3>Sushi Box</h3>
-                        <p>Sushi · Japanese</p>
-                    </div>
-
-                    <span class="rating">
-                        ★ 4.7
-                    </span>
-
-                </div>
-
-                <div class="food-card-bottom">
-
-                    <span class="price">
-                        €12.00
-                    </span>
-
-                    <button class="add-button">
-                        Add to cart
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="food-grid" id="food-grid">
+        <!-- JavaScript will create the dish cards here -->
     </div>
 
 </section>
 
 </main>
-
+<script src="script.js"></script>
 </body>
 
 </html>

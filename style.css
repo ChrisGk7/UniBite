@@ -111,6 +111,18 @@ body {
     gap: 12px;
 }
 
+.welcome-message {
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.welcome-message strong {
+    color: #f97316;
+    font-weight: 600;
+}
+
 /* Base style for both buttons */
 .top-nav-actions a {
     text-decoration: none;
@@ -167,26 +179,30 @@ body {
 
 .welcome-section h1 {
     margin: 0 0 24px 0;
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 700;
     color: #222;
 }
 
 .search-box {
-    max-width: 550px;
+    max-width: 420px;
+    display: flex;
 }
 
 .search-input {
-    width: 100%;
+    flex: 1;
+
     padding: 14px 18px;
 
     border: 1px solid #ddd;
-    border-radius: 12px;
+    border-right: none;
+
+    border-radius: 12px 0 0 12px;
 
     background-color: white;
     color: #222;
 
-    font-size: 16px;
+    font-size: 14px;
 
     box-sizing: border-box;
     outline: none;
@@ -197,6 +213,29 @@ body {
 .search-input:focus {
     border-color: #f97316;
     box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+
+
+/* Search Button */
+.search-button {
+    padding: 12px 20px;
+
+    border: 1px solid #f97316;
+    border-radius: 0 12px 12px 0;
+
+    background-color: #f97316;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+}
+
+.search-button:hover {
+    background-color: #ea580c;
 }
 
 /* -------------------------
