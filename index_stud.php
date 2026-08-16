@@ -13,6 +13,10 @@ require_once "db.php";
 
     <title>Food Ordering</title>
     <link rel="stylesheet" href="style.css">
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
 </head>
 
 <body>
@@ -23,9 +27,10 @@ require_once "db.php";
 
         <nav class="top-navbar">
 
-            <a href="#" class="brand">
-                UniBite
-            </a>
+        <a href="index.php" class="logo" adta-text="UniBite">
+            <span class="actual-text">&nbsp;UniBite&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UniBite&nbsp;</span>
+        </a>
 
             <div class="top-nav-actions">
 
@@ -178,9 +183,62 @@ require_once "db.php";
     </div>
 
 </section>
+<!-- Map -->
+<section class="map-section">
+
+    <div class="map-header">
+        <h2>Find food near you</h2>
+        <p>See where available dishes can be picked up.</p>
+    </div>
+
+    <div id="feed-map"></div>
+
+</section>
 
 </main>
+<!-- Footer-->
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-top">
+
+            <a href="#" class="footer-brand">
+                UniBite
+            </a>
+
+            <ul class="footer-links">
+                <li>
+                    <a href="#">About</a>
+                </li>
+
+                <li>
+                    <a href="#">Privacy Policy</a>
+                </li>
+
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <hr class="footer-divider">
+
+        <p class="footer-copyright">
+            © 2026 UniBite. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="map.js"></script>
+
 <script src="script.js"></script>
+
 </body>
 
 </html>
