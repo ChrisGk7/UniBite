@@ -26,56 +26,22 @@ const editAllegerns=document.getElementById("editAllegerns");
 const cancelEdit=document.getElementById("cancelEdit");
 let listingToEdit=null;
 
+// Χαρτης Συνάρτηση για validation στο input
+const pickupMap = initPickupMap('pickupMap', 'latitude', 'longitude');
+let editMap = null; // lazily initialized the first time the edit modal opens
 
-//Validation checkup
-function validateField(field) {
+function validatePickupPoint() {
+    const latInput = document.getElementById('latitude');
+    const lngInput = document.getElementById('longitude');
+    const errorEl = document.getElementById('pickupMapError');
 
-    const errorElement = field.nextElementSibling;
-
-    if (!field.validity.valid) {
-        errorElement.textContent =
-            field.dataset.error || "This field is not valid.";
-
+    if (!latInput.value || !lngInput.value) {
+        if (errorEl) errorEl.textContent = 'Please select a pickup point on the map.';
         return false;
     }
-
-    errorElement.textContent = "";
     return true;
 }
 
-
-
-function validateForm() {
-
-    const fields = listingForm.querySelectorAll(
-        "input[required], textarea[required]"
-    );
-
-    let isValid = true;
-
-    fields.forEach(function(field) {
-
-        if (!validateField(field)) {
-            isValid = false;
-        }
-
-    });
-
-    return isValid;
-}
-
-
-const fields = listingForm.querySelectorAll(
-    "input[required], textarea[required]"
-);
-
-fields.forEach(function(field) {
-
-    field.addEventListener("blur", function() {
-        validateField(field);
-    });
-
-});
 
 
 async function loadDishes() {
@@ -102,6 +68,8 @@ async function loadDishes() {
             article.dataset.portions = dish.portions;
             article.dataset.pickupLocation = dish.pickup_location;
             article.dataset.pickupTime = dish.pickup_time;
+            article.dataset.latitude = dish.latitude;
+            article.dataset.longitude = dish.longitude;
 
             const image = document.createElement("img");
 
@@ -165,10 +133,16 @@ async function loadDishes() {
 //Δημιουργία Αγγελίας
 
 listingForm.addEventListener("submit", async function(event) {
-
     event.preventDefault();
 
-    if (!validateForm()) {
+  
+    if (!listingForm.checkValidity()) {
+        const firstInvalid = listingForm.querySelector(":invalid");
+        if (firstInvalid) firstInvalid.focus();
+        return;
+    }
+
+    if (!validatePickupPoint()) {
         return;
     }
 
@@ -188,7 +162,9 @@ listingForm.addEventListener("submit", async function(event) {
         if (data.success) {
 
             listingForm.reset();
-
+            //242 243 for hiding preview image
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            if (previewContainer) previewContainer.style.display = 'none';
             loadDishes();
         }
 
@@ -227,7 +203,27 @@ listingContainer.addEventListener("click", function(event){
 
     editPickupTime.value =  listingToEdit.dataset.pickupTime .replace(" ", "T") .slice(0, 16);
 
+    document.getElementById('editLatitude').value = listingToEdit.dataset.latitude || '';
+    document.getElementById('editLongitude').value = listingToEdit.dataset.longitude || '';
+
     editModal.style.display = "flex";
+
+    // Leaflet can't size a map correctly while its container is display:none,
+    // so we initialize it lazily (first open) and always fix its size /
+    // re-center it after the modal becomes visible.
+    if (!editMap) {
+        editMap = initPickupMap('editPickupMap', 'editLatitude', 'editLongitude');
+    }
+    setTimeout(function () {
+        if (editMap) {
+            editMap.invalidateSize();
+            const lat = parseFloat(listingToEdit.dataset.latitude);
+            const lng = parseFloat(listingToEdit.dataset.longitude);
+            if (!isNaN(lat) && !isNaN(lng)) {
+                editMap.setView([lat, lng], 15);
+            }
+        }
+    }, 0);
  }
 
     //ΚΟΥΜΠΙ ΔΙΑΓΡΑΦΗΣ
@@ -282,6 +278,9 @@ editForm.addEventListener("submit", async function(event) {
     formData.append("pickup_location",editPickupLocation.value.trim());
 
     formData.append("pickup_time",editPickupTime.value);
+
+    formData.append("latitude", document.getElementById('editLatitude').value);
+    formData.append("longitude", document.getElementById('editLongitude').value);
 
     
     if (editImage.files[0]) {
@@ -374,5 +373,3 @@ confirmDelete.addEventListener("click", async function() {
 });
 
 loadDishes();
-
-

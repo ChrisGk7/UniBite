@@ -1,14 +1,19 @@
 <?php
+session_start();
 require_once "database.php";
 
+if (!isset($_SESSION['username'])) {
+    http_response_code(401);
+    echo json_encode(["success" => false, "message" => "Not logged in"]);
+    exit;
+}
 
-header("Content-Type: application/json");
+$cook = $_SESSION['username'];
 
-$cook = "testcook";// PROSORINO
+$dishes = get_dishes_by_cook($cook, $conn);
 
-$dishes= get_dishes_by_cook($cook,$conn);
+echo json_encode(["success" => true, "dishes" => $dishes]);
 
-echo json_encode(["success"=>true,"dishes"=>$dishes]);
 
 
 

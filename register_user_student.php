@@ -62,12 +62,15 @@ if (isset($_POST['login'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['name']     = $user['name'];
             $_SESSION['email']    = $user['email'];
-            header("Location: student.php");
+
+            if (is_admin($user['username'], $conn)) {
+                header("Location: admin_dashboard.php");
+            } else {
+                header("Location: index_stud.php");
+            }
             exit();
         } else {
-            // Deliberately vague: don't reveal whether the username or
-            // the password was the one that was wrong.
-            $signin_general_error = "Invalid username or password.";
+           $error_message = "Invalid username or password.";
         }
     }
 

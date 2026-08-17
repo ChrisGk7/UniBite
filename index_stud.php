@@ -1,6 +1,14 @@
 <?php
 
-require_once "db.php";
+session_start();
+
+require_once "DataBase_stud.php";
+
+if(!isset($_SESSION['username'])){
+
+    header("Location: index.php");
+    exit();
+}
 
 ?>
 
@@ -12,7 +20,7 @@ require_once "db.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Food Ordering</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_stud.css">
     <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -27,7 +35,7 @@ require_once "db.php";
 
         <nav class="top-navbar">
 
-        <a href="index.php" class="logo" adta-text="UniBite">
+        <a href="index.php" class="logo" data-text="UniBite">
             <span class="actual-text">&nbsp;UniBite&nbsp;</span>
             <span aria-hidden="true" class="hover-text">&nbsp;UniBite&nbsp;</span>
         </a>
@@ -36,7 +44,8 @@ require_once "db.php";
 
             <!-- Welcome message -->
             <span class="welcome-message">
-                Welcome back, <strong>Alex</strong> 👋
+                Welcome back, 
+                <strong><?php echo htmlspecialchars($_SESSION['name']); ?></strong> 👋
             </span>
 
 
@@ -44,8 +53,8 @@ require_once "db.php";
                 Contact
             </a>
 
-            <a href="#" class="login-link">
-                Login
+            <a href="logout.php" class="login-link">
+                Logout
             </a>
 
             </div>
@@ -81,7 +90,7 @@ require_once "db.php";
 
         </nav>
 
-    </header>
+    
 
 
     <!-- Main content -->
@@ -90,25 +99,50 @@ require_once "db.php";
     <!-- Welcome section -->
     <section class="welcome-section">
 
+    <div class="welcome-left">
+
         <h1>
             What do you want to eat?
         </h1>
 
         <div class="search-box">
 
-        <input
-            type="text"
-            placeholder="Search for food..."
-            class="search-input"
-        >
+            <input
+                type="text"
+                placeholder="Search for food..."
+                class="search-input"
+            >
 
-        <button type="button" class="search-button">
-            Search
-        </button>
+            <button type="button" class="search-button">
+                Search
+            </button>
 
         </div>
 
-    </section>
+    </div>
+
+    <!-- Create new dish -->
+    <div class="create-dish-card">
+
+        <div class="create-dish-icon">
+            🍳
+        </div>
+
+        <h3>
+            Have food to share?
+        </h3>
+
+        <p>
+            Share your extra food with another student.
+        </p>
+
+        <a href="cook.PHP" class="create-dish-button">
+            + Create a Dish
+        </a>
+
+    </div>
+
+</section>
 
 
 <!-- Food categories -->
@@ -237,7 +271,7 @@ require_once "db.php";
 
 <script src="map.js"></script>
 
-<script src="script.js"></script>
+<script src="script_stud.js"></script>
 
 </body>
 

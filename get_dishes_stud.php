@@ -3,9 +3,9 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once "db.php";
+require_once "DataBase_stud.php";
 
-$sql = "SELECT * FROM dishes";
+$sql = "SELECT * FROM dish";
 
 $result = mysqli_query($conn, $sql);
 

@@ -1,4 +1,8 @@
-fetch("get_dishes.php")
+//Initialize map independently
+const feedMap = initFeedMap("feed-map");
+
+// Load dishes
+fetch("get_dishes_stud.php")
     .then(response => response.json())
     .then(dishes => {
 
@@ -74,6 +78,56 @@ fetch("get_dishes.php")
                 </div>
             `;
 
+            const requestButton = card.querySelector(".request-button");
+
+if (
+    requestButton &&
+    Number(dish.portions) > 0
+) {
+
+    requestButton.addEventListener("click", async function (event) {
+
+        event.stopPropagation();
+
+        const formData = new FormData();
+
+        formData.append("dish_id", dish.id);
+
+        try {
+
+            const response = await fetch("request_dish.php", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                requestButton.textContent = "Request sent";
+                requestButton.disabled = true;
+
+                console.log(data.message);
+
+            } else {
+
+                console.error(data.message);
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Request dish error:",
+                error
+            );
+
+        }
+
+    });
+
+}
+
             // Expand / collapse the card
             card.addEventListener("click", function () {
                 card.classList.toggle("expanded");
@@ -86,7 +140,6 @@ fetch("get_dishes.php")
 
         });
 
-        const feedMap = initFeedMap("feed-map");
 
     })
     
