@@ -5,15 +5,6 @@ body {
     color: #222;
 }
 
-/* SECOND NAVBAR */
-
-.secondary-navbar {
-    background-color: #fffaf3;
-    border-top: 1px solid #e5e5e5;
-    border-bottom: 1px solid #e5e5e5;
-    padding: 12px 0;
-}
-
 
 /* Keeps all buttons next to each other and centered */
 
@@ -85,7 +76,23 @@ body {
 .top-header {
     background-color: #fffdf7;
     width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 5000;
 }
+
+/* SECOND NAVBAR */
+
+.secondary-navbar {
+    background-color: #fffaf3;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 12px 0;
+    position: sticky;
+    top: 70px;
+    z-index: 4999;
+}
+
 
 .top-navbar {
     width: 100%;
@@ -163,6 +170,12 @@ body {
     border-color: #ea580c;
     transform: translateY(-1px);
 }
+
+/* Button scroll */
+html {
+    scroll-behavior: smooth;
+}
+
 /* -------------------------
    Main content & Welcome selection
 ------------------------- */
@@ -250,12 +263,24 @@ body {
 }
 
 .search-box {
-    max-width: 420px;
+    width: 420px;
+    max-width: 100%;
     display: flex;
+}
+
+/* -------------------------
+   Search
+------------------------- */
+
+.search-box {
+    display: flex;
+    width: 380px;
+    max-width: 100%;
 }
 
 .search-input {
     flex: 1;
+    min-width: 0;
 
     padding: 14px 18px;
 
@@ -264,28 +289,26 @@ body {
 
     border-radius: 12px 0 0 12px;
 
-    background-color: white;
+    background: white;
     color: #222;
 
     font-size: 14px;
-
-    box-sizing: border-box;
     outline: none;
 
-    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
 }
 
 .search-input:focus {
     border-color: #f97316;
-    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
 }
 
-
-/* Search Button */
 .search-button {
-    padding: 12px 20px;
+    min-width: 90px;
+    
+    padding: 12px 18px;
 
     border: 1px solid #f97316;
+
     border-radius: 0 12px 12px 0;
 
     background-color: #f97316;
@@ -295,8 +318,6 @@ body {
     font-weight: 600;
 
     cursor: pointer;
-
-    transition: background-color 0.2s;
 }
 
 .search-button:hover {
@@ -376,6 +397,28 @@ body {
    Popular Dishes
 ------------------------- */
 
+.popular-section,
+.map-section {
+    position: relative;
+    padding-top: 32px;
+    margin-top: 50px;
+}
+
+.popular-section::before,
+.map-section::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background-color: #ff5a1f;
+    border-radius: 10px;
+}
+
 .popular-section {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -420,6 +463,8 @@ body {
     grid-template-columns: repeat(3, 1fr);
 
     gap: 24px;
+
+    align-items: start;
 }
 
 
@@ -448,22 +493,27 @@ body {
 /* Food image area */
 
 .food-card-image {
-    height: 190px;
+    width: 100%;
+    height: 180px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    border-bottom: 2px solid #ff5a1f;
+}
 
-    background-color: #fffaf3;
+.food-card-image img {
+    width: 100%;
+    height: 100%;
 
-    font-size: 64px;
+    object-fit: cover;
+    display: block;
 }
 
 
 /* Card text */
 
 .food-card-content {
-    padding: 20px;
+    padding: 16px;
 }
 
 .food-card-top {
@@ -491,16 +541,8 @@ body {
     color: #777;
 }
 
-.rating {
-    color: #f59e0b;
 
-    font-size: 14px;
-
-    white-space: nowrap;
-}
-
-
-/* Price + button */
+/* Request button */
 
 .food-card-bottom {
     display: flex;
@@ -750,10 +792,6 @@ body {
     color: #9ca3af;
 }
 
-.food-card.unavailable .rating {
-    color: #9ca3af;
-}
-
 .food-card.unavailable .dish-details {
     background-color: #f3f4f6;
 }
@@ -815,3 +853,4 @@ body {
         0 0 12px var(--animation-color)
     );
 }
+

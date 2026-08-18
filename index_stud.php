@@ -35,7 +35,7 @@ if(!isset($_SESSION['username'])){
 
         <nav class="top-navbar">
 
-        <a href="index.php" class="logo" data-text="UniBite">
+        <a href="index_stud.php" class="logo" data-text="UniBite">
             <span class="actual-text">&nbsp;UniBite&nbsp;</span>
             <span aria-hidden="true" class="hover-text">&nbsp;UniBite&nbsp;</span>
         </a>
@@ -49,7 +49,7 @@ if(!isset($_SESSION['username'])){
             </span>
 
 
-            <a href="#">
+            <a href="#contact">
                 Contact
             </a>
 
@@ -71,19 +71,19 @@ if(!isset($_SESSION['username'])){
             <ul class="secondary-nav-links">
 
                 <li>
-                    <a href="#">Home</a>
+                    <a href="index_stud.php">Home</a>
                 </li>
 
                 <li>
-                    <a href="#">Menu</a>
+                    <a href="#dishes">Menu</a>
                 </li>
 
                 <li>
-                    <a href="#">Restaurants</a>
+                    <a href="#map-section">Map</a>
                 </li>
 
                 <li>
-                    <a href="#">About</a>
+                    <a href="#about">About</a>
                 </li>
 
             </ul>
@@ -109,12 +109,15 @@ if(!isset($_SESSION['username'])){
 
             <input
                 type="text"
+                id="search-input"
                 placeholder="Search for food..."
                 class="search-input"
             >
 
-            <button type="button" class="search-button">
-                Search
+            <button type="button" 
+                    id="search-button"
+                    class="search-button">
+                    Search
             </button>
 
         </div>
@@ -206,7 +209,7 @@ if(!isset($_SESSION['username'])){
 
 
 <!-- Popular dishes -->
-<section class="popular-section">
+<section class="popular-section" id= "dishes">
 
     <div class="popular-header">
         <h2>Available Dishes</h2>
@@ -218,7 +221,7 @@ if(!isset($_SESSION['username'])){
 
 </section>
 <!-- Map -->
-<section class="map-section">
+<section class="map-section" id="map-section">
 
     <div class="map-header">
         <h2>Find food near you</h2>
@@ -231,19 +234,19 @@ if(!isset($_SESSION['username'])){
 
 </main>
 <!-- Footer-->
-<footer class="footer">
+<footer class="footer" id="about">
 
-    <div class="footer-container">
+    <div class="footer-container" id="contact">
 
         <div class="footer-top">
 
-            <a href="#" class="footer-brand">
+            <a href="#index_stud.php" class="footer-brand">
                 UniBite
             </a>
 
             <ul class="footer-links">
                 <li>
-                    <a href="#">About</a>
+                    <a href="#about">About</a>
                 </li>
 
                 <li>
@@ -251,7 +254,7 @@ if(!isset($_SESSION['username'])){
                 </li>
 
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#contact">Contact</a>
                 </li>
             </ul>
 
@@ -266,6 +269,7 @@ if(!isset($_SESSION['username'])){
     </div>
 
 </footer>
+
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
