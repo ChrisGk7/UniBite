@@ -53,7 +53,7 @@
 
         return $row ?: null;
     }
-    // returns true if the email is registered in the database
+    // returns true if the username is registered in the database
     function check_user_in_db($username, $conn){
         
         $sql = "SELECT * FROM user WHERE username = '$username'";
@@ -61,6 +61,19 @@
         $result = mysqli_query($conn, $sql);
         
         return mysqli_num_rows($result)>0;
+        
+    
+    }
+
+    //returns true if there is a record of an existing email in the database
+     function check_user_email_in_db($email, $conn){
+        
+        $sql = "SELECT * FROM user WHERE email = '$email'";
+        //empty($result)
+        $result = mysqli_query($conn, $sql);
+        
+        return mysqli_num_rows($result)>0;
+        
     
     }
 

@@ -129,3 +129,30 @@ if (regUsernameField) {
         }
     });
 }
+
+//..................Email validity Check...................
+const regEmailFieald = document.getElementById('reg_email')
+    regEmailFieald.addEventListener('blur',async function () {
+        const email = this.value.trim();
+        if(!email) return;
+
+        try {
+
+            const response = await fetch(`check_username.php?email=${encodeURIComponent(email)}`);
+            const data = await response.json();
+        
+        
+        if(data.exists){
+
+            this.setCustomValidity("User with this email already exists.");
+        }
+        else{
+
+            this.setCustomValidity("");
+        }
+        validateField(this);
+    }catch(error){
+        console.error("Error checking email availability:", error);
+    }
+    
+    });
