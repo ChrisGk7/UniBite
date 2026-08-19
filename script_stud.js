@@ -328,64 +328,57 @@ function addDishMarkers(dishes) {
 // Search dishes
 // -------------------------
 
+function normalizeText(text) {
+    return String(text || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+}
+
+const searchAliases = {
+    pizza: "πιτσα",
+    pasta: "μακαρονια",
+    burger: "burger",
+    burgers: "burger",
+    sushi: "sushi",
+    salad: "σαλατα",
+    salads: "σαλατα",
+    dessert: "γλυκο",
+    desserts: "γλυκο"
+};
+
 function searchDishes() {
 
-    const searchTerm =
-        searchInput.value
-            .trim()
-            .toLowerCase();
-    console.log("Search term:", searchTerm);
-    console.log("All dishes:", allDishes);
+    let searchTerm = normalizeText(searchInput.value);
 
-    // Empty search = show all dishes
+    if (searchAliases[searchTerm]) {
+        searchTerm = searchAliases[searchTerm];
+    }
+
     if (searchTerm === "") {
-
         renderDishes(allDishes);
-
         return;
     }
 
+    const filteredDishes = allDishes.filter(dish => {
 
-    const filteredDishes =
-        allDishes.filter(dish => {
+        const title = normalizeText(dish.title);
+        const description = normalizeText(dish.description);
+        const allergens = normalizeText(dish.allergens);
+        const cook = normalizeText(dish.cook);
+        const location = normalizeText(dish.pickup_location);
 
-            return (
-
-                (dish.title || "")
-                    .toLowerCase()
-                    .includes(searchTerm)
-
-                ||
-
-                (dish.description || "")
-                    .toLowerCase()
-                    .includes(searchTerm)
-
-                ||
-
-                (dish.allergens || "")
-                    .toLowerCase()
-                    .includes(searchTerm)
-
-                ||
-
-                (dish.cook || "")
-                    .toLowerCase()
-                    .includes(searchTerm)
-
-                ||
-
-                (dish.pickup_location || "")
-                    .toLowerCase()
-                    .includes(searchTerm)
-
-            );
-
-        });
-
+        return (
+            title.includes(searchTerm) ||
+            description.includes(searchTerm) ||
+            allergens.includes(searchTerm) ||
+            cook.includes(searchTerm) ||
+            location.includes(searchTerm)
+        );
+    });
 
     renderDishes(filteredDishes);
-
 }
 
 

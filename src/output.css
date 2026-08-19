@@ -199,6 +199,9 @@
   .collapse {
     visibility: collapse;
   }
+  .visible {
+    visibility: visible;
+  }
   .fixed {
     position: fixed;
   }

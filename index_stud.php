@@ -19,15 +19,16 @@ if(!isset($_SESSION['username'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Food Ordering</title>
+    <title>UniBite</title>
     <link rel="stylesheet" href="style_stud.css">
+    <link rel="icon" type="image/png" href="images/Unibite_icon.png">
     <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
 </head>
 
-<body>
+<body id="top">
 
     
     <!-- Top navbar -->
@@ -35,7 +36,7 @@ if(!isset($_SESSION['username'])){
 
         <nav class="top-navbar">
 
-        <a href="index_stud.php" class="logo" data-text="UniBite">
+        <a class="logo" data-text="UniBite">
             <span class="actual-text">&nbsp;UniBite&nbsp;</span>
             <span aria-hidden="true" class="hover-text">&nbsp;UniBite&nbsp;</span>
         </a>
@@ -71,7 +72,7 @@ if(!isset($_SESSION['username'])){
             <ul class="secondary-nav-links">
 
                 <li>
-                    <a href="index_stud.php">Home</a>
+                    <a href="#top">Home</a>
                 </li>
 
                 <li>
@@ -80,10 +81,6 @@ if(!isset($_SESSION['username'])){
 
                 <li>
                     <a href="#map-section">Map</a>
-                </li>
-
-                <li>
-                    <a href="#about">About</a>
                 </li>
 
             </ul>
@@ -236,35 +233,95 @@ if(!isset($_SESSION['username'])){
 <!-- Footer-->
 <footer class="footer" id="about">
 
-    <div class="footer-container" id="contact">
+    <div class="footer-container">
 
-        <div class="footer-top">
+        <div class="footer-content">
 
-            <a href="#index_stud.php" class="footer-brand">
-                UniBite
-            </a>
+            <!-- UniBite -->
+            <div class="footer-section footer-about">
 
-            <ul class="footer-links">
-                <li>
-                    <a href="#about">About</a>
-                </li>
+                <a class="footer-brand">
+                    <img
+                        src="images/unibite_icon.png"
+                        alt="UniBite logo"
+                        class="footer-logo-image"
+                    >
 
-                <li>
-                    <a href="#">Privacy Policy</a>
-                </li>
+                    <span class="footer-logo-text">
+                        <span class="footer-logo-uni">Uni</span><span class="footer-logo-bite">Bite</span>
+                    </span>
 
-                <li>
-                    <a href="#contact">Contact</a>
-                </li>
-            </ul>
+                </a>
+
+                <p class="footer-description">
+                    Share food.<br>
+                    Reduce waste.<br>
+                    Connect students.
+                    
+                </p>
+
+            </div>
+
+
+            <!-- About -->
+            <div class="footer-section footer-about-section">
+
+                <h3>About UniBite</h3>
+
+                <p>
+                    UniBite connects students who have
+                    extra food with those who need it.
+                    Together, we build a stronger, more
+                    caring community.
+                </p>
+
+            </div>
+
+
+            <!-- Contact -->
+            <div class="footer-section footer-contact-section" id="contact">
+
+                <h3>Contact</h3>
+
+                <div class="footer-contact">
+
+                    <div class="contact-item">
+                        <i data-lucide="mail"></i>
+                        <span>contact@unibite.gr</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <i data-lucide="phone"></i>
+                        <span>+30 2610 123456</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <i data-lucide="map-pin"></i>
+                        <span>Patras, Greece</span>
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
+
         <hr class="footer-divider">
 
-        <p class="footer-copyright">
-            © 2026 UniBite. All Rights Reserved.
-        </p>
+
+        <div class="footer-bottom">
+
+            <p class="footer-copyright">
+                © 2026 UniBite. All Rights Reserved.
+            </p>
+
+            <p class="footer-message">
+                Made for students
+                <i data-lucide="graduation-cap"></i>
+            </p>
+
+        </div>
 
     </div>
 
@@ -276,6 +333,12 @@ if(!isset($_SESSION['username'])){
 <script src="map.js"></script>
 
 <script src="script_stud.js"></script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+    lucide.createIcons();
+</script>
 
 </body>
 
