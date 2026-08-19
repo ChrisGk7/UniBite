@@ -23,6 +23,7 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 <html>
 
 <head>
+    <link rel="icon" type="image/png" href="images/Unibite_icon.png">
     <link rel="stylesheet" href="cook.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -35,6 +36,12 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 
 
 <header class="cook-header">
+
+
+     <button class="logo" data-text="Awesome" onclick="window.location.href='index_stud.php'">
+            <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
+    </button>
     
     <button type="button" class="requestsBtn">Τα ετοίματά μου</button>
     <h1>Οι Αγγελίες μου</h1>
