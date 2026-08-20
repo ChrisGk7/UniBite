@@ -9,6 +9,71 @@ const searchButton = document.getElementById("search-button");
 
 let allDishes = [];
 
+let nearestMode = false;
+
+
+
+// -------------------------
+// My Orders drawer
+// -------------------------
+
+const myOrdersButton =
+    document.getElementById("my-orders-button");
+
+const ordersDrawer =
+    document.getElementById("orders-drawer");
+
+const ordersOverlay =
+    document.getElementById("orders-overlay");
+
+const closeOrdersButton =
+    document.getElementById("close-orders");
+
+
+function openOrdersDrawer() {
+
+    ordersDrawer.classList.add("open");
+    ordersOverlay.classList.add("open");
+
+}
+
+
+function closeOrdersDrawer() {
+
+    ordersDrawer.classList.remove("open");
+    ordersOverlay.classList.remove("open");
+
+}
+
+
+if (myOrdersButton) {
+
+    myOrdersButton.addEventListener(
+        "click",
+        openOrdersDrawer
+    );
+
+}
+
+
+if (closeOrdersButton) {
+
+    closeOrdersButton.addEventListener(
+        "click",
+        closeOrdersDrawer
+    );
+
+}
+
+
+if (ordersOverlay) {
+
+    ordersOverlay.addEventListener(
+        "click",
+        closeOrdersDrawer
+    );
+
+}
 
 // -------------------------
 // Load dishes from database
@@ -328,6 +393,8 @@ function addDishMarkers(dishes) {
 // Search dishes
 // -------------------------
 
+const nearMeButton = document.getElementById("near-me-button");
+
 function normalizeText(text) {
     return String(text || "")
         .toLowerCase()
@@ -379,6 +446,79 @@ function searchDishes() {
     });
 
     renderDishes(filteredDishes);
+}
+
+// -------------------------
+// Filter Dishes
+// -------------------------
+if (nearMeButton) {
+
+    nearMeButton.addEventListener("click", function () {
+
+        // If nearest mode is already active,
+        // return to the normal dish order
+        if (nearestMode) {
+
+            nearestMode = false;
+
+            // Restore normal dish order 
+            renderDishes(allDishes);
+
+            // Return map to its default position
+            resetFeedMap(feedMap);
+
+            // Restore button 
+            nearMeButton.textContent = "◎ Nearest first";
+
+            return;
+        }
+
+
+        // Otherwise activate nearest mode
+        centerMapOnCurrentLocation(
+            feedMap,
+
+            function (userLat, userLng) {
+
+                const nearbyDishes = allDishes
+                    .filter(dish => {
+                        return (
+                            Number(dish.portions) > 0 &&
+                            dish.latitude &&
+                            dish.longitude
+                        );
+                    })
+                    .map(dish => {
+
+                        const distance = haversineDistanceKm(
+                            userLat,
+                            userLng,
+                            Number(dish.latitude),
+                            Number(dish.longitude)
+                        );
+
+                        return {
+                            ...dish,
+                            distance: distance
+                        };
+
+                    })
+                    .sort((a, b) => {
+                        return a.distance - b.distance;
+                    });
+
+
+                nearestMode = true;
+
+                renderDishes(nearbyDishes);
+
+                nearMeButton.textContent = "✕ Clear location sort";
+
+            }
+        );
+
+    });
+
 }
 
 

@@ -1,6 +1,27 @@
+:root {
+    --tsaxpiniariko-orange : #f97316;
+    --primary-orange: #f4511e;
+    --primary-orange-dark: #d93d0b;
+
+    --accent-yellow: #f9b233;
+
+    --dark: #201a17;
+    --dark-soft: #4d433e;
+
+    --cream: #fff8ef;
+    --light-orange: #fff0e6;
+    --white: #ffffff;
+
+    --danger: #d93636;
+    --danger-dark: #b82626;
+
+    --border: #eaded5;
+    --shadow: 0 12px 35px rgba(48, 32, 20, 0.1);
+}
+
 body {
     margin: 0;
-    background-color: #fffdf7;
+    background-color: var(--cream);
     font-family: Arial, sans-serif;
     color: #222;
 }
@@ -130,30 +151,50 @@ body {
     font-weight: 600;
 }
 
-/* Base style for both buttons */
-.top-nav-actions a {
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
+/* Shared style */
+.top-nav-actions a,
+.top-nav-actions button {
+    display: inline-flex;
+    
+    align-items: center;
+    justify-content: center;
 
-    padding: 9px 18px;
+    height: 42px;
+    padding: 0 20px;
+
+    box-sizing: border-box;
 
     border-radius: 9999px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+
+    text-decoration: none;
+
+    cursor: pointer;
 
     transition:
         background-color 0.2s,
         color 0.2s,
+        border-color 0.2s,
         transform 0.2s;
 }
 
-/* Contact button */
-.top-nav-actions a:not(.login-link) {
+/* My Orders */
+#my-orders-button {
     color: #f97316;
-    border: 2px solid #f97316;
+
     background-color: transparent;
+
+    border: 2px solid #f97316;
+
+    appearance: none;
+    -webkit-appearance: none;
 }
 
-.top-nav-actions a:not(.login-link):hover {
+#my-orders-button:hover {
     background-color: #fff0e5;
     transform: translateY(-1px);
 }
@@ -174,6 +215,157 @@ body {
 /* Button scroll */
 html {
     scroll-behavior: smooth;
+}
+
+/* =========================
+   MY ORDERS DRAWERs
+========================= */
+
+.orders-overlay {
+    position: fixed;
+    inset: 0;
+
+    background-color: rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    z-index: 6000;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+.orders-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.orders-drawer {
+    position: fixed;
+
+    top: 12px;
+    right: -430px;
+
+    width: 420px;
+    max-width: 90vw;
+
+    /* Slightly shorter because of the top/bottom gap */
+    height: calc(100vh - 24px);
+
+    background-color: #fffaf3;
+
+    border-radius: 24px 0 0 24px;
+
+    z-index: 6001;
+
+    box-shadow: -8px 0 25px rgba(0, 0, 0, 0.18);
+
+    transition: right 0.3s ease;
+
+    overflow-y: auto;
+}
+
+.orders-drawer.open {
+    right: 0;
+}
+
+
+/* Header */
+
+.orders-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 24px;
+
+    border-bottom: 1px solid #e5e5e5;
+
+    position: sticky;
+    top: 0;
+
+    background-color: #fffaf3;
+
+    border-radius: 24px 0 0 0;
+
+    z-index: 1;
+}
+
+.orders-drawer-header h2 {
+    margin: 0;
+
+    color: #222;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+/* Close button */
+
+.close-orders {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: transparent;
+
+    color: #555;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s,
+        color 0.2s;
+}
+
+.close-orders:hover {
+    background-color: #fff0e5;
+    color: #f97316;
+}
+
+
+/* Content */
+
+.orders-container {
+    padding: 24px;
+}
+
+.orders-empty-state {
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 15px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .orders-drawer {
+        width: 100%;
+        max-width: 100%;
+        right: -100%;
+    }
+
 }
 
 /* -------------------------
@@ -391,6 +583,53 @@ html {
     font-weight: 500;
 
     color: #444;
+}
+
+/* -------------------------
+   Dishes near me 
+------------------------- */
+.dishes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.dishes-header h2 {
+    margin: 0;
+}
+
+.near-me-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    background-color: #f97316;
+    color: white;
+
+    border: none;
+    border-radius: 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s,
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.near-me-button:hover {
+    background-color: #ea580c;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
 /* -------------------------
@@ -1054,8 +1293,7 @@ html {
 
 #dishes,
 #map-section,
-#contact,
-#about {
+#contact{
     scroll-margin-top: 140px;
 }
 

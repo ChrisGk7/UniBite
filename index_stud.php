@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once "DataBase_stud.php";
+require_once "database.php";
 
 if(!isset($_SESSION['username'])){
 
@@ -36,7 +36,7 @@ if(!isset($_SESSION['username'])){
 
         <nav class="top-navbar">
 
-        <a class="logo" data-text="UniBite">
+        <a herf="index_stud.php" class="logo" data-text="UniBite">
             <span class="actual-text">&nbsp;UniBite&nbsp;</span>
             <span aria-hidden="true" class="hover-text">&nbsp;UniBite&nbsp;</span>
         </a>
@@ -50,9 +50,12 @@ if(!isset($_SESSION['username'])){
             </span>
 
 
-            <a href="#contact">
-                Contact
-            </a>
+            <button
+                type="button"
+                id="my-orders-button"
+            >
+                My Orders
+            </button>
 
             <a href="logout.php" class="login-link">
                 Logout
@@ -81,6 +84,10 @@ if(!isset($_SESSION['username'])){
 
                 <li>
                     <a href="#map-section">Map</a>
+                </li>
+
+                <li>
+                    <a href="#contact">Contact</a>
                 </li>
 
             </ul>
@@ -205,13 +212,22 @@ if(!isset($_SESSION['username'])){
 </section>
 
 
-<!-- Popular dishes -->
+<!-- Available Dishes -->
 <section class="popular-section" id= "dishes">
 
     <div class="popular-header">
         <h2>Available Dishes</h2>
-    </div>
 
+        <button
+            type="button"
+            id="near-me-button"
+            class="near-me-button"
+        >  
+            <span></span> 
+            ◎ Dishes near me 
+        </button>
+
+    </div>
     <div class="food-grid" id="food-grid">
         <!-- JavaScript will create the dish cards here -->
     </div>
@@ -231,9 +247,9 @@ if(!isset($_SESSION['username'])){
 
 </main>
 <!-- Footer-->
-<footer class="footer" id="about">
+<footer class="footer">
 
-    <div class="footer-container">
+    <div class="footer-container" id="contact">
 
         <div class="footer-content">
 
@@ -326,6 +342,36 @@ if(!isset($_SESSION['username'])){
     </div>
 
 </footer>
+
+<!-- My Orders Overlay -->
+<div id="orders-overlay" class="orders-overlay"></div>
+
+<!-- My Orders Drawer -->
+<aside id="orders-drawer" class="orders-drawer">
+
+    <div class="orders-drawer-header">
+
+        <h2>My Orders</h2>
+
+        <button
+            type="button"
+            id="close-orders"
+            class="close-orders"
+        >
+            ✕
+        </button>
+
+    </div>
+
+    <div class="orders-container">
+
+        <div class="orders-empty-state">
+            <p>No received orders yet.</p>
+        </div>
+
+    </div>
+
+</aside>
 
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
