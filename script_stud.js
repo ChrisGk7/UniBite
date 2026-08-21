@@ -218,7 +218,7 @@ function renderDishes(dishes) {
 
                 <p>
                     <strong>Credit cost:</strong>
-                    ${dish.credit_cost}
+                    ${dish.credits_per_portion}
                 </p>
 
                 <p>

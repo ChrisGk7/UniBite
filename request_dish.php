@@ -37,7 +37,7 @@ if ($dish_id <= 0) {
 
 // Get the dish directly from the database
 $sql = "
-    SELECT id, cook, portions, credit_cost
+    SELECT id, cook, portions, credits_per_portion
     FROM dish
     WHERE id = ?
 ";
@@ -81,7 +81,7 @@ $cook_username = $dish["cook"];
 
 $request_portions = 1;
 
-$credit_cost = (int)$dish["credit_cost"];
+$credit_cost = (int)$dish["credits_per_portion"];
 
 
 // Create pending request
@@ -91,7 +91,7 @@ $sql = "
         cook_username,
         dish_id,
         portions,
-        credit_cost
+        credits_per_portion
     )
     VALUES (?, ?, ?, ?, ?)
 ";
@@ -105,7 +105,7 @@ mysqli_stmt_bind_param(
     $cook_username,
     $dish_id,
     $request_portions,
-    $credit_cost
+    $credits_per_portion
 );
 
 mysqli_stmt_execute($stmt);
