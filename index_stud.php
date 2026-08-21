@@ -32,40 +32,41 @@ if(!isset($_SESSION['username'])){
 
     
     <!-- Top navbar -->
-    <header class="top-header">
+<header class="top-header">
 
-        <nav class="top-navbar">
+<nav class="top-navbar">
 
-        <a herf="index_stud.php" class="logo" data-text="UniBite">
-            <span class="actual-text">&nbsp;UniBite&nbsp;</span>
-            <span aria-hidden="true" class="hover-text">&nbsp;UniBite&nbsp;</span>
+    <a href="index_stud.php" class="logo" data-text="UniBite">
+        <span class="actual-text">&nbsp;UniBite&nbsp;</span>
+        <span aria-hidden="true" class="hover-text">
+            &nbsp;UniBite&nbsp;
+        </span>
+    </a>
+
+
+    <div class="top-nav-actions">
+
+        <div class="credit-display">
+            <span class="credit-number">5</span>
+            <span class="credit-label">Credits</span>
+        </div>
+
+        <button
+            type="button"
+            id="my-orders-button"
+        >
+            My Orders
+        </button>
+
+        <a href="logout.php" class="login-link">
+            Logout
         </a>
 
-            <div class="top-nav-actions">
+    </div>
 
-            <!-- Welcome message -->
-            <span class="welcome-message">
-                Welcome back, 
-                <strong><?php echo htmlspecialchars($_SESSION['name']); ?></strong> 👋
-            </span>
+</nav>
 
-
-            <button
-                type="button"
-                id="my-orders-button"
-            >
-                My Orders
-            </button>
-
-            <a href="logout.php" class="login-link">
-                Logout
-            </a>
-
-            </div>
-
-        </nav>
-
-    </header>
+</header>
 
 
         
@@ -91,6 +92,14 @@ if(!isset($_SESSION['username'])){
                 </li>
 
             </ul>
+
+            <div class="secondary-welcome">
+            Welcome back,
+            <strong>
+                <?php echo htmlspecialchars($_SESSION['name']); ?>
+            </strong>
+            👋
+        </div>
 
         </nav>
 

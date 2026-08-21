@@ -230,14 +230,39 @@ function renderDishes(dishes) {
                     <strong>Pickup time:</strong>
                     ${pickupDate}
                 </p>
-
-
+                
                 ${
                     Number(dish.portions) > 0
                         ? `
-                            <button class="request-button">
-                                Request dish
-                            </button>
+                            <div class="dish-request-row">
+                
+                                <div class="portion-controls">
+                
+                                    <button
+                                        type="button"
+                                        class="portion-minus"
+                                    >
+                                        −
+                                    </button>
+                
+                                    <span class="portion-value">
+                                        1
+                                    </span>
+                
+                                    <button
+                                        type="button"
+                                        class="portion-plus"
+                                    >
+                                        +
+                                    </button>
+                
+                                </div>
+                
+                                <button class="request-button">
+                                    Request dish
+                                </button>
+                
+                            </div>
                           `
                         : `
                             <button
@@ -249,6 +274,8 @@ function renderDishes(dishes) {
                           `
                 }
 
+
+
             </div>
         `;
 
@@ -259,6 +286,54 @@ function renderDishes(dishes) {
 
         const requestButton =
             card.querySelector(".request-button");
+
+            const minusButton =
+            card.querySelector(".portion-minus");
+        
+        const plusButton =
+            card.querySelector(".portion-plus");
+        
+        const portionValue =
+            card.querySelector(".portion-value");
+        
+        let selectedPortions = 1;
+        
+        
+        if (minusButton && plusButton && portionValue) {
+        
+            minusButton.addEventListener("click", function (event) {
+        
+                event.stopPropagation();
+        
+                if (selectedPortions > 1) {
+        
+                    selectedPortions--;
+        
+                    portionValue.textContent =
+                        selectedPortions;
+                }
+        
+            });
+        
+        
+            plusButton.addEventListener("click", function (event) {
+        
+                event.stopPropagation();
+        
+                if (
+                    selectedPortions <
+                    Number(dish.portions)
+                ) {
+        
+                    selectedPortions++;
+        
+                    portionValue.textContent =
+                        selectedPortions;
+                }
+        
+            });
+        
+        }
 
 
         if (
