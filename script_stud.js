@@ -296,9 +296,13 @@ function renderDishes(dishes) {
         const portionValue =
             card.querySelector(".portion-value");
         
+        // One variable for THIS dish card
         let selectedPortions = 1;
+
         
-        
+        // -------------------------
+        // Portion selector
+        // -------------------------
         if (minusButton && plusButton && portionValue) {
         
             minusButton.addEventListener("click", function (event) {
@@ -355,6 +359,11 @@ function renderDishes(dishes) {
                     formData.append(
                         "dish_id",
                         dish.id
+                    );
+
+                    formData.append(
+                        "portions",
+                        selectedPortions
                     );
 
 
