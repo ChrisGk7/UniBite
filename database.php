@@ -113,6 +113,20 @@
         return $exists;
     }
 
+    // Returns every admin's username, name, email, and reg_date, newest first.
+    function get_all_admins($conn){
+        $sql = "SELECT a.username, u.name, a.email, u.reg_date
+                FROM admin a
+                JOIN user u ON u.username = a.username
+                ORDER BY u.reg_date DESC";
+        $result = mysqli_query($conn, $sql);
+        $admins = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $admins[] = $row;
+        }
+        return $admins;
+    }
+
     // ---------------------------------------------------------------
     // ADMIN DASHBOARD STATS 
     // ---------------------------------------------------------------
