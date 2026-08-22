@@ -160,67 +160,6 @@ if(!isset($_SESSION['username'])){
 
 </section>
 
-
-<!-- Food categories -->
-<section class="categories-section">
-
-    <h2>Categories</h2>
-
-    <div class="categories-container">
-
-        <!-- Pizza -->
-        <div class="category-item">
-            <div class="category-box">
-                🍕
-            </div>
-            <p>Pizza</p>
-        </div>
-
-        <!-- Burgers -->
-        <div class="category-item">
-            <div class="category-box">
-                🍔
-            </div>
-            <p>Burgers</p>
-        </div>
-
-        <!-- Sushi -->
-        <div class="category-item">
-            <div class="category-box">
-                🍣
-            </div>
-            <p>Sushi</p>
-        </div>
-
-        <!-- Pasta -->
-        <div class="category-item">
-            <div class="category-box">
-                🍝
-            </div>
-            <p>Pasta</p>
-        </div>
-
-        <!-- Salads -->
-        <div class="category-item">
-            <div class="category-box">
-                🥗
-            </div>
-            <p>Salads</p>
-        </div>
-
-        <!-- Desserts -->
-        <div class="category-item">
-            <div class="category-box">
-                🍰
-            </div>
-            <p>Desserts</p>
-        </div>
-
-    </div>
-
-</section>
-
-
 <!-- Available Dishes -->
 <section class="popular-section" id= "dishes">
 
