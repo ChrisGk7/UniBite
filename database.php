@@ -373,13 +373,13 @@
     return $result;
 }
    
-
-    function acc_decl_request($student_username, $cook_username, $dish_id, $status, $conn){
-        $sql = "UPDATE request SET status = '".$status."' WHERE stu_username = '".$student_username."' AND cook_username = '".$cook_username."' AND dish_id = '".$dish_id."' AND status = 'pending'";
-        mysqli_query($conn, $sql);
-        $sql = "UPDATE request SET reply_datetime = CURRENT_TIMESTAMP() WHERE stu_username = '".$student_username."' AND cook_username = '".$cook_username."' AND dish_id = '".$dish_id."' AND status = '".$status."'";
-        mysqli_query($conn, $sql);
-    }
+    //NA TIN BGALUME LEW
+    // function acc_decl_request($student_username, $cook_username, $dish_id, $status, $conn){
+    //     $sql = "UPDATE request SET status = '".$status."' WHERE stu_username = '".$student_username."' AND cook_username = '".$cook_username."' AND dish_id = '".$dish_id."' AND status = 'pending'";
+    //     mysqli_query($conn, $sql);
+    //     $sql = "UPDATE request SET reply_datetime = CURRENT_TIMESTAMP() WHERE stu_username = '".$student_username."' AND cook_username = '".$cook_username."' AND dish_id = '".$dish_id."' AND status = '".$status."'";
+    //     mysqli_query($conn, $sql);
+    // }
 
 
     // displays the requests to the cook
@@ -407,9 +407,15 @@
         INNER JOIN dish d
             ON r.dish_id = d.id
 
-        WHERE r.cook_username = ?
-
-        ORDER BY r.request_datetime DESC
+WHERE r.cook_username = ?
+AND (
+    r.status = 'pending'
+    OR (
+        r.status = 'accepted'
+        AND r.pickup_status = 'awaiting_pickup'
+    )
+        )   
+ORDER BY r.request_datetime DESC
     ";
 
     $stmt = mysqli_prepare($conn, $sql);
