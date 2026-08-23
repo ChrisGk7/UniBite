@@ -26,56 +26,22 @@ const editAllegerns=document.getElementById("editAllegerns");
 const cancelEdit=document.getElementById("cancelEdit");
 let listingToEdit=null;
 
+// Χαρτης Συνάρτηση για validation στο input
+const pickupMap = initPickupMap('pickupMap', 'latitude', 'longitude');
+let editMap = null; // lazily initialized the first time the edit modal opens
 
-//Validation checkup
-function validateField(field) {
+function validatePickupPoint() {
+    const latInput = document.getElementById('latitude');
+    const lngInput = document.getElementById('longitude');
+    const errorEl = document.getElementById('pickupMapError');
 
-    const errorElement = field.nextElementSibling;
-
-    if (!field.validity.valid) {
-        errorElement.textContent =
-            field.dataset.error || "This field is not valid.";
-
+    if (!latInput.value || !lngInput.value) {
+        if (errorEl) errorEl.textContent = 'Please select a pickup point on the map.';
         return false;
     }
-
-    errorElement.textContent = "";
     return true;
 }
 
-
-
-function validateForm() {
-
-    const fields = listingForm.querySelectorAll(
-        "input[required], textarea[required]"
-    );
-
-    let isValid = true;
-
-    fields.forEach(function(field) {
-
-        if (!validateField(field)) {
-            isValid = false;
-        }
-
-    });
-
-    return isValid;
-}
-
-
-const fields = listingForm.querySelectorAll(
-    "input[required], textarea[required]"
-);
-
-fields.forEach(function(field) {
-
-    field.addEventListener("blur", function() {
-        validateField(field);
-    });
-
-});
 
 
 async function loadDishes() {
@@ -102,6 +68,8 @@ async function loadDishes() {
             article.dataset.portions = dish.portions;
             article.dataset.pickupLocation = dish.pickup_location;
             article.dataset.pickupTime = dish.pickup_time;
+            article.dataset.latitude = dish.latitude;
+            article.dataset.longitude = dish.longitude;
 
             const image = document.createElement("img");
 
@@ -165,10 +133,16 @@ async function loadDishes() {
 //Δημιουργία Αγγελίας
 
 listingForm.addEventListener("submit", async function(event) {
-
     event.preventDefault();
 
-    if (!validateForm()) {
+  
+    if (!listingForm.checkValidity()) {
+        const firstInvalid = listingForm.querySelector(":invalid");
+        if (firstInvalid) firstInvalid.focus();
+        return;
+    }
+
+    if (!validatePickupPoint()) {
         return;
     }
 
@@ -188,7 +162,9 @@ listingForm.addEventListener("submit", async function(event) {
         if (data.success) {
 
             listingForm.reset();
-
+            //242 243 for hiding preview image
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            if (previewContainer) previewContainer.style.display = 'none';
             loadDishes();
         }
 
@@ -227,7 +203,27 @@ listingContainer.addEventListener("click", function(event){
 
     editPickupTime.value =  listingToEdit.dataset.pickupTime .replace(" ", "T") .slice(0, 16);
 
+    document.getElementById('editLatitude').value = listingToEdit.dataset.latitude || '';
+    document.getElementById('editLongitude').value = listingToEdit.dataset.longitude || '';
+
     editModal.style.display = "flex";
+
+    // Leaflet can't size a map correctly while its container is display:none,
+    // so we initialize it lazily (first open) and always fix its size /
+    // re-center it after the modal becomes visible.
+    if (!editMap) {
+        editMap = initPickupMap('editPickupMap', 'editLatitude', 'editLongitude');
+    }
+    setTimeout(function () {
+        if (editMap) {
+            editMap.invalidateSize();
+            const lat = parseFloat(listingToEdit.dataset.latitude);
+            const lng = parseFloat(listingToEdit.dataset.longitude);
+            if (!isNaN(lat) && !isNaN(lng)) {
+                editMap.setView([lat, lng], 15);
+            }
+        }
+    }, 0);
  }
 
     //ΚΟΥΜΠΙ ΔΙΑΓΡΑΦΗΣ
@@ -282,6 +278,9 @@ editForm.addEventListener("submit", async function(event) {
     formData.append("pickup_location",editPickupLocation.value.trim());
 
     formData.append("pickup_time",editPickupTime.value);
+
+    formData.append("latitude", document.getElementById('editLatitude').value);
+    formData.append("longitude", document.getElementById('editLongitude').value);
 
     
     if (editImage.files[0]) {
@@ -373,6 +372,451 @@ confirmDelete.addEventListener("click", async function() {
 
 });
 
+async function loadCookRequests() {
+
+    try {
+
+        const response =
+            await fetch("get_requests.php");
+
+        const data =
+            await response.json();
+
+        console.log("REQUEST DATA:", data);
+
+        if (!data.success) {
+
+            console.error(data.message);
+            return;
+        }
+
+        renderCookRequests(data.requests);
+
+    } catch (error) {
+
+        console.error(
+            "Error loading requests:",
+            error
+        );
+
+    }
+}
+
+
+function renderCookRequests(requests) {
+
+    const requestsList =
+        document.querySelector(".requests-list");
+
+    requestsList.innerHTML = "";
+
+
+    if (requests.length === 0) {
+
+        requestsList.innerHTML = `
+            <p class="no-requests-message">
+                Δεν υπάρχουν αιτήματα αυτή τη στιγμή.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    requests.forEach(request => {
+
+        const card =
+            document.createElement("article");
+
+        card.classList.add("request-card");
+
+
+        card.innerHTML = `
+            <div class="request-card-header">
+
+                <div>
+                    <h3>${request.title}</h3>
+
+                    <p>
+                        Από:
+                        <strong>
+                            ${request.stu_username}
+                        </strong>
+                    </p>
+                </div>
+
+                <span class="request-status ${request.status}">
+                    ${request.status}
+                </span>
+
+            </div>
+
+
+            <div class="request-card-info">
+
+                <p>
+                    <strong>Μερίδες:</strong>
+                    ${request.portions}
+                </p>
+
+                <p>
+                    <strong>Κόστος:</strong>
+                    ${request.credit_cost} credits
+                </p>
+
+                <p>
+                    <strong>Τοποθεσία:</strong>
+                    ${request.pickup_location}
+                </p>
+
+                <p>
+                    <strong>Ώρα Παραλαβής:</strong>
+                    ${request.pickup_time}
+                </p>
+
+                <p>
+                    <strong>Κατάσταση παραλαβής:</strong>
+                    ${request.pickup_status || "-"}
+                </p>
+
+            </div>
+
+
+            ${
+                request.status === "pending"
+
+                    ? `
+                        <div class="request-actions">
+
+                            <button
+                                type="button"
+                                class="approveRequestBtn"
+                                data-request-id="${request.id}"
+                            >
+                                Αποδοχή
+                            </button>
+
+                            <button
+                                type="button"
+                                class="rejectRequestBtn"
+                                data-request-id="${request.id}"
+                            >
+                                Απόρριψη
+                            </button>
+
+                        </div>
+                    `
+
+                    : request.status === "accepted" &&
+                      request.pickup_status === "awaiting_pickup"
+
+                    ? `
+                        <div class="request-actions">
+
+                            <button
+                                type="button"
+                                class="pickedUpBtn"
+                                data-request-id="${request.id}"
+                            >
+                                Παραλήφθηκε
+                            </button>
+
+                            <button
+                                type="button"
+                                class="noShowBtn"
+                                data-request-id="${request.id}"
+                            >
+                                Δεν παραλήφθηκε
+                            </button>
+
+                        </div>
+                    `
+
+                    : ""
+            }
+        `;
+
+
+        requestsList.appendChild(card);
+
+    });
+
+}
+    
+
+
+async function respondToRequest(
+    requestId,
+    action
+) {
+
+    const formData =
+        new FormData();
+
+    formData.append(
+        "request_id",
+        requestId
+    );
+
+    formData.append(
+        "action",
+        action
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "respond_request.php",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "REQUEST RESPONSE:",
+            data
+        );
+
+
+        if (!data.success) {
+
+            alert(data.message);
+
+            return;
+        }
+
+
+        loadCookRequests();
+
+        loadDishes();
+
+
+    } catch (error) {
+
+        console.error(
+            "Respond request error:",
+            error
+        );
+
+    }
+}
+
+
+
+const requestsList =
+    document.querySelector(".requests-list");
+
+
+if (requestsList) {
+
+    requestsList.addEventListener(
+        "click",
+        function (event) {
+
+
+            // -------------------------
+            // ACCEPT REQUEST
+            // -------------------------
+
+            if (
+                event.target.classList.contains(
+                    "approveRequestBtn"
+                )
+            ) {
+
+                const requestId =
+                    event.target.dataset.requestId;
+
+                respondToRequest(
+                    requestId,
+                    "accept"
+                );
+            }
+
+
+            // -------------------------
+            // REJECT REQUEST
+            // -------------------------
+
+            if (
+                event.target.classList.contains(
+                    "rejectRequestBtn"
+                )
+            ) {
+
+                const requestId =
+                    event.target.dataset.requestId;
+
+                respondToRequest(
+                    requestId,
+                    "reject"
+                );
+            }
+
+
+            // -------------------------
+            // PICKED UP
+            // -------------------------
+
+            if (
+                event.target.classList.contains(
+                    "pickedUpBtn"
+                )
+            ) {
+
+                const requestId =
+                    event.target.dataset.requestId;
+
+                updatePickupStatus(
+                    requestId,
+                    "picked_up"
+                );
+            }
+
+
+            // -------------------------
+            // NO SHOW
+            // -------------------------
+
+            if (
+                event.target.classList.contains(
+                    "noShowBtn"
+                )
+            ) {
+
+                const requestId =
+                    event.target.dataset.requestId;
+
+                updatePickupStatus(
+                    requestId,
+                    "no_show"
+                );
+            }
+
+        }
+    );
+}
+
+
+
+
+async function updatePickupStatus(
+    requestId,
+    pickupAction
+) {
+
+    const formData =
+        new FormData();
+
+    formData.append(
+        "request_id",
+        requestId
+    );
+
+    formData.append(
+        "pickup_action",
+        pickupAction
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "update_pickup.php",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "PICKUP RESPONSE:",
+            data
+        );
+
+
+        if (!data.success) {
+
+            alert(data.message);
+
+            return;
+        }
+
+
+        loadCookRequests();
+
+        loadDishes();
+
+
+    } catch (error) {
+
+        console.error(
+            "Update pickup error:",
+            error
+        );
+
+    }
+}
+
+
+
+
+
+
+
+
 loadDishes();
+
+
+
+const requestsBtn =
+    document.querySelector(".requestsBtn");
+
+const requestsModal =
+    document.querySelector(".requestsModal");
+
+const closeRequestsBtn =
+    document.querySelector(".closeRequestsBtn");
+
+
+if (requestsBtn) {
+
+    requestsBtn.addEventListener(
+        "click",
+        function () {
+
+            requestsModal.style.display = "flex";
+
+            loadCookRequests();
+        }
+    );
+}
+
+
+if (closeRequestsBtn) {
+
+    closeRequestsBtn.addEventListener(
+        "click",
+        function () {
+
+            requestsModal.style.display = "none";
+        }
+    );
+}
+
 
 
