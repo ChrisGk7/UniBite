@@ -407,15 +407,15 @@
         INNER JOIN dish d
             ON r.dish_id = d.id
 
-WHERE r.cook_username = ?
-AND (
-    r.status = 'pending'
-    OR (
-        r.status = 'accepted'
+        WHERE r.cook_username = ?
+        AND (
+              r.status = 'pending'
+        OR (
+              r.status = 'accepted'
         AND r.pickup_status = 'awaiting_pickup'
-    )
+            )
         )   
-ORDER BY r.request_datetime DESC
+        ORDER BY r.request_datetime DESC
     ";
 
     $stmt = mysqli_prepare($conn, $sql);
