@@ -311,10 +311,11 @@ if(!isset($_SESSION['username'])){
 
     </div>
 
-    <div class="orders-container">
+
+    <div id="orders-container" class="orders-container">
 
         <div class="orders-empty-state">
-            <p>No received orders yet.</p>
+            <p>No accepted orders yet.</p>
         </div>
 
     </div>
@@ -322,9 +323,18 @@ if(!isset($_SESSION['username'])){
 </aside>
 
 
+
+
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script src="map.js"></script>
+
+<script>
+    const currentUsername =
+        <?php echo json_encode($_SESSION["username"]); ?>;
+</script>
+
 
 <script src="script_stud.js"></script>
 

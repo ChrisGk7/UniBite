@@ -35,6 +35,8 @@ function openOrdersDrawer() {
     ordersDrawer.classList.add("open");
     ordersOverlay.classList.add("open");
 
+    loadMyOrders();
+
 }
 
 
@@ -232,46 +234,59 @@ function renderDishes(dishes) {
                 </p>
                 
                 ${
-                    Number(dish.portions) > 0
+                    dish.cook === currentUsername
                         ? `
                             <div class="dish-request-row">
                 
-                                <div class="portion-controls">
-                
-                                    <button
-                                        type="button"
-                                        class="portion-minus"
-                                    >
-                                        −
-                                    </button>
-                
-                                    <span class="portion-value">
-                                        1
-                                    </span>
-                
-                                    <button
-                                        type="button"
-                                        class="portion-plus"
-                                    >
-                                        +
-                                    </button>
-                
-                                </div>
-                
-                                <button class="request-button">
-                                    Request dish
-                                </button>
+                                <span class="own-dish-pill">
+                                    Your dish
+                                </span>
                 
                             </div>
                           `
-                        : `
-                            <button
-                                class="request-button"
-                                disabled
-                            >
-                                Unavailable
-                            </button>
-                          `
+                
+                        : Number(dish.portions) > 0
+                            ? `
+                                <div class="dish-request-row">
+                
+                                    <div class="portion-controls">
+                
+                                        <button
+                                            type="button"
+                                            class="portion-minus"
+                                        >
+                                            −
+                                        </button>
+                
+                                        <span class="portion-value">
+                                            1
+                                        </span>
+                
+                                        <button
+                                            type="button"
+                                            class="portion-plus"
+                                        >
+                                            +
+                                        </button>
+                
+                                    </div>
+                
+                
+                                    <button class="request-button">
+                                        Request dish
+                                    </button>
+                
+                                </div>
+                              `
+                
+                            : `
+                                <button
+                                    class="request-button"
+                                    disabled
+                                >
+                                    Unavailable
+                                </button>
+                              `
                 }
 
 
@@ -640,3 +655,462 @@ if (searchInput) {
     );
 
 }
+
+
+document.addEventListener(
+    "click",
+    async function (event) {
+
+        const pickupButton =
+            event.target.closest(
+                ".student-pickup-button"
+            );
+
+        if (!pickupButton) {
+            return;
+        }
+
+
+        const orderCard =
+            pickupButton.closest(
+                ".student-order-card"
+            );
+
+        if (!orderCard) {
+            return;
+        }
+
+
+        const requestId =
+            orderCard.dataset.requestId;
+
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "request_id",
+            requestId
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "student_pickup.php",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+            const data =
+                await response.json();
+
+
+            if (!data.success) {
+
+                alert(data.message);
+
+                return;
+            }
+
+
+            loadMyOrders();
+
+
+        } catch (error) {
+
+            console.error(
+                "Pickup error:",
+                error
+            );
+
+        }
+
+    }
+);
+
+
+async function loadMyOrders() {
+
+    const ordersContainer =
+        document.getElementById("orders-container");
+
+    if (!ordersContainer) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch("get_my_orders.php");
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            ordersContainer.innerHTML = `
+                <div class="orders-empty-state">
+                    <p>${data.message}</p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        if (data.orders.length === 0) {
+
+            ordersContainer.innerHTML = `
+                <div class="orders-empty-state">
+                    <p>No accepted orders yet.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        ordersContainer.innerHTML = "";
+
+
+        data.orders.forEach(order => {
+
+            const orderCard =
+                document.createElement("div");
+
+            orderCard.classList.add(
+                "student-order-card"
+            );
+
+            orderCard.dataset.requestId =
+                order.request_id;
+
+
+            const pickupDate =
+                order.pickup_time
+                    ? new Date(
+                        order.pickup_time.replace(" ", "T")
+                      ).toLocaleString()
+                    : "Not specified";
+
+
+            const pickedUp =
+                order.pickup_status === "picked_up";
+
+
+            const alreadyRated =
+            order.rating !== null;
+
+
+            orderCard.innerHTML = `
+
+                <div class="student-order-header">
+
+                    <div>
+
+                        <h3>
+                            ${order.title}
+                        </h3>
+
+                        <p>
+                            Cook:
+                            <strong>
+                                ${order.cook}
+                            </strong>
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="
+                            student-order-status
+                            ${pickedUp ? "picked-up" : "accepted"}
+                        "
+                    >
+                        ${pickedUp ? "Picked up" : "Accepted"}
+                    </span>
+
+                </div>
+
+
+                <div class="student-order-info">
+
+                    <p>
+                        <strong>Portions:</strong>
+                        ${order.portions}
+                    </p>
+
+                    <p>
+                        <strong>Cost:</strong>
+                        ${order.credit_cost} credits
+                    </p>
+
+                    <p>
+                        <strong>Location:</strong>
+                        ${order.pickup_location}
+                    </p>
+
+                    <p>
+                        <strong>Pickup time:</strong>
+                        ${pickupDate}
+                    </p>
+
+                </div>
+
+
+                ${
+                    !pickedUp
+                        ? `
+                            <div class="student-order-actions">
+
+                                <button
+                                    type="button"
+                                    class="student-pickup-button"
+                                >
+                                    Pick up
+                                </button>
+
+                            </div>
+                          `
+                        : ""
+                }
+
+
+                <div class="
+    student-rating-section
+    ${pickedUp ? "show-rating" : ""}
+">
+
+    <div class="rating-divider"></div>
+
+    ${
+        alreadyRated
+            ? `
+                <div class="rating-completed">
+
+                    <h4>
+                        Your rating
+                    </h4>
+
+                    <div class="star-rating completed">
+
+                        ${[1, 2, 3, 4, 5]
+                            .map(star =>
+                                star <= Number(order.rating)
+                                    ? "★"
+                                    : "☆"
+                            )
+                            .join("")}
+
+                    </div>
+
+                    <p class="rating-thank-you">
+                        Rating submitted
+                    </p>
+
+                </div>
+              `
+            : `
+                <h4>
+                    How was your meal?
+                </h4>
+
+                <p class="rating-description">
+                    Rate your experience with this dish.
+                </p>
+
+                <div class="star-rating">
+
+                    <button type="button" data-rating="1">☆</button>
+                    <button type="button" data-rating="2">☆</button>
+                    <button type="button" data-rating="3">☆</button>
+                    <button type="button" data-rating="4">☆</button>
+                    <button type="button" data-rating="5">☆</button>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="submit-rating-button"
+                >
+                    Submit Rating
+                </button>
+              `
+    }
+
+</div>
+            `;
+
+
+            ordersContainer.appendChild(
+                orderCard
+            );
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "My Orders error:",
+            error
+        );
+
+    }
+}
+
+
+document.addEventListener("click", function (event) {
+
+    const star =
+        event.target.closest(".star-rating button");
+
+    if (!star) {
+        return;
+    }
+
+    const starContainer =
+        star.closest(".star-rating");
+
+    const orderCard =
+        star.closest(".student-order-card");
+
+    if (!starContainer || !orderCard) {
+        return;
+    }
+
+    const selectedRating =
+        Number(star.dataset.rating);
+
+    orderCard.dataset.rating =
+        selectedRating;
+
+    const stars =
+        starContainer.querySelectorAll("button");
+
+    stars.forEach(button => {
+
+        const value =
+            Number(button.dataset.rating);
+
+        button.textContent =
+            value <= selectedRating
+                ? "★"
+                : "☆";
+    });
+
+});
+
+
+document.addEventListener(
+    "click",
+    async function (event) {
+
+        const submitButton =
+            event.target.closest(
+                ".submit-rating-button"
+            );
+
+        if (!submitButton) {
+            return;
+        }
+
+
+        const orderCard =
+            submitButton.closest(
+                ".student-order-card"
+            );
+
+        if (!orderCard) {
+            return;
+        }
+
+
+        const requestId =
+            orderCard.dataset.requestId;
+
+        const rating =
+            Number(orderCard.dataset.rating);
+
+
+        if (!rating) {
+
+            alert(
+                "Please select a rating first."
+            );
+
+            return;
+        }
+
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "request_id",
+            requestId
+        );
+
+        formData.append(
+            "rating",
+            rating
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "rate_order.php",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!data.success) {
+
+                alert(data.message);
+
+                return;
+            }
+
+
+            submitButton.textContent =
+                "Rating submitted";
+
+            submitButton.disabled =
+                true;
+
+
+            const stars =
+                orderCard.querySelectorAll(
+                    ".star-rating button"
+                );
+
+            stars.forEach(star => {
+                star.disabled = true;
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Rating error:",
+                error
+            );
+
+        }
+
+    }
+);
