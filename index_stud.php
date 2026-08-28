@@ -10,7 +10,40 @@ if(!isset($_SESSION['username'])){
     exit();
 }
 
+$student_username = $_SESSION['username'];
+
+$sql = "
+    SELECT credits
+    FROM student
+    WHERE username = ?
+";
+
+$stmt = mysqli_prepare($conn, $sql);
+
+mysqli_stmt_bind_param(
+    $stmt,
+    "s",
+    $student_username
+);
+
+mysqli_stmt_execute($stmt);
+
+$result =
+    mysqli_stmt_get_result($stmt);
+
+$student_data =
+    mysqli_fetch_assoc($result);
+
+mysqli_stmt_close($stmt);
+
+$current_credits =
+    $student_data
+        ? (int)$student_data["credits"]
+        : 0;
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,8 +80,13 @@ if(!isset($_SESSION['username'])){
     <div class="top-nav-actions">
 
         <div class="credit-display">
-            <span class="credit-number">5</span>
-            <span class="credit-label">Credits</span>
+            <span class="credit-number">
+                <?php echo $current_credits; ?>
+            </span>
+
+            <span class="credit-label">
+                Credits
+            </span>
         </div>
 
         <button

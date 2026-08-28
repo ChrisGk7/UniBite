@@ -77,6 +77,48 @@ if (ordersOverlay) {
 
 }
 
+
+// -------------------------
+// Dish expiration
+// -------------------------
+
+function getDishStatus(dish) {
+
+    // If reg_date is missing, do not expire the dish
+    if (!dish.reg_date) {
+        return Number(dish.portions) > 0
+            ? "available"
+            : "unavailable";
+    }
+
+    const createdAt =
+        new Date(
+            dish.reg_date.replace(" ", "T")
+        );
+
+    const now =
+        new Date();
+
+    const ageMs =
+        now - createdAt;
+
+    const fortyEightHoursMs =
+        48 * 60 * 60 * 1000;
+
+
+    if (ageMs >= fortyEightHoursMs) {
+        return "deleted";
+    }
+
+
+    if (Number(dish.portions) <= 0) {
+        return "unavailable";
+    }
+
+
+    return "available";
+}
+
 // -------------------------
 // Load dishes from database
 // -------------------------
@@ -85,22 +127,28 @@ fetch("get_dishes_stud.php")
     .then(response => response.json())
     .then(dishes => {
 
-        allDishes = dishes;
+        // Keep only dishes that have not expired
+        allDishes = dishes.filter(dish => {
 
-        // Render all dish cards
+            return getDishStatus(dish) !== "deleted";
+
+        });
+
+        // Show active / unavailable dishes
         renderDishes(allDishes);
 
-        // Add map markers only once
+        // Only non-expired dishes get map markers
         addDishMarkers(allDishes);
 
     })
     .catch(error => {
+
         console.error(
             "Error loading dishes:",
             error
         );
-    });
 
+    });
 
 // -------------------------
 // Render dish cards
@@ -733,6 +781,54 @@ document.addEventListener(
 );
 
 
+// -------------------------
+// Check rating penalties
+// -------------------------
+
+async function checkRatingPenalties() {
+
+    try {
+
+        const response =
+            await fetch(
+                "check_rating_penalties.php"
+            );
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            console.error(
+                "Rating penalty error:",
+                data.message
+            );
+
+            return;
+        }
+
+
+        if (data.penalties > 0) {
+
+            console.log(
+                `${data.penalties} rating penalty applied.`
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Rating penalty error:",
+            error
+        );
+
+    }
+}
+
+
 async function loadMyOrders() {
 
     const ordersContainer =
@@ -1114,3 +1210,5 @@ document.addEventListener(
 
     }
 );
+
+checkRatingPenalties();
