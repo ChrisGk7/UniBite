@@ -373,13 +373,13 @@
     return $result;
 }
    
-    //NA TIN BGALUME LEW
-    // function acc_decl_request($student_username, $cook_username, $dish_id, $status, $conn){
-    //     $sql = "UPDATE request SET status = '".$status."' WHERE stu_username = '".$student_username."' AND cook_username = '".$cook_username."' AND dish_id = '".$dish_id."' AND status = 'pending'";
-    //     mysqli_query($conn, $sql);
-    //     $sql = "UPDATE request SET reply_datetime = CURRENT_TIMESTAMP() WHERE stu_username = '".$student_username."' AND cook_username = '".$cook_username."' AND dish_id = '".$dish_id."' AND status = '".$status."'";
-    //     mysqli_query($conn, $sql);
-    // }
+
+    function acc_decl_request($student_username, $cook_username, $dish_id, $status, $conn){
+        $sql = "UPDATE request SET status = '".$status."' WHERE stu_username = '".$student_username."' AND cook_username = '".$cook_username."' AND dish_id = '".$dish_id."' AND status = 'pending'";
+        mysqli_query($conn, $sql);
+        $sql = "UPDATE request SET reply_datetime = CURRENT_TIMESTAMP() WHERE stu_username = '".$student_username."' AND cook_username = '".$cook_username."' AND dish_id = '".$dish_id."' AND status = '".$status."'";
+        mysqli_query($conn, $sql);
+    }
 
 
     // displays the requests to the cook
@@ -408,13 +408,7 @@
             ON r.dish_id = d.id
 
         WHERE r.cook_username = ?
-        AND (
-              r.status = 'pending'
-        OR (
-              r.status = 'accepted'
-        AND r.pickup_status = 'awaiting_pickup'
-            )
-        )   
+
         ORDER BY r.request_datetime DESC
     ";
 
@@ -448,19 +442,22 @@
 
 
 
-//accept/reject requests 
+// accept/reject requests
 function respond_to_request($request_id, $cook_username, $action, $conn)
 {
     mysqli_begin_transaction($conn);
 
     try {
 
+        // Παίρνουμε και κλειδώνουμε το request
         $sql = "
             SELECT
                 id,
+                stu_username,
                 cook_username,
                 dish_id,
                 portions,
+                credit_cost,
                 status
             FROM request
             WHERE id = ?
@@ -483,9 +480,11 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
 
         mysqli_stmt_execute($stmt);
 
-        $result = mysqli_stmt_get_result($stmt);
+        $result =
+            mysqli_stmt_get_result($stmt);
 
-        $request = mysqli_fetch_assoc($result);
+        $request =
+            mysqli_fetch_assoc($result);
 
         mysqli_stmt_close($stmt);
 
@@ -496,10 +495,16 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
 
 
         if ($request["status"] !== "pending") {
-            throw new Exception("This request has already been answered.");
+            throw new Exception(
+                "This request has already been answered."
+            );
         }
 
+
+        // -------------------------
         // REJECT
+        // -------------------------
+
         if ($action === "reject") {
 
             $sql = "
@@ -510,7 +515,12 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
                 WHERE id = ?
             ";
 
-            $stmt = mysqli_prepare($conn, $sql);
+            $stmt =
+                mysqli_prepare($conn, $sql);
+
+            if (!$stmt) {
+                throw new Exception(mysqli_error($conn));
+            }
 
             mysqli_stmt_bind_param(
                 $stmt,
@@ -522,7 +532,9 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
 
             mysqli_stmt_close($stmt);
 
+
             mysqli_commit($conn);
+
 
             return [
                 "success" => true,
@@ -530,7 +542,11 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
             ];
         }
 
+
+        // -------------------------
         // ACCEPT
+        // -------------------------
+
         if ($action === "accept") {
 
             $dish_id =
@@ -539,6 +555,16 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
             $requested_portions =
                 (int)$request["portions"];
 
+            $student_username =
+                $request["stu_username"];
+
+            $credit_cost =
+                (int)$request["credit_cost"];
+
+
+            // -------------------------
+            // Έλεγχος διαθέσιμων μερίδων
+            // -------------------------
 
             $sql = "
                 SELECT portions
@@ -547,7 +573,12 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
                 FOR UPDATE
             ";
 
-            $stmt = mysqli_prepare($conn, $sql);
+            $stmt =
+                mysqli_prepare($conn, $sql);
+
+            if (!$stmt) {
+                throw new Exception(mysqli_error($conn));
+            }
 
             mysqli_stmt_bind_param(
                 $stmt,
@@ -581,14 +612,74 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
             }
 
 
+            // -------------------------
+            // Έλεγχος credits student
+            // -------------------------
+
+            $sql = "
+                SELECT credits
+                FROM student
+                WHERE username = ?
+                FOR UPDATE
+            ";
+
+            $stmt =
+                mysqli_prepare($conn, $sql);
+
+            if (!$stmt) {
+                throw new Exception(mysqli_error($conn));
+            }
+
+            mysqli_stmt_bind_param(
+                $stmt,
+                "s",
+                $student_username
+            );
+
+            mysqli_stmt_execute($stmt);
+
+            $result =
+                mysqli_stmt_get_result($stmt);
+
+            $student =
+                mysqli_fetch_assoc($result);
+
+            mysqli_stmt_close($stmt);
+
+
+            if (!$student) {
+                throw new Exception(
+                    "Student not found."
+                );
+            }
+
+
+            if (
+                (int)$student["credits"]
+                < $credit_cost
+            ) {
+                throw new Exception(
+                    "Student does not have enough credits."
+                );
+            }
+
+
+            // -------------------------
             // Μείωση διαθέσιμων μερίδων
+            // -------------------------
+
             $sql = "
                 UPDATE dish
                 SET portions = portions - ?
                 WHERE id = ?
             ";
 
-            $stmt = mysqli_prepare($conn, $sql);
+            $stmt =
+                mysqli_prepare($conn, $sql);
+
+            if (!$stmt) {
+                throw new Exception(mysqli_error($conn));
+            }
 
             mysqli_stmt_bind_param(
                 $stmt,
@@ -602,7 +693,39 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
             mysqli_stmt_close($stmt);
 
 
+            // -------------------------
+            // Αφαίρεση credits student
+            // -------------------------
+
+            $sql = "
+                UPDATE student
+                SET credits = credits - ?
+                WHERE username = ?
+            ";
+
+            $stmt =
+                mysqli_prepare($conn, $sql);
+
+            if (!$stmt) {
+                throw new Exception(mysqli_error($conn));
+            }
+
+            mysqli_stmt_bind_param(
+                $stmt,
+                "is",
+                $credit_cost,
+                $student_username
+            );
+
+            mysqli_stmt_execute($stmt);
+
+            mysqli_stmt_close($stmt);
+
+
+            // -------------------------
             // Ενημέρωση request
+            // -------------------------
+
             $sql = "
                 UPDATE request
                 SET
@@ -612,7 +735,12 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
                 WHERE id = ?
             ";
 
-            $stmt = mysqli_prepare($conn, $sql);
+            $stmt =
+                mysqli_prepare($conn, $sql);
+
+            if (!$stmt) {
+                throw new Exception(mysqli_error($conn));
+            }
 
             mysqli_stmt_bind_param(
                 $stmt,
@@ -647,7 +775,7 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
         ];
     }
 }
-   
+ 
 
 
 function update_pickup_status($request_id,$cook_username,$pickup_action,$conn) {
@@ -871,11 +999,118 @@ function update_pickup_status($request_id,$cook_username,$pickup_action,$conn) {
 
 
 
+function student_confirm_pickup($request_id, $student_username, $conn)
+{
+    mysqli_begin_transaction($conn);
+
+    try {
+
+        // Lock the student's accepted request
+        $sql = "
+            SELECT
+                id,
+                stu_username,
+                cook_username,
+                dish_id,
+                portions,
+                status,
+                pickup_status
+            FROM request
+            WHERE id = ?
+              AND stu_username = ?
+            FOR UPDATE
+        ";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        if (!$stmt) {
+            throw new Exception(mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "is",
+            $request_id,
+            $student_username
+        );
+
+        mysqli_stmt_execute($stmt);
+
+        $result =
+            mysqli_stmt_get_result($stmt);
+
+        $request =
+            mysqli_fetch_assoc($result);
+
+        mysqli_stmt_close($stmt);
 
 
+        if (!$request) {
+            throw new Exception("Request not found.");
+        }
 
 
+        if ($request["status"] !== "accepted") {
+            throw new Exception(
+                "Only accepted requests can be picked up."
+            );
+        }
 
 
+        if (
+            $request["pickup_status"] !==
+            "awaiting_pickup"
+        ) {
+            throw new Exception(
+                "Pickup status has already been updated."
+            );
+        }
+
+
+        // Mark as picked up
+        $sql = "
+            UPDATE request
+            SET
+                pickup_status = 'picked_up',
+                pickup_datetime = NOW()
+            WHERE id = ?
+        ";
+
+        $stmt =
+            mysqli_prepare($conn, $sql);
+
+        if (!$stmt) {
+            throw new Exception(mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "i",
+            $request_id
+        );
+
+        mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+
+
+        mysqli_commit($conn);
+
+
+        return [
+            "success" => true,
+            "pickup_status" => "picked_up"
+        ];
+
+    } catch (Throwable $e) {
+
+        mysqli_rollback($conn);
+
+        return [
+            "success" => false,
+            "message" => $e->getMessage()
+        ];
+    }
+}
 
 ?>
