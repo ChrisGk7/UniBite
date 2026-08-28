@@ -1,6 +1,5 @@
-
 INSERT INTO `user` (`username`, `email`, `pass`, `name`, `reg_date`) VALUES
-('admin', 'admin@unibite.com', '$2y$10$vKsQ9UPpPL2kRm3OgORKL.WgfCPNe5vxBnx0.zFKrv22f1q0XfEya', 'Chris Gkreko', '2026-08-10 14:21:40'),
+('admin', 'admin@unibite.com', '$2y$10$vKsQ9UPpPL2kRm3OgORKL.WgfCPNe5vxBnx0.zFKrv22f1q0XFEya', 'Chris Gkreko', '2026-08-10 14:21:40'),
 ('Chrizz', 'chrizz@chrizz.gr', '$2y$10$WLjueCSPabRmE15hUx6OheSOf5WysNaN9PwXs6ScOnet7MPzZtv3q', 'Christos Gkreko', '2026-08-20 18:16:16'),
 ('Lemonia', 'LM@gmail.com', '$2y$10$04HNZL1ZL3ZdQf9XW317R.KXAuQqhblI5gxfZeHv3MAr5OSYIQPeW', 'Lemonia Michalakopoulou', '2026-08-10 14:30:52'),
 ('Mitaras', 'ap@unibite.gr', '$2y$10$u092N5su9CR4CNxgBBda7e0x0BAJLb.T.xrzSL29NmDIqrfXv4oo.', 'Alex Parginos', '2026-08-10 14:24:30'),
@@ -10,6 +9,12 @@ INSERT INTO `user` (`username`, `email`, `pass`, `name`, `reg_date`) VALUES
 INSERT INTO `admin` (`username`, `email`) VALUES
 ('admin', 'admin@unibite.com'),
 ('Mitaras', 'ap@unibite.gr');
+
+INSERT INTO `student` (`username`, `email`, `credits`, `street`, `number`, `city`, `postcode`, `mobile`) VALUES
+('Chrizz', 'chrizz@chrizz.gr', 5, 'Thessalonikis', 73, 'Patras', 26441, '697987987'),
+('Lemonia', 'LM@gmail.com', 5, 'CORFU', 1, 'CORFU', 49084, '+306973902768'),
+('teststudent', 'up1234567@upnet.gr', 5, 'Kanakari', 60, 'patra', 26211, '+306982082900'),
+('up1234589@gmail.com', 'up1234589@gmail.com', 5, 'korinthou', 10, 'patras', 26221, '6900001234');
 
 INSERT INTO `cook` (`username`, `email`, `street`, `number`, `city`, `postcode`, `mobile`) VALUES
 ('Chrizz', 'chrizz@chrizz.gr', 'Thessalonikis', 73, 'Patras', 26441, '697987987'),
@@ -30,9 +35,3 @@ INSERT INTO `request` (`id`, `stu_username`, `cook_username`, `dish_id`, `portio
 (3, 'teststudent', 'teststudent', 21, 1, 1, 'pending', NULL, NULL, '2026-08-17 18:33:56', NULL, NULL, NULL),
 (4, 'up1234589@gmail.com', 'teststudent', 19, 1, 1, 'pending', NULL, NULL, '2026-08-19 16:06:06', NULL, NULL, NULL),
 (21, 'Chrizz', 'Lemonia', 8, 1, 1, 'pending', NULL, NULL, '2026-08-20 22:23:35', NULL, NULL, NULL);
-
-INSERT INTO `student` (`username`, `email`, `credits`, `street`, `number`, `city`, `postcode`, `mobile`) VALUES
-('Chrizz', 'chrizz@chrizz.gr', 5, 'Thessalonikis', 73, 'Patras', 26441, '697987987'),
-('Lemonia', 'LM@gmail.com', 5, 'CORFU', 1, 'CORFU', 49084, '+306973902768'),
-('teststudent', 'up1234567@upnet.gr', 5, 'Kanakari', 60, 'patra', 26211, '+306982082900'),
-('up1234589@gmail.com', 'up1234589@gmail.com', 5, 'korinthou', 10, 'patras', 26221, '6900001234');
