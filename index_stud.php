@@ -9,10 +9,41 @@ if(!isset($_SESSION['username'])){
     header("Location: index.php");
     exit();
 }
-$is_admin = is_admin($_SESSION['username'],$conn);
- 
+
+$student_username = $_SESSION['username'];
+
+$sql = "
+    SELECT credits
+    FROM student
+    WHERE username = ?
+";
+
+$stmt = mysqli_prepare($conn, $sql);
+
+mysqli_stmt_bind_param(
+    $stmt,
+    "s",
+    $student_username
+);
+
+mysqli_stmt_execute($stmt);
+
+$result =
+    mysqli_stmt_get_result($stmt);
+
+$student_data =
+    mysqli_fetch_assoc($result);
+
+mysqli_stmt_close($stmt);
+
+$current_credits =
+    $student_data
+        ? (int)$student_data["credits"]
+        : 0;
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,15 +80,14 @@ $is_admin = is_admin($_SESSION['username'],$conn);
     <div class="top-nav-actions">
 
         <div class="credit-display">
-            <span class="credit-number">5</span>
-            <span class="credit-label">Credits</span>
-        </div>
+            <span class="credit-number">
+                <?php echo $current_credits; ?>
+            </span>
 
-       <?php if ($is_admin): ?>
-        <button class="logic-link" type="button" onclick="window.location.href = 'admin_dashboard.php'">
-            Admin Dashboard
-        </button    >
-    <?php endif; ?>
+            <span class="credit-label">
+                Credits
+            </span>
+        </div>
 
         <button
             type="button"
@@ -319,10 +349,11 @@ $is_admin = is_admin($_SESSION['username'],$conn);
 
     </div>
 
-    <div class="orders-container">
+
+    <div id="orders-container" class="orders-container">
 
         <div class="orders-empty-state">
-            <p>No received orders yet.</p>
+            <p>No accepted orders yet.</p>
         </div>
 
     </div>
@@ -330,9 +361,18 @@ $is_admin = is_admin($_SESSION['username'],$conn);
 </aside>
 
 
+
+
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script src="map.js"></script>
+
+<script>
+    const currentUsername =
+        <?php echo json_encode($_SESSION["username"]); ?>;
+</script>
+
 
 <script src="script_stud.js"></script>
 

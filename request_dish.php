@@ -165,6 +165,18 @@ if ($request_portions > $available_portions) {
 $cook_username =
     $dish["cook"];
 
+// Prevent users from requesting their own dish
+
+if ($cook_username === $student_username) {
+
+    echo json_encode([
+        "success" => false,
+        "message" => "You cannot request your own dish."
+    ]);
+    
+    exit;
+}
+
 $credits_per_portion =
     (int)$dish["credits_per_portion"];
 
