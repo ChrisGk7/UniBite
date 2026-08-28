@@ -1,3 +1,12 @@
+
+INSERT INTO `user` (`username`, `email`, `pass`, `name`, `reg_date`) VALUES
+('admin', 'admin@unibite.com', '$2y$10$vKsQ9UPpPL2kRm3OgORKL.WgfCPNe5vxBnx0.zFKrv22f1q0XfEya', 'Chris Gkreko', '2026-08-10 14:21:40'),
+('Chrizz', 'chrizz@chrizz.gr', '$2y$10$WLjueCSPabRmE15hUx6OheSOf5WysNaN9PwXs6ScOnet7MPzZtv3q', 'Christos Gkreko', '2026-08-20 18:16:16'),
+('Lemonia', 'LM@gmail.com', '$2y$10$04HNZL1ZL3ZdQf9XW317R.KXAuQqhblI5gxfZeHv3MAr5OSYIQPeW', 'Lemonia Michalakopoulou', '2026-08-10 14:30:52'),
+('Mitaras', 'ap@unibite.gr', '$2y$10$u092N5su9CR4CNxgBBda7e0x0BAJLb.T.xrzSL29NmDIqrfXv4oo.', 'Alex Parginos', '2026-08-10 14:24:30'),
+('teststudent', 'up1234567@upnet.gr', '$2y$10$FXuvhCDuIdGSI0TAlxZrcuaxYTs1V1/lsACaAQJ8EeqRphO.98o5O', 'Test Student', '2026-08-17 12:27:36'),
+('up1234589@gmail.com', 'up1234589@gmail.com', '$2y$10$gS2kMSLE1bYcA57Be3UQLOE8byXzAoaZnxJ.UvlpaEd7SmGsskdKW', 'Alex hat', '2026-08-19 16:00:09');
+
 INSERT INTO `admin` (`username`, `email`) VALUES
 ('admin', 'admin@unibite.com'),
 ('Mitaras', 'ap@unibite.gr');
@@ -27,11 +36,3 @@ INSERT INTO `student` (`username`, `email`, `credits`, `street`, `number`, `city
 ('Lemonia', 'LM@gmail.com', 5, 'CORFU', 1, 'CORFU', 49084, '+306973902768'),
 ('teststudent', 'up1234567@upnet.gr', 5, 'Kanakari', 60, 'patra', 26211, '+306982082900'),
 ('up1234589@gmail.com', 'up1234589@gmail.com', 5, 'korinthou', 10, 'patras', 26221, '6900001234');
-
-INSERT INTO `user` (`username`, `email`, `pass`, `name`, `reg_date`) VALUES
-('admin', 'admin@unibite.com', '$2y$10$vKsQ9UPpPL2kRm3OgORKL.WgfCPNe5vxBnx0.zFKrv22f1q0XfEya', 'Chris Gkreko', '2026-08-10 14:21:40'),
-('Chrizz', 'chrizz@chrizz.gr', '$2y$10$WLjueCSPabRmE15hUx6OheSOf5WysNaN9PwXs6ScOnet7MPzZtv3q', 'Christos Gkreko', '2026-08-20 18:16:16'),
-('Lemonia', 'LM@gmail.com', '$2y$10$04HNZL1ZL3ZdQf9XW317R.KXAuQqhblI5gxfZeHv3MAr5OSYIQPeW', 'Lemonia Michalakopoulou', '2026-08-10 14:30:52'),
-('Mitaras', 'ap@unibite.gr', '$2y$10$u092N5su9CR4CNxgBBda7e0x0BAJLb.T.xrzSL29NmDIqrfXv4oo.', 'Alex Parginos', '2026-08-10 14:24:30'),
-('teststudent', 'up1234567@upnet.gr', '$2y$10$FXuvhCDuIdGSI0TAlxZrcuaxYTs1V1/lsACaAQJ8EeqRphO.98o5O', 'Test Student', '2026-08-17 12:27:36'),
-('up1234589@gmail.com', 'up1234589@gmail.com', '$2y$10$gS2kMSLE1bYcA57Be3UQLOE8byXzAoaZnxJ.UvlpaEd7SmGsskdKW', 'Alex hat', '2026-08-19 16:00:09');
