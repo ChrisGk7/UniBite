@@ -40,6 +40,7 @@ CREATE TABLE cook(
   city text NOT NULL,
   postcode INT(11) NOT NULL,
   mobile varchar(14) NOT NULL,
+  total_credits_earned INT NOT NULL DEFAULT 0,
 
   PRIMARY KEY (username),
 
