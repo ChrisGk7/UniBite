@@ -66,7 +66,7 @@ if (isset($_POST['login'])) {
             if (is_admin($user['username'], $conn)) {
                 header("Location: admin_dashboard.php");
             } else {
-                header("Location: student.php");
+                header("Location: index_stud.php");
             }
             exit();
         } else {

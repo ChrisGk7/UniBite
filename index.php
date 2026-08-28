@@ -9,6 +9,7 @@ require_once("register_user_student.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unibite - Log in</title>
+    <link rel="icon" type="image/png" href="images/Unibite_icon.png">
     <link rel="stylesheet" href="style.css">
     
 </head>

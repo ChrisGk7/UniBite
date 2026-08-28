@@ -30,15 +30,18 @@ async function loadAdminStats() {
         topRatedListEl.innerHTML = ''; 
         if (data.top_rated_dishes && data.top_rated_dishes.length > 0) {
             data.top_rated_dishes.forEach(function (dish) {
-                const li = document.createElement('li');
+                const list = document.createElement("li");
+                list.classList.add("listing-card");
                 const avg = Number(dish.avg_rating).toFixed(1);
-                li.textContent = `${dish.title} by ${dish.cook_name} — ${avg}/5 (${dish.rating_count} ratings)`;
-                topRatedListEl.appendChild(li);
+                list.dataset.avg = avg;
+                list.textContent = `${dish.title} by ${dish.cook_name} — ${avg}/5 (${dish.rating_count} ratings)`;
+                topRatedListEl.appendChild(list);
             });
         } else {
-            const li = document.createElement('li');
-            li.textContent = 'No dishes have been rated yet.';
-            topRatedListEl.appendChild(li);
+            const list = document.createElement('li');
+            list.classList.add("listing-card");
+            list.textContent = 'No dishes have been rated yet.';
+            topRatedListEl.appendChild(list);
         }
 
     } catch (error) {

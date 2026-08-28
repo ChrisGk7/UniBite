@@ -28,13 +28,20 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width", initial-scale="1.0">  
+    <link rel="icon" type="image/png" href="images/Unibite_icon.png">
     <title>Unibite - Οι Αγγελίες μου</title>
 </head>
 
 <body>
 
 
-<header>Οι αγγελίες μου</header>
+<header class="cook-header">
+    
+    <button type="button" class="requestsBtn">Τα ετοίματά μου</button>
+    <h1>Οι Αγγελίες μου</h1>
+
+
+</header>
 
 
 <main>
@@ -43,7 +50,7 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
         
         <h2>Νέα Αγγελία</h2>
     
-        <form id="listingForm"  method="POST" enctype="multipart/form-data" action="create_dish.php" novalidate>
+        <form id="listingForm" class="listingForm" method="POST" enctype="multipart/form-data" action="create_dish.php" novalidate>
         
         <div class="form-group">
             <label>Τίτλος</label>
@@ -110,7 +117,7 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
     <section class="my-listings">
         <h2>Οι αγγελίες μου</h2>
 
-        <div id="listingsContainer">
+        <div id="listingsContainer" class="listingsContainer">
             <article class="listing-card">
                 <h3>Μακαρόνια με κιμά</h3>
                 <p>Σποιτικό Φαγητό</p>
@@ -132,6 +139,39 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 
 </main>
 
+</main>
+
+
+<div class="requestsModal">
+
+    <div class="requests-modal-content">
+
+        <div class="requests-modal-header">
+
+            <h2>Τα αιτήματά μου</h2>
+
+            <button type="button" class="closeRequestsBtn">
+                ×
+            </button>
+
+        </div>
+
+        <div class="requests-list">
+
+            <p class="no-requests-message">
+                Δεν υπάρχουν αιτήματα αυτή τη στιγμή.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="deleteModal" class="modal">
+
+
 
 <div id="deleteModal" class="modal">
     <div class="modal-content">
@@ -141,8 +181,8 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 
         <div class="modal-buttons">
 
-        <button id="cancelDelete">Ακύρωση</button>
-        <button id="confirmDelete">Διαγραφή</button>
+        <button id="cancelDelete" class="cancelDelete">Ακύρωση</button>
+        <button id="confirmDelete" class="confirmDelete">Διαγραφή</button>
         </div>
     </div>
 
@@ -154,7 +194,7 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
     <div class="edit-modal-content">
 
         <h2>Επεξεργασία Αγγελίας</h2>
-        <form id="editForm">
+        <form id="editForm" class="editForm">
 
             <label>Τίτλος</label>
             <input type="text" id="editTitle">
@@ -185,9 +225,9 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 
             <div class="edit-modal-buttons">
                 
-                <button type="submit" id="saveEdit">Αποθήκευση Αλλαγών</button>
+                <button type="submit" id="saveEdit" class="saveEdit">Αποθήκευση Αλλαγών</button>
 
-                <button type="button" id="cancelEdit">Ακύρωση</button>
+                <button type="button" id="cancelEdit" class="cancelEdit">Ακύρωση</button>
 
 
             </div>
@@ -225,6 +265,33 @@ document.getElementById('image').addEventListener('change', function(event) {
     }
 });
 </script>
+
+
+
+
+<script>
+const requestBtn = document.querySelector('.requestsBtn');
+const requestsModal = document.querySelector('.requestsModal');
+const closeRequestsBtn = document.querySelector('.closeRequestsBtn');
+
+requestBtn.addEventListener('click', function() {
+    requestsModal.style.display = 'flex';
+});
+
+closeRequestsBtn.addEventListener('click', function() {
+    requestsModal.style.display = 'none';
+});
+</script>
+
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>
