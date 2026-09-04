@@ -7,12 +7,16 @@ if (!isset($_SESSION['username'])) {
     exit();
 }   
 
+$cook_username = $_SESSION['username'];
+
+
+
 $student = get_student_by_username($_SESSION['username'], $conn);
 if($student){
 $cook=ensure_cook_registered($student['username'],$conn);//After redirect this function    
 }                                                       //this function inserts the student into the table cook
 
-
+$cook_points = get_cook_points($cook_username, $conn);
 ?>
 
 
@@ -23,6 +27,8 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 <html>
 
 <head>
+    <link rel="stylesheet" href="cook_req.css">
+    <link rel="icon" type="image/png" href="images/Unibite_icon.png">
     <link rel="stylesheet" href="cook.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -34,7 +40,31 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 <body>
 
 
-<header>Οι αγγελίες μου</header>
+<header class="cook-header">
+
+<div class="header-actions">
+
+    <button type="button" class="requestsBtn">
+        Τα αιτήματά μου
+    </button>
+
+    <div class="cook-points">
+        Πόντοι:
+        <strong><?php echo $cook_points; ?></strong>
+    </div>
+
+</div>
+
+    <button class="logo" data-text="Awesome" onclick="window.location.href='index_stud.php'">
+            <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
+    </button>
+    
+    
+    <h1>Οι Αγγελίες μου</h1>
+
+
+</header>
 
 
 <main>
@@ -43,7 +73,7 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
         
         <h2>Νέα Αγγελία</h2>
     
-        <form id="listingForm"  method="POST" enctype="multipart/form-data" action="create_dish.php" novalidate>
+        <form id="listingForm" class="listingForm" method="POST" enctype="multipart/form-data" action="create_dish.php" novalidate>
         
         <div class="form-group">
             <label>Τίτλος</label>
@@ -110,7 +140,7 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
     <section class="my-listings">
         <h2>Οι αγγελίες μου</h2>
 
-        <div id="listingsContainer">
+        <div id="listingsContainer" class="listingsContainer">
             <article class="listing-card">
                 <h3>Μακαρόνια με κιμά</h3>
                 <p>Σποιτικό Φαγητό</p>
@@ -132,6 +162,39 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 
 </main>
 
+</main>
+
+
+<div class="requestsModal">
+
+    <div class="requests-modal-content">
+
+        <div class="requests-modal-header">
+
+            <h2>Τα αιτήματά μου</h2>
+
+            <button type="button" class="closeRequestsBtn">
+                ×
+            </button>
+
+        </div>
+
+        <div class="requests-list">
+
+            <p class="no-requests-message">
+                Δεν υπάρχουν αιτήματα αυτή τη στιγμή.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
 
 <div id="deleteModal" class="modal">
     <div class="modal-content">
@@ -141,8 +204,8 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 
         <div class="modal-buttons">
 
-        <button id="cancelDelete">Ακύρωση</button>
-        <button id="confirmDelete">Διαγραφή</button>
+        <button id="cancelDelete" class="cancelDelete">Ακύρωση</button>
+        <button id="confirmDelete" class="confirmDelete">Διαγραφή</button>
         </div>
     </div>
 
@@ -154,7 +217,7 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
     <div class="edit-modal-content">
 
         <h2>Επεξεργασία Αγγελίας</h2>
-        <form id="editForm">
+        <form id="editForm" class="editForm">
 
             <label>Τίτλος</label>
             <input type="text" id="editTitle">
@@ -185,9 +248,9 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 
             <div class="edit-modal-buttons">
                 
-                <button type="submit" id="saveEdit">Αποθήκευση Αλλαγών</button>
+                <button type="submit" id="saveEdit" class="saveEdit">Αποθήκευση Αλλαγών</button>
 
-                <button type="button" id="cancelEdit">Ακύρωση</button>
+                <button type="button" id="cancelEdit" class="cancelEdit">Ακύρωση</button>
 
 
             </div>
@@ -201,8 +264,9 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="map.js"></script>
-<script src="form.js"></script>
 <script src="cook.js"></script> 
+<script src="form.js"></script>
+
 
 <script>
 document.getElementById('image').addEventListener('change', function(event) {
@@ -225,6 +289,9 @@ document.getElementById('image').addEventListener('change', function(event) {
     }
 });
 </script>
+
+
+
 </body>
 
 </html>

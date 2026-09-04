@@ -68,6 +68,7 @@ $sql = "
         id,
         status,
         pickup_status,
+        cook_username,
         rating
     FROM request
     WHERE id = ?
@@ -150,61 +151,149 @@ if ($request["rating"] !== null) {
 }
 
 
-/* Save rating */
+/* Save rating + give bonus points */
 
-$sql = "
-    UPDATE request
-    SET
-        rating = ?,
-        rated_datetime = NOW()
-    WHERE id = ?
-      AND stu_username = ?
-";
+mysqli_begin_transaction($conn);
 
-$stmt =
-    mysqli_prepare($conn, $sql);
+try {
 
+    $sql = "
+        UPDATE request
+        SET
+            rating = ?,
+            rated_datetime = NOW()
+        WHERE id = ?
+          AND stu_username = ?
+          AND rating IS NULL
+    ";
 
-if (!$stmt) {
+    $stmt =
+        mysqli_prepare($conn, $sql);
 
-    echo json_encode([
-        "success" => false,
-        "message" => mysqli_error($conn)
-    ]);
-
-    exit;
-}
+    if (!$stmt) {
+        throw new Exception(mysqli_error($conn));
+    }
 
 
-mysqli_stmt_bind_param(
-    $stmt,
-    "iis",
-    $rating,
-    $request_id,
-    $student_username
-);
+    mysqli_stmt_bind_param(
+        $stmt,
+        "iis",
+        $rating,
+        $request_id,
+        $student_username
+    );
 
 
-if (!mysqli_stmt_execute($stmt)) {
+    if (!mysqli_stmt_execute($stmt)) {
+        throw new Exception(mysqli_stmt_error($stmt));
+    }
 
-    echo json_encode([
-        "success" => false,
-        "message" => mysqli_stmt_error($stmt)
-    ]);
+
+    if (mysqli_stmt_affected_rows($stmt) !== 1) {
+
+        mysqli_stmt_close($stmt);
+
+        throw new Exception(
+            "This order has already been rated."
+        );
+    }
+
 
     mysqli_stmt_close($stmt);
 
-    exit;
+
+    /* Calculate rating bonus */
+
+    $bonus_points = 0;
+
+    if ($rating === 4) {
+        $bonus_points = 2;
+    }
+    elseif ($rating === 5) {
+        $bonus_points = 3;
+    }
+
+
+    /* Give bonus to cook */
+
+   if ($bonus_points > 0) {
+
+    $cook_username =
+        $request["cook_username"];
+
+
+    // Προσθήκη bonus στα συνολικά earned points του cook
+    $sql = "
+        UPDATE cook
+        SET total_credits_earned =
+            total_credits_earned + ?
+        WHERE username = ?
+    ";
+
+    $stmt = mysqli_prepare($conn, $sql);
+
+    if (!$stmt) {
+        throw new Exception(mysqli_error($conn));
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "is",
+        $bonus_points,
+        $cook_username
+    );
+
+    if (!mysqli_stmt_execute($stmt)) {
+        throw new Exception(mysqli_stmt_error($stmt));
+    }
+
+    mysqli_stmt_close($stmt);
+
+
+    // Προσθήκη bonus και στα διαθέσιμα credits του student
+    $sql = "
+        UPDATE student
+        SET credits = credits + ?
+        WHERE username = ?
+    ";
+
+    $stmt = mysqli_prepare($conn, $sql);
+
+    if (!$stmt) {
+        throw new Exception(mysqli_error($conn));
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "is",
+        $bonus_points,
+        $cook_username
+    );
+
+    if (!mysqli_stmt_execute($stmt)) {
+        throw new Exception(mysqli_stmt_error($stmt));
+    }
+
+    mysqli_stmt_close($stmt);
 }
+    mysqli_commit($conn);
 
+    echo json_encode([
+        "success" => true,
+        "message" => "Rating submitted successfully.",
+        "rating" => $rating,
+        "bonus_points" => $bonus_points
+    ]);
 
-mysqli_stmt_close($stmt);
+}
+catch (Throwable $e) {
 
+    mysqli_rollback($conn);
 
-echo json_encode([
-    "success" => true,
-    "message" => "Rating submitted successfully.",
-    "rating" => $rating
-]);
+    echo json_encode([
+        "success" => false,
+        "message" => $e->getMessage()
+    ]);
+}
 
 ?>
