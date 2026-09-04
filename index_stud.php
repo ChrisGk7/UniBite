@@ -232,7 +232,8 @@ $current_credits =
 </section>
 
 </main>
-<!-- Footer-->
+
+<!-- Footer -->
 <footer class="footer">
 
     <div class="footer-container" id="contact">
@@ -243,6 +244,7 @@ $current_credits =
             <div class="footer-section footer-about">
 
                 <a class="footer-brand">
+
                     <img
                         src="images/unibite_icon.png"
                         alt="UniBite logo"
@@ -259,7 +261,6 @@ $current_credits =
                     Share food.<br>
                     Reduce waste.<br>
                     Connect students.
-                    
                 </p>
 
             </div>
@@ -281,25 +282,54 @@ $current_credits =
 
 
             <!-- Contact -->
-            <div class="footer-section footer-contact-section" id="contact">
+            <div class="footer-section footer-contact-section">
 
                 <h3>Contact</h3>
 
                 <div class="footer-contact">
 
                     <div class="contact-item">
-                        <i data-lucide="mail"></i>
-                        <span>contact@unibite.gr</span>
+
+                        <img
+                            src="images/mail_icon.png"
+                            alt="Email"
+                            class="contact-icon-image"
+                        >
+
+                        <span>
+                            contact@unibite.gr
+                        </span>
+
                     </div>
 
-                    <div class="contact-item">
-                        <i data-lucide="phone"></i>
-                        <span>+30 2610 123456</span>
-                    </div>
 
                     <div class="contact-item">
-                        <i data-lucide="map-pin"></i>
-                        <span>Patras, Greece</span>
+
+                        <img
+                            src="images/phone_icon.png"
+                            alt="Phone"
+                            class="contact-icon-image"
+                        >
+
+                        <span>
+                            +30 2610 123456
+                        </span>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <img
+                            src="images/location_icon.png"
+                            alt="Location"
+                            class="contact-icon-image"
+                        >
+
+                        <span>
+                            Patras, Greece
+                        </span>
+
                     </div>
 
                 </div>
@@ -309,18 +339,30 @@ $current_credits =
         </div>
 
 
+        <!-- Divider -->
         <hr class="footer-divider">
 
 
+        <!-- Bottom -->
         <div class="footer-bottom">
 
             <p class="footer-copyright">
                 © 2026 UniBite. All Rights Reserved.
             </p>
 
+
             <p class="footer-message">
-                Made for students
-                <i data-lucide="graduation-cap"></i>
+
+                <span>
+                    Made for students
+                </span>
+
+                <img
+                    src="images/student_hat.png"
+                    alt="Student"
+                    class="footer-student-icon"
+                >
+
             </p>
 
         </div>
@@ -360,6 +402,33 @@ $current_credits =
 
 </aside>
 
+    <!-- Request Error Popup -->
+<div id="request-error-overlay" class="request-error-overlay">
+
+<div class="request-error-popup">
+
+    <div class="request-error-icon">
+        !
+    </div>
+
+    <h3>Request unavailable</h3>
+
+    <p id="request-error-message">
+        You do not have enough credits.
+    </p>
+
+    <button
+        type="button"
+        id="close-request-error"
+        class="close-request-error"
+    >
+        Got it
+    </button>
+
+</div>
+
+</div>
+
 
 
 
@@ -375,12 +444,6 @@ $current_credits =
 
 
 <script src="script_stud.js"></script>
-
-<script src="https://unpkg.com/lucide@latest"></script>
-
-<script>
-    lucide.createIcons();
-</script>
 
 </body>
 

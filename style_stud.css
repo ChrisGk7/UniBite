@@ -1785,3 +1785,176 @@ html {
     scroll-margin-top: 140px;
 }
 
+/* =========================
+   REQUEST ERROR POPUP
+========================= */
+
+.request-error-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background-color: rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    z-index: 10000;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+
+/* Visible state */
+
+.request-error-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Popup */
+
+.request-error-popup {
+    width: 100%;
+    max-width: 390px;
+
+    padding: 32px;
+
+    background-color: #fffaf3;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.18);
+
+    text-align: center;
+
+    transform: translateY(15px) scale(0.97);
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.request-error-overlay.show
+.request-error-popup {
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* Error icon */
+
+.request-error-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 18px;
+
+    background-color: #fff0e5;
+
+    border: 2px solid #f97316;
+    border-radius: 50%;
+
+    color: #f97316;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+
+/* Title */
+
+.request-error-popup h3 {
+    margin: 0 0 10px;
+
+    color: #222;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+/* Message */
+
+.request-error-popup p {
+    margin: 0 0 24px;
+
+    color: #666;
+
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+/* Close button */
+
+.close-request-error {
+    padding: 11px 28px;
+
+    border: none;
+    border-radius: 25px;
+
+    background-color: #f97316;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.close-request-error:hover {
+    background-color: #ea580c;
+
+    transform: translateY(-2px);
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.contact-icon-image {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.footer-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-student-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
