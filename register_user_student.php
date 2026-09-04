@@ -62,7 +62,7 @@ if (isset($_POST['login'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['name']     = $user['name'];
             $_SESSION['email']    = $user['email'];
-            header("Location: student.php");
+            header("Location: index_stud.php");
             exit();
         } else {
             // Deliberately vague: don't reveal whether the username or

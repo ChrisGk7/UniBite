@@ -162,7 +162,6 @@ listingForm.addEventListener("submit", async function(event) {
         if (data.success) {
 
             listingForm.reset();
-            //242 243 for hiding preview image
             const previewContainer = document.getElementById('imagePreviewContainer');
             if (previewContainer) previewContainer.style.display = 'none';
             loadDishes();

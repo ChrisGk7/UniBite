@@ -40,6 +40,7 @@ CREATE TABLE cook(
   city text NOT NULL,
   postcode INT(11) NOT NULL,
   mobile varchar(14) NOT NULL,
+  total_credits_earned INT NOT NULL DEFAULT 0,
 
   PRIMARY KEY (username),
 
@@ -76,7 +77,7 @@ CREATE TABLE dish(
   pickup_location varchar(255) NOT NULL,   
   pickup_time datetime NOT NULL,           
 
-  -- for the map view / distance sorting
+  
   latitude decimal(10,7) DEFAULT NULL,
   longitude decimal(10,7) DEFAULT NULL,
 
@@ -90,8 +91,6 @@ CREATE TABLE dish(
   FOREIGN KEY (cook) REFERENCES cook(username)
   ON UPDATE CASCADE ON DELETE CASCADE
 );
-
-
 
 CREATE TABLE request(
   id int(30) NOT NULL AUTO_INCREMENT,

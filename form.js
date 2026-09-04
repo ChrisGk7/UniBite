@@ -3,15 +3,19 @@ const signupform = document.getElementById('signupContainer');
 const gotosigninButton = document.getElementById('gotosigninButton');
 const gotosignupButton = document.getElementById('gotosignupButton');
 
-gotosignupButton.addEventListener('click', function () {
-    signinform.classList.add('hidden');
-    signupform.classList.remove('hidden');
-});
+if (gotosignupButton && signinform && signupform) {
+    gotosignupButton.addEventListener('click', function () {
+        signinform.classList.add('hidden');
+        signupform.classList.remove('hidden');
+    });
+}
 
-gotosigninButton.addEventListener('click', function () {
-    signupform.classList.add('hidden');
-    signinform.classList.remove('hidden');
-});
+if (gotosigninButton && signinform && signupform) {
+    gotosigninButton.addEventListener('click', function () {
+        signupform.classList.add('hidden');
+        signinform.classList.remove('hidden');
+    });
+}
     
 // signinButton.addEventListener('click', function (event) {
 //     event.preventDefault(); // Prevent the default form submission
@@ -125,3 +129,30 @@ if (regUsernameField) {
         }
     });
 }
+
+//..................Email validity Check...................
+const regEmailFieald = document.getElementById('reg_email')
+    regEmailFieald.addEventListener('blur',async function () {
+        const email = this.value.trim();
+        if(!email) return;
+
+        try {
+
+            const response = await fetch(`check_username.php?email=${encodeURIComponent(email)}`);
+            const data = await response.json();
+        
+        
+        if(data.exists){
+
+            this.setCustomValidity("User with this email already exists.");
+        }
+        else{
+
+            this.setCustomValidity("");
+        }
+        validateField(this);
+    }catch(error){
+        console.error("Error checking email availability:", error);
+    }
+    
+    });

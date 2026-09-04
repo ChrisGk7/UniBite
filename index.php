@@ -1,7 +1,6 @@
-
 <?php
 require_once("register_user_student.php");
-include ("header.html");
+
 ?>
 
 <!DOCTYPE html>
@@ -9,16 +8,22 @@ include ("header.html");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in</title>
+    <title>Unibite - Log in</title>
     <link rel="stylesheet" href="style.css">
     
 </head>
 <body>
     <div id="signupContainer" class="form_area hidden" >
-            <p class="title">UNIBITE</p>
-            <p class="title">Register</p>
+            <p class="title">Welcome to </p>
+            <div class="form_group"> 
+            <button class="logo" data-text="Awesome" onclick="window.location.href='index.php'">
+            <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
+            </button>
+            </div>
+            <p class="title">Sign Up</p>
             <form id="signupForm" action="index.php" method="post"  novalidate>
-
+            
                 <div class="form_group">
                     <label class="sub_title" for="reg_username">Username</label>
                     <input id="reg_username" data-error="Please enter a valid username" class="form_style" type="text" name="username" value="<?php echo htmlspecialchars($old['username']); ?>" autocomplete="username" required>
@@ -82,14 +87,19 @@ include ("header.html");
     </div>
 
     <div id="signinContainer" class="form_area">
-        
-            <p class="title">UNIBITE</p>
+            <p class="title">Welcome to </p>
+           <div class="form_group"> 
+            <button class="logo" data-text="Awesome" onclick="window.location.href='index.php'">
+            <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
+            </button>
+           </div>
             
             <form id="signinForm" action="index.php" method="post" novalidate>
 
                 <div class="form_group">
                     <label class="sub_title" for="signin_username">Username</label>
-                    <input id="signin_username" data-error="Please enter a valid username" class="form_style" type="text" name="username"  autocomplete="username" required>
+                    <input id="signin_username" data-error="Please enter a valid username" class="form_style" type="text" name="username" value="<?php echo htmlspecialchars($old['signin_username']); ?>" autocomplete="username" required>
                     <span class="error-message" aria-live="polite"></span>
                 </div>
                 <div class="form_group">
@@ -97,7 +107,11 @@ include ("header.html");
                     <input id="signin_password" data-error="Please enter a valid password" class="form_style" type="password" name="password" autocomplete="current-password" required>
                     <span class="error-message" aria-live="polite"></span>
                 </div>
-                
+                <?php if (isset($error_message)): ?>
+                    <div class="form_group">
+                        <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
+                    </div>
+                <?php endif; ?>
                 <div class="form_group">
                     <button id="signinButton" class="btn" type="submit" name="login">SIGN IN</button>
                 </div>
@@ -112,4 +126,3 @@ include ("header.html");
 </body>
 
 </html>
-
