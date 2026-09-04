@@ -710,3 +710,57 @@ hr {
   width: 100%;
   filter: drop-shadow(0 0 23px var(--animation-color))
 }
+
+
+
+.header-actions {
+    position: absolute;
+    right: 40px;
+    top: 35px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 200px;
+}
+
+.header-actions .requestsBtn {
+    position: static;
+    transform: none;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 11px 20px;
+}
+
+.header-actions .requestsBtn:hover {
+    transform: translateY(-2px);
+}
+
+.header-actions .cook-points {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 11px 20px;
+}
+
+.cook-points {
+    background: var(--white);
+    color: var(--dark);
+
+    border: 2px solid var(--accent-yellow);
+    border-radius: 25px;
+
+    font-weight: 700;
+    text-align: center;
+
+    box-shadow: var(--shadow);
+}
+
+.cook-points strong {
+    color: var(--primary-orange);
+    font-size: 1.1rem;
+    margin-left: 6px;
+}

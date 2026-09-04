@@ -846,18 +846,49 @@ function update_pickup_status($request_id,$cook_username,$pickup_action,$conn) {
 
 
         // PICKED UP
-        if ($pickup_action === "picked_up") {
+if ($pickup_action === "picked_up") {
 
+    $request_portions =
+        (int)$request["portions"];
+
+    // Ενημέρωση request
+    $sql = "
+        UPDATE request
+        SET
+            pickup_status = 'picked_up',
+            pickup_datetime = NOW()
+        WHERE id = ?
+    ";
+
+    $stmt =
+        mysqli_prepare($conn, $sql);
+
+    if (!$stmt) {
+        throw new Exception(mysqli_error($conn));
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $request_id
+    );
+
+    if (!mysqli_stmt_execute($stmt)) {
+        throw new Exception(mysqli_stmt_error($stmt));
+    }
+
+    mysqli_stmt_close($stmt);
+
+
+            // Πόντοι στον cook ανάλογα με τις μερίδες
             $sql = "
-                UPDATE request
-                SET
-                    pickup_status = 'picked_up',
-                    pickup_datetime = NOW()
-                WHERE id = ?
+                UPDATE cook
+                SET total_credits_earned =
+                    total_credits_earned + ?
+                WHERE username = ?
             ";
 
-            $stmt =
-                mysqli_prepare($conn, $sql);
+            $stmt = mysqli_prepare($conn, $sql);
 
             if (!$stmt) {
                 throw new Exception(mysqli_error($conn));
@@ -865,17 +896,44 @@ function update_pickup_status($request_id,$cook_username,$pickup_action,$conn) {
 
             mysqli_stmt_bind_param(
                 $stmt,
-                "i",
-                $request_id
+                "is",
+                $request_portions,
+                $cook_username
             );
 
-            mysqli_stmt_execute($stmt);
+            if (!mysqli_stmt_execute($stmt)) {
+                throw new Exception(mysqli_stmt_error($stmt));
+            }
 
             mysqli_stmt_close($stmt);
 
 
-            mysqli_commit($conn);
+            // Οι ίδιοι πόντοι προστίθενται και στα διαθέσιμα credits του student
+            $sql = "
+                UPDATE student
+                SET credits = credits + ?
+                WHERE username = ?
+            ";
 
+            $stmt = mysqli_prepare($conn, $sql);
+
+            if (!$stmt) {
+                throw new Exception(mysqli_error($conn));
+            }
+
+            mysqli_stmt_bind_param(
+                $stmt,
+                "is",
+                $request_portions,
+                $cook_username
+            );
+
+            if (!mysqli_stmt_execute($stmt)) {
+                throw new Exception(mysqli_stmt_error($stmt));
+            }
+
+            mysqli_stmt_close($stmt);
+            mysqli_commit($conn);
 
             return [
                 "success" => true,
@@ -1114,3 +1172,43 @@ function student_confirm_pickup($request_id, $student_username, $conn)
 }
 
 ?>
+
+
+
+<?php
+
+
+function get_cook_points($cook_username, $conn) {
+
+    $sql = "
+        SELECT total_credits_earned
+        FROM cook
+        WHERE username = ?
+    ";
+
+    $stmt = mysqli_prepare($conn, $sql);
+
+    if (!$stmt) {
+        return 0;
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "s",
+        $cook_username
+    );
+
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    $row = mysqli_fetch_assoc($result);
+
+    mysqli_stmt_close($stmt);
+
+    if (!$row) {
+        return 0;
+    }
+
+    return (int)$row["total_credits_earned"];
+}

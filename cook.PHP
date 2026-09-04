@@ -7,12 +7,16 @@ if (!isset($_SESSION['username'])) {
     exit();
 }   
 
+$cook_username = $_SESSION['username'];
+
+
+
 $student = get_student_by_username($_SESSION['username'], $conn);
 if($student){
 $cook=ensure_cook_registered($student['username'],$conn);//After redirect this function    
 }                                                       //this function inserts the student into the table cook
 
-
+$cook_points = get_cook_points($cook_username, $conn);
 ?>
 
 
@@ -38,13 +42,25 @@ $cook=ensure_cook_registered($student['username'],$conn);//After redirect this f
 
 <header class="cook-header">
 
+<div class="header-actions">
 
-     <button class="logo" data-text="Awesome" onclick="window.location.href='index_stud.php'">
+    <button type="button" class="requestsBtn">
+        Τα αιτήματά μου
+    </button>
+
+    <div class="cook-points">
+        Πόντοι:
+        <strong><?php echo $cook_points; ?></strong>
+    </div>
+
+</div>
+
+    <button class="logo" data-text="Awesome" onclick="window.location.href='index_stud.php'">
             <span class="actual-text">&nbsp;UNiBITE&nbsp;</span>
             <span aria-hidden="true" class="hover-text">&nbsp;UNiBITE&nbsp;</span>
     </button>
     
-    <button type="button" class="requestsBtn">Τα αιτήματά μου</button>
+    
     <h1>Οι Αγγελίες μου</h1>
 
 
