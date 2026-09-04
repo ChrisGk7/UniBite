@@ -742,10 +742,13 @@ async function updatePickupStatus(
             await response.json();
 
 
-        console.log(
-            "PICKUP RESPONSE:",
-            data
-        );
+        console.log("CHECK 1");
+
+const cookPointsElement =
+    document.getElementById("cookPoints");
+
+console.log("CHECK 2:", cookPointsElement);
+console.log("CHECK 3:", data.points_earned);
 
 
         if (!data.success) {
@@ -754,6 +757,38 @@ async function updatePickupStatus(
 
             return;
         }
+
+
+
+        // Live ενημέρωση πόντων όταν έγινε παραλαβή
+if (pickupAction === "picked_up") {
+
+    const cookPointsElement =
+        document.getElementById("cookPoints");
+
+    if (cookPointsElement) {
+
+        const currentPoints =
+            Number(cookPointsElement.textContent.trim());
+
+        const earnedPoints =
+            Number(data.points_earned);
+
+        const newPoints =
+            currentPoints + earnedPoints;
+
+        console.log("CURRENT:", currentPoints);
+        console.log("EARNED:", earnedPoints);
+        console.log("CALCULATED:", newPoints);
+
+        cookPointsElement.textContent = newPoints;
+
+        console.log(
+            "DISPLAY AFTER UPDATE:",
+            cookPointsElement.textContent
+        );
+    }
+}
 
 
         loadCookRequests();
@@ -787,6 +822,15 @@ const requestsBtn =
 
 const requestsModal =
     document.querySelector(".requestsModal");
+
+    requestsModal.addEventListener("click", function (event) {
+
+    if (event.target === requestsModal) {
+        requestsModal.style.display = "none";
+    }
+
+});
+
 
 const closeRequestsBtn =
     document.querySelector(".closeRequestsBtn");
