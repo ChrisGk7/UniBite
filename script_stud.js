@@ -457,6 +457,10 @@ function renderDishes(dishes) {
 
                         } else {
 
+                            showRequestError(
+                                data.message
+                            );
+
                             console.error(data.message);
 
                         }
@@ -494,6 +498,92 @@ function renderDishes(dishes) {
 
     });
 
+}
+
+
+// -------------------------
+// Request error popup
+// -------------------------
+
+function showRequestError(message) {
+
+    const overlay =
+        document.getElementById(
+            "request-error-overlay"
+        );
+
+    const messageElement =
+        document.getElementById(
+            "request-error-message"
+        );
+
+
+    if (!overlay || !messageElement) {
+        return;
+    }
+
+
+    messageElement.textContent =
+        message;
+
+    overlay.classList.add("show");
+}
+
+
+function closeRequestError() {
+
+    const overlay =
+        document.getElementById(
+            "request-error-overlay"
+        );
+
+
+    if (overlay) {
+        overlay.classList.remove("show");
+    }
+}
+
+// Close button //
+
+const requestErrorOverlay =
+    document.getElementById(
+        "request-error-overlay"
+    );
+
+const closeRequestErrorButton =
+    document.getElementById(
+        "close-request-error"
+    );
+
+
+if (closeRequestErrorButton) {
+
+    closeRequestErrorButton.addEventListener(
+        "click",
+        closeRequestError
+    );
+}
+
+
+if (requestErrorOverlay) {
+
+    requestErrorOverlay.addEventListener(
+        "click",
+        function (event) {
+
+            // Close only when clicking
+            // outside the popup
+            if (
+                event.target ===
+                requestErrorOverlay
+            ) {
+
+                closeRequestError();
+
+            }
+
+        }
+    );
 }
 
 
