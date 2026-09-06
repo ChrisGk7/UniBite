@@ -24,7 +24,7 @@ if (!is_admin($_SESSION['username'], $conn)) {
     <link rel="stylesheet" href="style_stud.css">
 </head>
 <body>
-    <header class="top-header">
+    <header class="top-header" >
 
         <nav class="top-navbar">
 
@@ -39,12 +39,9 @@ if (!is_admin($_SESSION['username'], $conn)) {
 
             <div class="top-nav-actions">
 
-                <div class="credit-display">
-                    <span class="credit-number">5</span>
-                    <span class="credit-label">Credits</span>
-                </div>
+              
              <button class="login-link" onclick="window.location.href='manage_admins.php'">Add an Admin</button> 
-             <button class="login-link" onclick="window.location.href='index_stud.php.'">Student Dashboard</button> 
+              
                
              <a href="logout.php" class="login-link">
                     Logout
@@ -64,9 +61,12 @@ if (!is_admin($_SESSION['username'], $conn)) {
                     <a href="#top">Home</a>
                 </li>
 
-                
-
-                
+              <li>
+                    <a href="#leaderboard">Leaderboard</a>
+                </li>
+                <li>
+                    <a href="#admins-section">Admins</a>
+                </li>
                 <li>
                     <a href="#contact">Contact</a>
                 </li>
@@ -84,36 +84,56 @@ if (!is_admin($_SESSION['username'], $conn)) {
         </nav>
       
 
-<main class = "main-content">
-<section class="welcome-section">
-    
+<main class = "main-content" >
+<section class="total-portions" id="leaderboard">
+    <h2>Statistics</h2>
+    <hr class="divider">
+        <div class="stats-card" >
         
-
-    <section class="container">
-        
-            <h2>Portions shared (last 30 days)</h2>
+            <h2>Portions shared <n>(last 30 days)</h2>
             <p id="statTotalPortions">Loading...</p>
+        </div>
+</section>
+
+    <h2 >Leaderboard</h2>
+    <hr class="divider">
+    <section class="leaderboard-section">
+        <section class="stats-section">
+            <div class="stats-card">
+                <h2>Top Donor</h2>
+                <p id="statTopDonor">Loading...</p>
+            </div>
+        </section>
+        <br>
+        <section class="stats-section">
         
-    </section>
+            <div class="stats-card">
+                <h2>Highest Rated Dishes</h2>
+                <ul id="statTopRatedDishes"><li>Loading...</li></ul>
+            </div>
+        </section>
 
-    <section class="container">
-        <h2>Top Donor</h2>
-        <p id="statTopDonor">Loading...</p>
-    </section>
-
-    <section class="container">
-        <h2>Highest Rated Dishes</h2>
-        <ul id="statTopRatedDishes"><li>Loading...</li></ul>
-    </section>
-     <button class="btn" onclick="window.location.href='manage_admins.php'">Add an Admin</button>
-    <button class="btn" onclick="window.location.href='logout.php'">Logout</button>
-
+    </section>  
+   
+   
+    
     <script src="admin_dashboard.js" defer></script>
+
+<hr class="divider">
+<section class="stats-card" id="admins-section">
+    <h2>Admins</h2>
+    
+    <ul class="admins-list" id="adminList">
+        <li>Loading...</li>
+    </ul>
+
+
 </section>
 
 </main>
 </body>
-<!-- Footer-->
+
+<!-- Footer -->
 <footer class="footer">
 
     <div class="footer-container" id="contact">
@@ -124,6 +144,7 @@ if (!is_admin($_SESSION['username'], $conn)) {
             <div class="footer-section footer-about">
 
                 <a class="footer-brand">
+
                     <img
                         src="images/unibite_icon.png"
                         alt="UniBite logo"
@@ -140,7 +161,6 @@ if (!is_admin($_SESSION['username'], $conn)) {
                     Share food.<br>
                     Reduce waste.<br>
                     Connect students.
-                    
                 </p>
 
             </div>
@@ -162,25 +182,54 @@ if (!is_admin($_SESSION['username'], $conn)) {
 
 
             <!-- Contact -->
-            <div class="footer-section footer-contact-section" id="contact">
+            <div class="footer-section footer-contact-section">
 
                 <h3>Contact</h3>
 
                 <div class="footer-contact">
 
                     <div class="contact-item">
-                        <i data-lucide="mail"></i>
-                        <span>contact@unibite.gr</span>
+
+                        <img
+                            src="images/mail_icon.png"
+                            alt="Email"
+                            class="contact-icon-image"
+                        >
+
+                        <span>
+                            contact@unibite.gr
+                        </span>
+
                     </div>
 
-                    <div class="contact-item">
-                        <i data-lucide="phone"></i>
-                        <span>+30 2610 123456</span>
-                    </div>
 
                     <div class="contact-item">
-                        <i data-lucide="map-pin"></i>
-                        <span>Patras, Greece</span>
+
+                        <img
+                            src="images/phone_icon.png"
+                            alt="Phone"
+                            class="contact-icon-image"
+                        >
+
+                        <span>
+                            +30 2610 123456
+                        </span>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <img
+                            src="images/location_icon.png"
+                            alt="Location"
+                            class="contact-icon-image"
+                        >
+
+                        <span>
+                            Patras, Greece
+                        </span>
+
                     </div>
 
                 </div>
@@ -190,18 +239,30 @@ if (!is_admin($_SESSION['username'], $conn)) {
         </div>
 
 
+        <!-- Divider -->
         <hr class="footer-divider">
 
 
+        <!-- Bottom -->
         <div class="footer-bottom">
 
             <p class="footer-copyright">
                 © 2026 UniBite. All Rights Reserved.
             </p>
 
+
             <p class="footer-message">
-                Made for students
-                <i data-lucide="graduation-cap"></i>
+
+                <span>
+                    Made for students
+                </span>
+
+                <img
+                    src="images/student_hat.png"
+                    alt="Student"
+                    class="footer-student-icon"
+                >
+
             </p>
 
         </div>

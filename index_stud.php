@@ -78,11 +78,8 @@ $current_credits =
 
 
     <div class="top-nav-actions">
-        <div  class="credit-display">
-            <span class="btn" id="request-count" style="cursor: pointer" title="View Active Requests" onclick="window.location.href='cook.PHP'">
-                
-            </span>
-            
+        <div class="active-requests-container">
+            <span class="active-request-count" id="request-count" style="cursor: pointer" title="View Active Requests" onclick="window.location.href='cook.PHP'"> </span>
         </div>
         <div class="credit-display">
             <span class="credit-number">

@@ -43,8 +43,19 @@ if (isset($_POST['add_admin'])) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="form_area">
-        <p class="title">Add an Admin</p>
+   
+    
+    <form id="addAdminForm" method="post" novalidate>
+        <div class="form_area">
+            <div class="form_group">
+                <a href="admin_dashboard.php" class="logo" data-text="UniBite">
+                    <span class="actual-text">&nbsp;UniBite&nbsp;</span>
+                    <span aria-hidden="true" class="hover-text">
+                        &nbsp;UniBite&nbsp;
+                    </span>
+                </a>
+            </div>
+            <p class="title">Add an Admin</p>
 
         <?php if ($error_message): ?>
             <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
@@ -53,7 +64,7 @@ if (isset($_POST['add_admin'])) {
             <p class="success-message"><?php echo htmlspecialchars($success_message); ?></p>
         <?php endif; ?>
 
-        <form id="addAdminForm" method="post" novalidate>
+        
             <div class="form_group">
                 <label class="sub_title" for="reg_username">Username</label>
                 <input id="reg_username" data-error="Please enter a valid username" class="form_style" type="text" name="username" autocomplete="username" required>
@@ -85,8 +96,9 @@ if (isset($_POST['add_admin'])) {
             <div class="form_group">
                 <button class="btn" type="button" onclick="window.location.href='admin_dashboard.php'">BACK TO DASHBOARD</button>
             </div>
-        </form>
-    </div>
+        </div>  
+    </form>
+    
 
     <script src="form.js" defer></script>
 </body>
