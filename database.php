@@ -937,7 +937,8 @@ if ($pickup_action === "picked_up") {
 
             return [
                 "success" => true,
-                "pickup_status" => "picked_up"
+                "pickup_status" => "picked_up",
+                "points_earned" => $request_portions
             ];
         }
 

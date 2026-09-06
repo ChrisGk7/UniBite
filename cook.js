@@ -389,7 +389,19 @@ async function loadCookRequests() {
             return;
         }
 
-        renderCookRequests(data.requests);
+        const activeRequests = data.requests.filter(function(request) {
+
+    return (
+        request.status === "pending" ||
+        (
+            request.status === "accepted" &&
+            request.pickup_status === "awaiting_pickup"
+        )
+    );
+
+});
+
+renderCookRequests(activeRequests);
 
     } catch (error) {
 
