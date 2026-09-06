@@ -50,8 +50,8 @@ $cook_points = get_cook_points($cook_username, $conn);
 
     <div class="cook-points">
         Πόντοι:
-        <strong><?php echo $cook_points; ?></strong>
-    </div>
+    <strong id="cookPoints"><?php echo $cook_points; ?></strong>
+</div>
 
 </div>
 

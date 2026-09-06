@@ -162,7 +162,6 @@ listingForm.addEventListener("submit", async function(event) {
         if (data.success) {
 
             listingForm.reset();
-            //242 243 for hiding preview image
             const previewContainer = document.getElementById('imagePreviewContainer');
             if (previewContainer) previewContainer.style.display = 'none';
             loadDishes();
@@ -390,7 +389,19 @@ async function loadCookRequests() {
             return;
         }
 
-        renderCookRequests(data.requests);
+        const activeRequests = data.requests.filter(function(request) {
+
+    return (
+        request.status === "pending" ||
+        (
+            request.status === "accepted" &&
+            request.pickup_status === "awaiting_pickup"
+        )
+    );
+
+});
+
+renderCookRequests(activeRequests);
 
     } catch (error) {
 
@@ -743,10 +754,13 @@ async function updatePickupStatus(
             await response.json();
 
 
-        console.log(
-            "PICKUP RESPONSE:",
-            data
-        );
+        console.log("CHECK 1");
+
+const cookPointsElement =
+    document.getElementById("cookPoints");
+
+console.log("CHECK 2:", cookPointsElement);
+console.log("CHECK 3:", data.points_earned);
 
 
         if (!data.success) {
@@ -755,6 +769,38 @@ async function updatePickupStatus(
 
             return;
         }
+
+
+
+        // Live ενημέρωση πόντων όταν έγινε παραλαβή
+if (pickupAction === "picked_up") {
+
+    const cookPointsElement =
+        document.getElementById("cookPoints");
+
+    if (cookPointsElement) {
+
+        const currentPoints =
+            Number(cookPointsElement.textContent.trim());
+
+        const earnedPoints =
+            Number(data.points_earned);
+
+        const newPoints =
+            currentPoints + earnedPoints;
+
+        console.log("CURRENT:", currentPoints);
+        console.log("EARNED:", earnedPoints);
+        console.log("CALCULATED:", newPoints);
+
+        cookPointsElement.textContent = newPoints;
+
+        console.log(
+            "DISPLAY AFTER UPDATE:",
+            cookPointsElement.textContent
+        );
+    }
+}
 
 
         loadCookRequests();
@@ -788,6 +834,15 @@ const requestsBtn =
 
 const requestsModal =
     document.querySelector(".requestsModal");
+
+    requestsModal.addEventListener("click", function (event) {
+
+    if (event.target === requestsModal) {
+        requestsModal.style.display = "none";
+    }
+
+});
+
 
 const closeRequestsBtn =
     document.querySelector(".closeRequestsBtn");
