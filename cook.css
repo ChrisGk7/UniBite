@@ -6,6 +6,9 @@
 }
 
 :root {
+    --tsaxpiniariko-orange : #f97316;
+    --tsaxpiniariko-orange-dark : #ea580c;
+
     --primary-orange: #f4511e;
     --primary-orange-dark: #d93d0b;
 
@@ -40,7 +43,7 @@ header {
 
     text-align: center;
 
-    border-bottom: 5px solid var(--primary-orange);
+    border-bottom: 5px solid var(--tsaxpiniariko-orange);
 }
 
 header h1 {
@@ -71,7 +74,7 @@ section h2::after {
 
     margin-top: 0.1px;
 
-    background-color: var(--primary-orange);
+    background-color: var(--tsaxpiniariko-orange);
     border-radius: 10px;
 }
 
@@ -127,7 +130,7 @@ section h2::after {
 
 .listingForm input:focus,
 .listingForm textarea:focus {
-    border-color: var(--primary-orange);
+    border-color: var(----tsaxpiniariko-orange);
 
     box-shadow: 0 0 0 4px rgba(244, 81, 30, 0.12);
 }
@@ -143,7 +146,7 @@ section h2::after {
     border: none;
     border-radius: 30px;
 
-    background-color: var(--primary-orange);
+    background-color: var(--tsaxpiniariko-orange);
     color: var(--white);
 
     font-size: 1rem;
@@ -159,11 +162,11 @@ section h2::after {
 
 .listingForm button:hover,
 #newListingBtn:hover {
-    background-color: var(--primary-orange-dark);
+    background-color: var(--tsaxpiniariko-orange-dark);
 
     transform: translateY(-2px);
 
-    box-shadow: 0 8px 20px rgba(244, 81, 30, 0.25);
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25);
 }
 
 hr {
@@ -227,7 +230,7 @@ hr {
 
     background: linear-gradient(
         90deg,
-        var(--primary-orange),
+        var(--tsaxpiniariko-orange),
         var(--accent-yellow)
     );
 }
@@ -476,9 +479,9 @@ hr {
 
 .editForm input:focus,
 .editForm textarea:focus {
-    border-color: var(--primary-orange);
+    border-color: var(--tsaxpiniariko-orange);
 
-    box-shadow: 0 0 0 4px rgba(244, 81, 30, 0.12);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
 }
 
 
@@ -508,7 +511,7 @@ hr {
 
 
 .saveEdit {
-    background-color: var(--primary-orange);
+    background-color: var(--tsaxpiniariko-orange);
 
     color: var(--white);
 }
@@ -522,11 +525,11 @@ hr {
 
  input:user-invalid 
         {
-        border-color:var(--primary-orange-dark) !important;
+        border-color:var(--tsaxpiniariko-orange-dark) !important;
         }
     .error-message
         {
-        color: var(--primary-orange-dark) !important;
+        color: var(--tsaxpiniariko-orange-dark) !important;
         font-size: 12px;
         margin-top: 5px;
         }    
@@ -554,7 +557,7 @@ hr {
     border: none;
     border-radius: 25px;
 
-    background-color: var(--primary-orange);
+    background-color: var(--tsaxpiniariko-orange);
     color: var(--white);
 
     font-size: 0.95rem;
@@ -568,7 +571,7 @@ hr {
 }
 
 .requestsBtn:hover {
-    background-color: var(--primary-orange-dark);
+    background-color: var(--tsaxpiniariko-orange-dark);
 
     transform: translateY(-50%) translateY(-2px);
 }
@@ -620,7 +623,7 @@ hr {
     padding-bottom: 15px;
     margin-bottom: 20px;
 
-    border-bottom: 3px solid var(--primary-orange);
+    border-bottom: 3px solid var(--tsaxpiniariko-orange);
 }
 
 
@@ -638,7 +641,7 @@ hr {
     border: none;
     border-radius: 50%;
 
-    background-color: var(--primary-orange);
+    background-color: var(--tsaxpiniariko-orange);
     color: var(--white);
 
     font-size: 1.5rem;
@@ -649,7 +652,7 @@ hr {
 
 
 .closeRequestsBtn:hover {
-    background-color: var(--primary-orange-dark);
+    background-color: var(--tsaxpiniariko-orange-dark);
 }
 
 
@@ -682,7 +685,7 @@ hr {
 .logo {
   --border-right: 6px;
   --text-stroke-color:var(--dark);
-  --animation-color: var(--primary-orange);
+  --animation-color: var(--tsaxpiniariko-orange);
   --fs-size: 2em;
   letter-spacing: 3px;
   text-decoration: none;
@@ -751,7 +754,7 @@ hr {
     background: var(--white);
     color: var(--dark);
 
-    border: 2px solid var(--accent-yellow);
+    border: 2px solid var(--tsaxpiniariko-orange);
     border-radius: 25px;
 
     font-weight: 700;
@@ -761,7 +764,7 @@ hr {
 }
 
 .cook-points strong {
-    color: var(--primary-orange);
+    color: var(--tsaxpiniariko-orange);
     font-size: 1.1rem;
     margin-left: 6px;
 }
