@@ -198,7 +198,8 @@ hr {
     display: flex;
     flex-direction: column;
     size: fit-content;
-    
+    max-width: 50%;
+    max-height: 100%;
 
     padding: 25px;
 
@@ -215,7 +216,7 @@ hr {
         transform 0.25s ease,
         box-shadow 0.25s ease;
 }
-    
+
 .listing-card::before {
     content: "";
 
