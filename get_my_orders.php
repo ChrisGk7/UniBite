@@ -37,6 +37,7 @@ $sql = "
 
     WHERE request.stu_username = ?
       AND request.status = 'accepted'
+      AND dish.reg_date > NOW() - INTERVAL 48 HOUR
 
     ORDER BY request.request_datetime DESC
 ";
