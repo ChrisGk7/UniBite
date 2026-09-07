@@ -1,0 +1,130 @@
+DROP DATABASE IF EXISTS unibite_db;
+CREATE DATABASE unibite_db;
+USE unibite_db;
+
+
+CREATE TABLE user(
+  username varchar(63) NOT NULL UNIQUE,
+  email varchar(63) NOT NULL UNIQUE,
+  pass varchar(255) DEFAULT NULL,
+  name varchar(63) DEFAULT NULL,
+  reg_date datetime NOT NULL DEFAULT current_timestamp(),
+
+  PRIMARY KEY (username)
+);
+
+CREATE TABLE student (
+  username varchar(63) NOT NULL UNIQUE,
+  email varchar(63) NOT NULL UNIQUE,
+  credits int(5) NOT NULL DEFAULT 5,      
+  street text NOT NULL,
+  number INT(5) NOT NULL,
+  city text NOT NULL,
+  postcode INT(11) NOT NULL,
+  mobile varchar(14) NOT NULL,
+
+  PRIMARY KEY (username),
+
+  FOREIGN KEY (username) REFERENCES user(username)
+  ON UPDATE CASCADE ON DELETE CASCADE,
+
+  FOREIGN KEY (email) REFERENCES user(email)
+  ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE cook(
+  username varchar(63) NOT NULL UNIQUE,
+  email varchar(63) NOT NULL UNIQUE,
+  street text NOT NULL,
+  number int(5) NOT NULL,
+  city text NOT NULL,
+  postcode INT(11) NOT NULL,
+  mobile varchar(14) NOT NULL,
+  total_credits_earned INT NOT NULL DEFAULT 0,
+
+  PRIMARY KEY (username),
+
+  FOREIGN KEY (email) REFERENCES user(email)
+  ON UPDATE CASCADE ON DELETE CASCADE,
+
+  FOREIGN KEY (username) REFERENCES user(username)
+  ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE admin (
+  username varchar(63) NOT NULL UNIQUE,
+  email varchar(63) NOT NULL UNIQUE,
+
+  PRIMARY KEY (username),
+
+  FOREIGN KEY (username) REFERENCES user(username)
+  ON UPDATE CASCADE ON DELETE CASCADE,
+
+  FOREIGN KEY (email) REFERENCES user(email)
+  ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE dish(
+  id int(30) NOT NULL AUTO_INCREMENT UNIQUE,
+  cook varchar(63) NOT NULL,
+  title varchar(255) NOT NULL,
+  description varchar(255) NOT NULL,      
+  allergens text NOT NULL,                
+  photos_url varchar(255) DEFAULT NULL,   
+
+
+  pickup_location varchar(255) NOT NULL,   
+  pickup_time datetime NOT NULL,           
+
+  
+  latitude decimal(10,7) DEFAULT NULL,
+  longitude decimal(10,7) DEFAULT NULL,
+
+  portions int(2) NOT NULL,           
+  credits_per_portion int(2) NOT NULL DEFAULT 1,
+
+  reg_date datetime NOT NULL DEFAULT current_timestamp(),
+
+  PRIMARY KEY (id),
+
+  FOREIGN KEY (cook) REFERENCES cook(username)
+  ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE request(
+  id int(30) NOT NULL AUTO_INCREMENT,
+
+  stu_username varchar(63) NOT NULL,
+  cook_username varchar(63) NOT NULL,
+  dish_id int(30) NOT NULL,
+
+  portions int(2) NOT NULL,
+  credit_cost int(2) NOT NULL,
+
+ 
+  status ENUM('pending','declined','accepted') NOT NULL DEFAULT 'pending',
+
+ 
+  pickup_status ENUM('awaiting_pickup','picked_up','no_show') DEFAULT NULL,
+
+
+  rating ENUM('1','2','3','4','5') DEFAULT NULL,
+
+  request_datetime datetime NOT NULL DEFAULT current_timestamp(),
+  reply_datetime datetime DEFAULT NULL,     
+  pickup_datetime datetime DEFAULT NULL,   
+  rated_datetime datetime DEFAULT NULL,    
+
+  PRIMARY KEY (id),
+
+  FOREIGN KEY (stu_username) REFERENCES student(username)
+  ON UPDATE CASCADE ON DELETE CASCADE,
+
+  FOREIGN KEY (cook_username) REFERENCES cook(username)
+  ON UPDATE CASCADE ON DELETE CASCADE,
+
+  FOREIGN KEY (dish_id) REFERENCES dish(id)
+  ON UPDATE CASCADE ON DELETE CASCADE
+);
+
