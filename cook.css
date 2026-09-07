@@ -33,7 +33,7 @@ body {
 }
 
 header {
-    background-color: var(--dark);
+    background-color: var(--white);
     color: var(--white);
 
     padding: 28px 20px;
@@ -45,6 +45,7 @@ header {
 
 header h1 {
     font-size: 2rem;
+    color: var(--dark);
     font-weight: 800;
 }
 
