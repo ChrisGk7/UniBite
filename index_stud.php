@@ -41,6 +41,10 @@ $current_credits =
         ? (int)$student_data["credits"]
         : 0;
 
+        if (!isset($_SESSION['username'])) {
+            header("Location: index.php");
+            exit();
+        }
 ?>
 
 
