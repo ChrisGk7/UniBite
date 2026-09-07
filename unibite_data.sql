@@ -6,13 +6,13 @@ INSERT INTO `user` (`username`, `email`, `pass`, `name`, `reg_date`) VALUES
 ('Dimitris', 'papakia@gmail.com', '$2y$10$i37Npfp9.JXYoLB.unoUeOC1wqldCuOHZQHXF3oK52LDGX1MtlD9q', 'DIMITRIS BRIONIS', '2026-09-07 12:51:40'),
 ('testakos1', 'dimvri112@gmail.com', '$2y$10$ybuzbRIA4x7C71EXJa0G1.VQdFwELUkoTyi7Tn16tef9cmhaBvvzK', 'testakos1 testakou', '2026-09-04 11:30:10'),
 ('testakos2', 'divri112@gmail.com', '$2y$10$4i/jz1Wz/UkEX.yddHA01eF4reRsq5PoKpN9obPh100PhHOioqvJW', 'testakos2 testakou', '2026-09-04 11:42:17'),
-('testakos3', 'asdasd@gmail.com', '$2y$10$sRz3n.MDb/E3lbx69./KiO5SaY/fCHkAUG9UsNDbC/LoUWyEpL5E2', 'testakos2 testakou', '2026-09-04 11:46:12');
+('testakos3', 'asdasd@gmail.com', '$2y$10$sRz3n.MDb/E3lbx69./KiO5SaY/fCHkAUG9UsNDbC/LoUWyEpL5E2', 'testakos2 testakou', '2026-09-04 11:46:12'),
 ('Mitaras', 'ap@unibite.gr', '$2y$10$u092N5su9CR4CNxgBBda7e0x0BAJLb.T.xrzSL29NmDIqrfXv4oo.', 'Alex Parginos', '2026-08-10 14:24:30');
 
 INSERT INTO `student` (`username`, `email`, `credits`, `street`, `number`, `city`, `postcode`, `mobile`) VALUES
 ('Chrizz', '6909878289.chris@gmail.com', 7, 'Zakinthou', 84, 'Patras', 26441, '6988441990'),
 ('JohnP', 'GP@gmail.com', 3, 'CORFU', 1, 'CORFU', 49084, '+306977894499'),
-('Lemonia', 'LM@gmail.com', 13, 'CORFU', 1, 'CORFU', 49084, '+306973902768')
+('Lemonia', 'LM@gmail.com', 13, 'CORFU', 1, 'CORFU', 49084, '+306973902768'),
 ('testakos1', 'dimvri112@gmail.com', 9, 'PATMOY', 7, 'PATRA', 49100, '+306945056779'),
 ('testakos2', 'divri112@gmail.com', 17, 'PATMOY', 7, 'PATRA', 49100, '+306945056779'),
 ('testakos3', 'asdasd@gmail.com', 1, 'PATMOY', 7, 'PATRA', 49100, '+306945056779');
