@@ -1,8 +1,10 @@
 :root {
     --tsaxpiniariko-orange : #f97316;
+    --tsaxpiniariko-orange-dark : #ea580c;
+    
     --primary-orange: #f4511e;
     --primary-orange-dark: #d93d0b;
-
+    
     --accent-yellow: #f9b233;
 
     --dark: #201a17;
@@ -51,7 +53,7 @@ body {
 
     padding: 10px 18px;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     text-decoration: none;
@@ -73,7 +75,7 @@ body {
 /* Hover */
 
 .secondary-nav-links a:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
     color: white;
 
     transform: translateY(-1px);
@@ -102,7 +104,7 @@ body {
 }
 
 .secondary-welcome strong {
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
     font-weight: 600;
 }
 
@@ -164,7 +166,7 @@ body {
 
 .brand {
     text-decoration: none;
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
     font-size: 28px;
     font-weight: 700;
 }
@@ -221,7 +223,7 @@ body {
     box-sizing: border-box;
 
     background-color: #fff0e5;
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 
     border-radius: 9999px;
 
@@ -239,15 +241,15 @@ body {
 .top-nav-actions .login-link {
     color: white;
 
-    border: 2px solid #f97316;
+    border: 2px solid var(--tsaxpiniariko-orange);
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
 }
 
 .top-nav-actions .login-link:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
 
-    border-color: #ea580c;
+    border-color: var(--tsaxpiniariko-orange-dark);
 
     transform: translateY(-1px);
 }
@@ -262,11 +264,11 @@ html {
 ========================= */
 
 #my-orders-button {
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 
     background-color: transparent;
 
-    border: 2px solid #f97316;
+    border: 2px solid var(--tsaxpiniariko-orange);
 
     appearance: none;
     -webkit-appearance: none;
@@ -402,7 +404,7 @@ html {
 
 .close-orders:hover {
     background-color: #fff0e5;
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 
     transform: translateY(-1px);
 }
@@ -469,8 +471,8 @@ html {
 
     background: linear-gradient(
         90deg,
-        #f97316,
-        #fbbf24
+        var(--tsaxpiniariko-orange),
+        var(--tsaxpiniariko-orange-dark)/*-------*/
     );
 }
 
@@ -545,7 +547,7 @@ html {
 
 .student-order-status.picked-up {
     background-color: #fff0e5;
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 }
 
 
@@ -600,7 +602,7 @@ html {
     border: none;
     border-radius: 9999px;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     font-size: 13px;
@@ -615,7 +617,7 @@ html {
 }
 
 .student-pickup-button:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
 
     transform: translateY(-1px);
 
@@ -718,7 +720,7 @@ html {
     border: none;
     border-radius: 25px;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     font-size: 14px;
@@ -733,7 +735,7 @@ html {
 }
 
 .submit-rating-button:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
 
     transform: translateY(-2px);
 
@@ -894,7 +896,7 @@ html {
 
     padding: 11px 20px;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     border-radius: 10px;
@@ -908,7 +910,7 @@ html {
 }
 
 .create-dish-button:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
     transform: translateY(-2px);
 }
 
@@ -949,7 +951,7 @@ html {
 }
 
 .search-input:focus {
-    border-color: #f97316;
+    border-color: var(--tsaxpiniariko-orange);
 }
 
 .search-button {
@@ -957,11 +959,11 @@ html {
     
     padding: 12px 18px;
 
-    border: 1px solid #f97316;
+    border: 1px solid var(--tsaxpiniariko-orange);
 
     border-radius: 0 12px 12px 0;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     font-size: 14px;
@@ -971,7 +973,7 @@ html {
 }
 
 .search-button:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
 }
 
 
@@ -997,7 +999,7 @@ html {
 
     padding: 11px 18px;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     border: none;
@@ -1015,7 +1017,7 @@ html {
 }
 
 .near-me-button:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
 
     transform: translateY(-1px);
 
@@ -1044,7 +1046,7 @@ html {
     width: 100%;
     height: 4px;
 
-    background-color: #ff5a1f;
+    background-color: var(--tsaxpiniariko-orange);
     border-radius: 10px;
 }
 
@@ -1073,7 +1075,7 @@ html {
 .view-all {
     text-decoration: none;
 
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 
     font-size: 14px;
     font-weight: 600;
@@ -1127,7 +1129,7 @@ html {
 
     overflow: hidden;
     flex-shrink: 0;
-    border-bottom: 2px solid #ff5a1f;
+    border-bottom: 2px solid var(--tsaxpiniariko-orange);
 }
 
 .food-card-image img {
@@ -1194,7 +1196,7 @@ html {
 
     padding: 10px 16px;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     font-size: 14px;
@@ -1206,7 +1208,7 @@ html {
 }
 
 .add-button:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
 }
 
 /* -------------------------
@@ -1278,7 +1280,7 @@ html {
     border: none;
 
     background-color: #fff0e5;
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 
     font-size: 18px;
     font-weight: 700;
@@ -1318,7 +1320,7 @@ html {
     border: none;
     border-radius: 9999px;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     font-size: 14px;
@@ -1332,12 +1334,12 @@ html {
 }
 
 .request-button:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
     transform: translateY(-1px);
 }
 
 .request-button:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
 }
 
 /* Own dish */
@@ -1483,7 +1485,7 @@ html {
 }
 
 .footer-logo-bite {
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 }
 
 .footer-description {
@@ -1510,7 +1512,7 @@ html {
 .footer-contact-section h3 {
     margin: 0 0 22px;
 
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 
     font-size: 24px;
     font-weight: 700;
@@ -1735,7 +1737,7 @@ html {
 
     --border-right: 4px;
     --text-stroke-color: #222;
-    --animation-color: #f97316;
+    --animation-color: var(--tsaxpiniariko-orange);
     --fs-size: 28px;
 
     letter-spacing: 2px;
@@ -1871,10 +1873,10 @@ html {
 
     background-color: #fff0e5;
 
-    border: 2px solid #f97316;
+    border: 2px solid var(--tsaxpiniariko-orange);
     border-radius: 50%;
 
-    color: #f97316;
+    color: var(--tsaxpiniariko-orange);
 
     font-size: 28px;
     font-weight: 700;
@@ -1913,7 +1915,7 @@ html {
     border: none;
     border-radius: 25px;
 
-    background-color: #f97316;
+    background-color: var(--tsaxpiniariko-orange);
     color: white;
 
     font-size: 15px;
@@ -1928,7 +1930,7 @@ html {
 
 
 .close-request-error:hover {
-    background-color: #ea580c;
+    background-color: var(--tsaxpiniariko-orange-dark);
 
     transform: translateY(-2px);
 }
