@@ -1,0 +1,437 @@
+/* =========================================
+   COOK REQUESTS
+   Same design language as cook.css
+========================================= */
+
+
+/* REQUEST MODAL */
+
+.requestsModal {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1100;
+}
+
+
+/* MODAL CONTENT */
+
+.requests-modal-content {
+    width: 90%;
+    max-width: 850px;
+
+    max-height: 85vh;
+    overflow-y: auto;
+
+    padding: 30px;
+
+    background-color: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    box-shadow: var(--shadow);
+}
+
+
+/* HEADER */
+
+.requests-modal-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+
+    border-bottom: 4px solid var(--primary-orange);
+}
+
+
+.requests-modal-header h2 {
+    font-size: 1.8rem;
+
+    color: var(--dark);
+}
+
+
+/* CLOSE BUTTON */
+
+.closeRequestsBtn {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: var(--primary-orange);
+    color: var(--white);
+
+    font-size: 1.5rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.closeRequestsBtn:hover {
+    background-color: var(--primary-orange-dark);
+
+    transform: translateY(-2px);
+}
+
+
+/* REQUEST LIST */
+
+.requests-list {
+    display: grid;
+
+    gap: 20px;
+}
+
+
+/* EMPTY MESSAGE */
+
+.no-requests-message {
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: var(--dark-soft);
+
+    background-color: var(--cream);
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    font-size: 1rem;
+}
+
+
+/* =========================================
+   REQUEST CARD
+========================================= */
+
+.request-card {
+    position: relative;
+
+    padding: 24px;
+
+    background-color: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* Orange / yellow line like listing-card */
+
+.request-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 6px;
+
+    background: linear-gradient(
+        90deg,
+        var(--primary-orange),
+        var(--accent-yellow)
+    );
+}
+
+
+.request-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 18px 40px rgba(48, 32, 20, 0.15);
+}
+
+
+/* CARD HEADER */
+
+.request-card-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-top: 5px;
+    margin-bottom: 18px;
+}
+
+
+.request-card-header h3 {
+    margin-bottom: 5px;
+
+    font-size: 1.35rem;
+
+    color: var(--dark);
+}
+
+
+.request-card-header p {
+    color: var(--dark-soft);
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.request-status {
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    border-radius: 25px;
+
+    background-color: var(--light-orange);
+    color: var(--primary-orange-dark);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    text-transform: capitalize;
+
+    white-space: nowrap;
+}
+
+
+/* Optional status-specific classes */
+
+.request-status.pending {
+    background-color: #fff0c7;
+    color: #8a6200;
+}
+
+
+.request-status.accepted {
+    background-color: #dff3e5;
+    color: #267444;
+}
+
+
+.request-status.declined {
+    background-color: #f8dddd;
+    color: var(--danger-dark);
+}
+
+
+/* =========================================
+   REQUEST INFO
+========================================= */
+
+.request-card-info {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+
+.request-card-info p {
+    padding: 12px 14px;
+
+    background-color: var(--cream);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    color: var(--dark-soft);
+}
+
+
+.request-card-info strong {
+    color: var(--dark);
+}
+
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.request-actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 5px;
+}
+
+
+.request-actions button {
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 25px;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.request-actions button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ACCEPT */
+
+.approveRequestBtn {
+    background-color: var(--primary-orange);
+    color: var(--white);
+}
+
+
+.approveRequestBtn:hover {
+    background-color: var(--primary-orange-dark);
+
+    box-shadow:
+        0 8px 20px rgba(244, 81, 30, 0.25);
+}
+
+
+/* REJECT */
+
+.rejectRequestBtn {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+
+.rejectRequestBtn:hover {
+    background-color: var(--danger-dark);
+
+    box-shadow:
+        0 8px 20px rgba(217, 54, 54, 0.25);
+}
+
+
+/* =========================================
+   FUTURE B3 BUTTONS
+   picked up / no show
+========================================= */
+
+.pickedUpBtn {
+    background-color: var(--primary-orange);
+    color: var(--white);
+}
+
+
+.pickedUpBtn:hover {
+    background-color: var(--primary-orange-dark);
+}
+
+
+.noShowBtn {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+
+.noShowBtn:hover {
+    background-color: var(--danger-dark);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .requests-modal-content {
+        width: 94%;
+
+        padding: 20px;
+
+        max-height: 90vh;
+
+        border-radius: 17px;
+    }
+
+
+    .requests-modal-header h2 {
+        font-size: 1.5rem;
+    }
+
+
+    .request-card {
+        padding: 20px;
+    }
+
+
+    .request-card-header {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .request-card-info {
+        grid-template-columns: 1fr;
+    }
+
+
+    .request-actions {
+        flex-direction: column;
+    }
+
+
+    .request-actions button {
+        width: 100%;
+    }
+
+}
