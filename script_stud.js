@@ -1302,3 +1302,25 @@ document.addEventListener(
 );
 
 checkRatingPenalties();
+//-------------------------
+//Chris: Check if user has to reply to requests
+//-------------------------
+const requestCount = document.getElementById("request-count");
+async function checkPendingRequests() {
+    try {
+        const response = await fetch('get_request_count.php');
+        const data = await response.json();
+        if (data.request_count > 0) {
+            requestCount.textContent = `Active Requests: ${data.request_count}`;
+            requestCount.style.color = 'red'; // Highlight the request count in red
+        }
+        else if (data.request_count === 0) {
+            requestCount.textContent = 'No Active Requests';
+            requestCount.style.color = ''; // Highlight the request count in green
+        } 
+    } catch (error) {
+        console.error('Error checking pending requests:', error);
+        requestCount.textContent = 'Request check failed';
+    }
+}
+checkPendingRequests();

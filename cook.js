@@ -426,7 +426,7 @@ function renderCookRequests(requests) {
 
         requestsList.innerHTML = `
             <p class="no-requests-message">
-                Δεν υπάρχουν αιτήματα αυτή τη στιγμή.
+                No active requests.
             </p>
         `;
 
@@ -466,27 +466,27 @@ function renderCookRequests(requests) {
             <div class="request-card-info">
 
                 <p>
-                    <strong>Μερίδες:</strong>
+                    <strong>Portions:</strong>
                     ${request.portions}
                 </p>
 
                 <p>
-                    <strong>Κόστος:</strong>
+                    <strong>Cost:</strong>
                     ${request.credit_cost} credits
                 </p>
 
                 <p>
-                    <strong>Τοποθεσία:</strong>
+                    <strong>Location:</strong>
                     ${request.pickup_location}
                 </p>
 
                 <p>
-                    <strong>Ώρα Παραλαβής:</strong>
+                    <strong>Pickup Time:</strong>
                     ${request.pickup_time}
                 </p>
 
                 <p>
-                    <strong>Κατάσταση παραλαβής:</strong>
+                    <strong>Pickup Status:</strong>
                     ${request.pickup_status || "-"}
                 </p>
 
@@ -504,7 +504,7 @@ function renderCookRequests(requests) {
                                 class="approveRequestBtn"
                                 data-request-id="${request.id}"
                             >
-                                Αποδοχή
+                                Accept
                             </button>
 
                             <button
@@ -512,7 +512,7 @@ function renderCookRequests(requests) {
                                 class="rejectRequestBtn"
                                 data-request-id="${request.id}"
                             >
-                                Απόρριψη
+                                Decline
                             </button>
 
                         </div>
@@ -529,7 +529,7 @@ function renderCookRequests(requests) {
                                 class="pickedUpBtn"
                                 data-request-id="${request.id}"
                             >
-                                Παραλήφθηκε
+                                Picked Up
                             </button>
 
                             <button
@@ -537,7 +537,7 @@ function renderCookRequests(requests) {
                                 class="noShowBtn"
                                 data-request-id="${request.id}"
                             >
-                                Δεν παραλήφθηκε
+                                No Show
                             </button>
 
                         </div>

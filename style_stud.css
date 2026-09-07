@@ -1958,3 +1958,131 @@ html {
     object-fit: contain;
     flex-shrink: 0;
 }
+/* =========================
+   Chris Active Requests
+========================= */   
+.active-requests-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    
+}
+.active-requests-container .active-request-count{
+    color: var(--tsaxpiniariko-orange);
+    background-color: var(--cream);
+    letter-spacing: 0.5px;
+    
+    border: 1px solid var(--white);
+    border-radius: 16px;
+
+    padding: 10px;
+
+    box-shadow:
+        0 4px 15px var(--black-shadow-07);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+.active-requests-container .active-request-count:hover {
+    transform: translateY(-2px);
+    background-color: var(--tsaxpiniariko-orange);
+    color: var(--cream);
+    box-shadow:
+        0 10px 25px var(--black-shadow-10);
+}
+/* Admin Elements */
+.stats-card {
+    font-size: 16px;
+    background-color: var(--cream );
+
+    border: 1px solid var(--white);
+    border-radius: 16px;
+   
+
+    padding: 24px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.07);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+.stats-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.10);
+}
+.stats-card hr {
+    margin: 0 0 6px;
+    border-radius: 2px;
+    color: var(--tsaxpiniariko-orange);
+    max-width: 75%;
+    max-height: 2px;
+}
+.stats-card img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    flex-shrink: 0;      
+}.admins-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.admins-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 16px;
+
+    border-bottom: 1px solid var(--light-gray);
+
+    transition:
+        background-color 0.2s,
+        transform 0.2s;
+}
+.admins-list li:hover {
+    background-color: var(--orange-light);
+
+    transform: translateY(-1px);
+}
+
+.admin-card {
+    background-color: var(--cream);
+
+    border: 1px solid var(--white);
+    border-radius: 16px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.07);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+.admin-card  img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.divider {
+    width: 100%;
+    height: 5px;
+    padding: 1px;
+    border-radius: 9px;
+    margin: 18px 0;
+
+    background-color: var(--tsaxpiniariko-orange);
+
+}
+.divider:hover {
+    background-color: var(--primary-orange);
+}

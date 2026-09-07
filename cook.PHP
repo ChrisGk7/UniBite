@@ -45,7 +45,7 @@ $cook_points = get_cook_points($cook_username, $conn);
 <div class="header-actions">
 
     <button type="button" class="requestsBtn">
-        My Requests: 
+        My Requests 
     </button>
 
     <div class="cook-points">
@@ -171,7 +171,7 @@ $cook_points = get_cook_points($cook_username, $conn);
 
         <div class="requests-modal-header">
 
-            <h2>My Request</h2>
+            <h2>My Requests</h2>
 
             <button type="button" class="closeRequestsBtn">
                 ×
