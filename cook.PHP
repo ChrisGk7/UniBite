@@ -45,13 +45,13 @@ $cook_points = get_cook_points($cook_username, $conn);
 <div class="header-actions">
 
     <button type="button" class="requestsBtn">
-        Τα αιτήματά μου
+        My Requests 
     </button>
 
     <div class="cook-points">
-        Πόντοι:
-        <strong><?php echo $cook_points; ?></strong>
-    </div>
+        Credits:
+    <strong id="cookPoints"><?php echo $cook_points; ?></strong>
+</div>
 
 </div>
 
@@ -61,7 +61,7 @@ $cook_points = get_cook_points($cook_username, $conn);
     </button>
     
     
-    <h1>Οι Αγγελίες μου</h1>
+    <h1>My Listings</h1>
 
 
 </header>
@@ -71,18 +71,18 @@ $cook_points = get_cook_points($cook_username, $conn);
 
     <section class="new-listing">
         
-        <h2>Νέα Αγγελία</h2>
+        <h2>New Listing</h2>
     
         <form id="listingForm" class="listingForm" method="POST" enctype="multipart/form-data" action="create_dish.php" novalidate>
         
         <div class="form-group">
-            <label>Τίτλος</label>
+            <label>Title</label>
             <input type="text" id="title" name="title" required data-error="Please enter a title.">
             <span class="error-message" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
-            <label>Φωτογραφία</label>
+            <label>Photo</label>
             <input type="file" id="image" name="image" accept="image/*">
             <div id="imagePreviewContainer" style="margin-top: 15px; display: none;">
                     <p style="font-weight: bold; margin-bottom: 5px; color: var(--dark-soft);">Προεπισκόπηση:</p>
@@ -91,31 +91,31 @@ $cook_points = get_cook_points($cook_username, $conn);
         </div>
 
         <div class="form-group">
-            <label>Σημειώσεις</label>
+            <label>Description</label>
             <textarea id="notes" name="description" required data-error="Please enter notes."></textarea>
             <span class="error-message" aria-live="polite" ></span>
         </div>
 
         <div class="form-group">    
-            <label>Αλλεργιογόνα</label>
-            <input type="text" id="allergerns" name="allergens" placeholder="πχ, Γλουτένη, Γάλα" required  data-error="Please enter the allergerns.">
+            <label>Allergerns</label>
+            <input type="text" id="allergerns" name="allergens" placeholder="e.g. Gluten, Milk" required  data-error="Please enter the allergerns.">
             <span class="error-message" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
-            <label>Μερίδες</label>
+            <label>Portions</label>
             <input type="number" id="portions" name="portions" min="1" required data-error="Please enter portions.">
             <span class="error-message" aria-live="polite"></span>
         </div>
         
         <div class="form-group">
-            <label>Τοποθεσία Παραλαβής</label>
+            <label>Pickup Location</label>
             <input type="text" id="pickupLocation" name="pickup_location" required data-error="Please enter the pickup location.">
             <span class="error-message" aria-live="polite" ></span>
         </div>
         
         <div class="form-group">
-            <label>Σημείο στον χάρτη (κάντε κλικ για να το ορίσετε)</label>
+            <label>Point on map(click to drop a pin)</label>
             <div id="pickupMap" style="height: 250px; border-radius: 12px;"></div>
             <input type="hidden" id="latitude" name="latitude">
             <input type="hidden" id="longitude" name="longitude">
@@ -123,13 +123,13 @@ $cook_points = get_cook_points($cook_username, $conn);
         </div>
         
         <div class="form-group">
-            <label>Ώρα Παραλαβής</label>
+            <label>Pickup time</label>
             <input type="datetime-local" id="pickupTime" name="pickup_time" required data-error="Please enter the pickup time.">
             <span class="error-message" aria-live="polite"></span>
         </div>
             
         <div class="form-group">
-            <button type="submit">Δημιουργία Αγγελίας</button>
+            <button type="submit">Create Listing</button>
         </div>
         </form>
 
@@ -138,7 +138,7 @@ $cook_points = get_cook_points($cook_username, $conn);
     <hr>
 
     <section class="my-listings">
-        <h2>Οι αγγελίες μου</h2>
+        <h2>My Listings</h2>
 
         <div id="listingsContainer" class="listingsContainer">
             <article class="listing-card">
@@ -171,7 +171,7 @@ $cook_points = get_cook_points($cook_username, $conn);
 
         <div class="requests-modal-header">
 
-            <h2>Τα αιτήματά μου</h2>
+            <h2>My Requests</h2>
 
             <button type="button" class="closeRequestsBtn">
                 ×
@@ -182,7 +182,7 @@ $cook_points = get_cook_points($cook_username, $conn);
         <div class="requests-list">
 
             <p class="no-requests-message">
-                Δεν υπάρχουν αιτήματα αυτή τη στιγμή.
+                No active requests.
             </p>
 
         </div>
@@ -198,14 +198,14 @@ $cook_points = get_cook_points($cook_username, $conn);
 
 <div id="deleteModal" class="modal">
     <div class="modal-content">
-        <h2>Διαγραφή αγγελίας</h2>
+        <h2>Delete Listing</h2>
 
-        <p>Είσαι σίγουρος ότι θέλεις να διαγράψεις αυτήν την αγγελία;"</p>
+        <p>Are you sure you want to delete the listing?"</p>
 
         <div class="modal-buttons">
 
-        <button id="cancelDelete" class="cancelDelete">Ακύρωση</button>
-        <button id="confirmDelete" class="confirmDelete">Διαγραφή</button>
+        <button id="cancelDelete" class="cancelDelete">Decline</button>
+        <button id="confirmDelete" class="confirmDelete">Delete</button>
         </div>
     </div>
 
@@ -216,41 +216,41 @@ $cook_points = get_cook_points($cook_username, $conn);
     
     <div class="edit-modal-content">
 
-        <h2>Επεξεργασία Αγγελίας</h2>
+        <h2>Edit Listing</h2>
         <form id="editForm" class="editForm">
 
-            <label>Τίτλος</label>
+            <label>Title</label>
             <input type="text" id="editTitle">
 
-            <label>Φωτογραφία</label>
+            <label>Photo</label>
             <input type="file" id="editImage">
 
-            <label>Σημειώσεις</label>
+            <label>Description</label>
             <textarea id="editNotes"></textarea>
 
-            <label>Αλλεργιογόνα</label>
+            <label>Allergerns</label>
             <input type="text" id="editAllegerns">
 
-            <label>Μερίδες</label>
+            <label>Portions</label>
             <input type="number" id="editPortions" min="1">
 
-            <label>Τοποθεσία Παραλαβής</label>
+            <label>Pickup Location</label>
             <input type="text" id="editPickupLocation">
 
-            <label>Σημείο στον χάρτη (κάντε κλικ για να το ορίσετε)</label>
+            <label>Point on map(click to drop a pin)</label>
             <div id="editPickupMap" style="height: 250px; border-radius: 12px;"></div>
             <input type="hidden" id="editLatitude">
             <input type="hidden" id="editLongitude">
 
-            <label>Ώρα Παραλαβής</label>
+            <label>Pickup time</label>
             <input type="datetime-local" id="editPickupTime">
 
-
+    
             <div class="edit-modal-buttons">
                 
-                <button type="submit" id="saveEdit" class="saveEdit">Αποθήκευση Αλλαγών</button>
+                <button type="submit" id="saveEdit" class="saveEdit">Save Changes</button>
 
-                <button type="button" id="cancelEdit" class="cancelEdit">Ακύρωση</button>
+                <button type="button" id="cancelEdit" class="cancelEdit">Decline</button>
 
 
             </div>

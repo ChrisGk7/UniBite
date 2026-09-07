@@ -87,26 +87,26 @@ async function loadDishes() {
 
             const allergensParagraph = document.createElement("p");
             allergensParagraph.textContent =
-                "Αλλεργιογόνα: " + dish.allergens;
+                "Allergens: " + dish.allergens;
 
             const portionsParagraph = document.createElement("p");
             portionsParagraph.textContent =
-                "Μερίδες: " + dish.portions;
+                "Portions: " + dish.portions;
 
             const pickupLocationParagraph = document.createElement("p");
             pickupLocationParagraph.textContent =
-                "Τοποθεσία Παραλαβής: " + dish.pickup_location;
+                "Pickup Location: " + dish.pickup_location;
 
             const pickupTimeParagraph = document.createElement("p");
             pickupTimeParagraph.textContent =
-                "Ώρα Παραλαβής: " + dish.pickup_time;
+                "Pickup time: " + dish.pickup_time;
 
             const editButton = document.createElement("button");
-            editButton.textContent = "Επεξεργασία";
+            editButton.textContent = "Edit";
             editButton.classList.add("editBtn");
 
             const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Διαγραφή";
+            deleteButton.textContent = "Delete";
             deleteButton.classList.add("deleteBtn");
 
             article.appendChild(h3);
@@ -162,7 +162,6 @@ listingForm.addEventListener("submit", async function(event) {
         if (data.success) {
 
             listingForm.reset();
-            //242 243 for hiding preview image
             const previewContainer = document.getElementById('imagePreviewContainer');
             if (previewContainer) previewContainer.style.display = 'none';
             loadDishes();
@@ -390,7 +389,19 @@ async function loadCookRequests() {
             return;
         }
 
-        renderCookRequests(data.requests);
+        const activeRequests = data.requests.filter(function(request) {
+
+    return (
+        request.status === "pending" ||
+        (
+            request.status === "accepted" &&
+            request.pickup_status === "awaiting_pickup"
+        )
+    );
+
+});
+
+renderCookRequests(activeRequests);
 
     } catch (error) {
 
@@ -415,7 +426,7 @@ function renderCookRequests(requests) {
 
         requestsList.innerHTML = `
             <p class="no-requests-message">
-                Δεν υπάρχουν αιτήματα αυτή τη στιγμή.
+                No active requests.
             </p>
         `;
 
@@ -455,27 +466,27 @@ function renderCookRequests(requests) {
             <div class="request-card-info">
 
                 <p>
-                    <strong>Μερίδες:</strong>
+                    <strong>Portions:</strong>
                     ${request.portions}
                 </p>
 
                 <p>
-                    <strong>Κόστος:</strong>
+                    <strong>Cost:</strong>
                     ${request.credit_cost} credits
                 </p>
 
                 <p>
-                    <strong>Τοποθεσία:</strong>
+                    <strong>Location:</strong>
                     ${request.pickup_location}
                 </p>
 
                 <p>
-                    <strong>Ώρα Παραλαβής:</strong>
+                    <strong>Pickup Time:</strong>
                     ${request.pickup_time}
                 </p>
 
                 <p>
-                    <strong>Κατάσταση παραλαβής:</strong>
+                    <strong>Pickup Status:</strong>
                     ${request.pickup_status || "-"}
                 </p>
 
@@ -493,7 +504,7 @@ function renderCookRequests(requests) {
                                 class="approveRequestBtn"
                                 data-request-id="${request.id}"
                             >
-                                Αποδοχή
+                                Accept
                             </button>
 
                             <button
@@ -501,7 +512,7 @@ function renderCookRequests(requests) {
                                 class="rejectRequestBtn"
                                 data-request-id="${request.id}"
                             >
-                                Απόρριψη
+                                Decline
                             </button>
 
                         </div>
@@ -518,7 +529,7 @@ function renderCookRequests(requests) {
                                 class="pickedUpBtn"
                                 data-request-id="${request.id}"
                             >
-                                Παραλήφθηκε
+                                Picked Up
                             </button>
 
                             <button
@@ -526,7 +537,7 @@ function renderCookRequests(requests) {
                                 class="noShowBtn"
                                 data-request-id="${request.id}"
                             >
-                                Δεν παραλήφθηκε
+                                No Show
                             </button>
 
                         </div>
@@ -743,10 +754,13 @@ async function updatePickupStatus(
             await response.json();
 
 
-        console.log(
-            "PICKUP RESPONSE:",
-            data
-        );
+        console.log("CHECK 1");
+
+const cookPointsElement =
+    document.getElementById("cookPoints");
+
+console.log("CHECK 2:", cookPointsElement);
+console.log("CHECK 3:", data.points_earned);
 
 
         if (!data.success) {
@@ -755,6 +769,38 @@ async function updatePickupStatus(
 
             return;
         }
+
+
+
+        // Live ενημέρωση πόντων όταν έγινε παραλαβή
+if (pickupAction === "picked_up") {
+
+    const cookPointsElement =
+        document.getElementById("cookPoints");
+
+    if (cookPointsElement) {
+
+        const currentPoints =
+            Number(cookPointsElement.textContent.trim());
+
+        const earnedPoints =
+            Number(data.points_earned);
+
+        const newPoints =
+            currentPoints + earnedPoints;
+
+        console.log("CURRENT:", currentPoints);
+        console.log("EARNED:", earnedPoints);
+        console.log("CALCULATED:", newPoints);
+
+        cookPointsElement.textContent = newPoints;
+
+        console.log(
+            "DISPLAY AFTER UPDATE:",
+            cookPointsElement.textContent
+        );
+    }
+}
 
 
         loadCookRequests();
@@ -788,6 +834,15 @@ const requestsBtn =
 
 const requestsModal =
     document.querySelector(".requestsModal");
+
+    requestsModal.addEventListener("click", function (event) {
+
+    if (event.target === requestsModal) {
+        requestsModal.style.display = "none";
+    }
+
+});
+
 
 const closeRequestsBtn =
     document.querySelector(".closeRequestsBtn");

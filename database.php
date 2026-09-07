@@ -158,11 +158,12 @@
    
     function get_top_rated_dishes($conn, $limit = 5){
         $limit = (int) $limit; // not user input in practice, but cast defensively since it can't be bound as a placeholder in LIMIT
-        $sql = "SELECT d.id, d.title, u.username AS cook_username, u.name AS cook_name,
-                       AVG(r.rating + 0) AS avg_rating, COUNT(r.rating) AS rating_count
+        $sql = "SELECT d.id, d.title, c.username AS cook_username, u.name AS cook_name,
+                       AVG(r.rating + 0) AS avg_rating, COUNT(r.rating) AS rating_count, d.photos_url AS image_url
                 FROM request r
                 JOIN dish d ON d.id = r.dish_id
-                JOIN user u ON u.username = r.cook_username
+                JOIN cook c ON c.username = r.cook_username
+                JOIN user u ON u.username = c.username
                 WHERE r.rating IS NOT NULL
                 GROUP BY d.id
                 ORDER BY avg_rating DESC, rating_count DESC
@@ -174,6 +175,9 @@
         }
         return $rows;
     }
+    // ---------------------------------------------------------------
+    // COOK FUNCTIONS
+    // ---------------------------------------------------------------
 
     function register_cook($username, $email, $street, $snumber,$city, $postcode, $mobile, $conn){
         $sql = "INSERT INTO cook (username, email, street, number, city, postcode, mobile) VALUES ('$username', '$email', '$street', '$snumber', '$city', '$postcode','$mobile' )";
@@ -437,6 +441,39 @@
     mysqli_stmt_close($stmt);
 
     return $requests;
+}
+
+//function to get the count of requests for a specific cook
+function get_request_count_by_cook($cook_username, $conn)
+{
+    $sql = "
+        SELECT COUNT(*) AS request_count
+        FROM request
+        WHERE cook_username = ?
+        AND status = 'pending'
+    ";
+
+    $stmt = mysqli_prepare($conn, $sql);
+
+    if (!$stmt) {
+        return false;
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "s",
+        $cook_username
+    );
+
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    $row = mysqli_fetch_assoc($result);
+
+    mysqli_stmt_close($stmt);
+
+    return (int)$row['request_count'];
 }
 
 
@@ -937,7 +974,8 @@ if ($pickup_action === "picked_up") {
 
             return [
                 "success" => true,
-                "pickup_status" => "picked_up"
+                "pickup_status" => "picked_up",
+                "points_earned" => $request_portions
             ];
         }
 
