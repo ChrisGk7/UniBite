@@ -204,7 +204,7 @@ try {
 
     /* Calculate rating bonus */
 
-    $bonus_points = 0;
+    $bonus_points = 1;
 
     if ($rating === 4) {
         $bonus_points = 2;
