@@ -61,7 +61,7 @@ if ($rating < 1 || $rating > 5) {
 }
 
 
-/* Check request */
+// Check request 
 
 $sql = "
     SELECT
@@ -151,7 +151,7 @@ if ($request["rating"] !== null) {
 }
 
 
-/* Save rating + give bonus points */
+// Save rating + give bonus points 
 
 mysqli_begin_transaction($conn);
 
@@ -202,9 +202,9 @@ try {
     mysqli_stmt_close($stmt);
 
 
-    /* Calculate rating bonus */
+    // Calculate rating bonus 
 
-    $bonus_points = 0;
+    $bonus_points = 1;
 
     if ($rating === 4) {
         $bonus_points = 2;

@@ -7,8 +7,10 @@ const feedMap = initFeedMap("feed-map");
 const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 
+// Κρατά τα ενεργά πιάτα 
 let allDishes = [];
 
+// Δίχνει αν είναι ενεργή η ταξινόμηση πιάτων 
 let nearestMode = false;
 
 
@@ -82,6 +84,9 @@ if (ordersOverlay) {
 // Dish expiration
 // -------------------------
 
+
+// Ελέγχει αν υπάρχουν διαθέσιμες μερίδες, αν εχουν περάσει 48 ώρες από το reg_date,
+// Αν οι μερίδες είνια 0 επιστρέφει Unavailable 
 function getDishStatus(dish) {
 
     // If reg_date is missing, do not expire the dish
@@ -123,6 +128,7 @@ function getDishStatus(dish) {
 // Load dishes from database
 // -------------------------
 
+// Ασύγχρονο get request, επιστροφή JSON με τα dishes
 fetch("get_dishes_stud.php")
     .then(response => response.json())
     .then(dishes => {
@@ -183,6 +189,7 @@ function renderDishes(dishes) {
         // Format pickup time
         const pickupDate = dish.pickup_time
             ? new Date(
+                // Μετατροπή του pickup_time σε τοπική ημερ. μέσο της toLocaleString 
                 dish.pickup_time.replace(" ", "T")
             ).toLocaleString()
             : "Not specified";
@@ -281,7 +288,7 @@ function renderDishes(dishes) {
                     ${pickupDate}
                 </p>
                 
-                ${
+                ${  // Δεν επιτρέπει στον μάγειρα να κάνει request για πιάτο του
                     dish.cook === currentUsername
                         ? `
                             <div class="dish-request-row">
@@ -349,10 +356,12 @@ function renderDishes(dishes) {
 
         const requestButton =
             card.querySelector(".request-button");
-
-            const minusButton =
+        
+                // Το minus δεν αφήνει τιμή κάτω από 1
+        const minusButton =
             card.querySelector(".portion-minus");
         
+                // Το plus δεν αφήνει τιμή να ξεπεράσει τις διαθέσιμες μερίδες του κάθε dish
         const plusButton =
             card.querySelector(".portion-plus");
         
@@ -634,11 +643,12 @@ const nearMeButton = document.getElementById("near-me-button");
 
 function normalizeText(text) {
     return String(text || "")
-        .toLowerCase()
-        .normalize("NFD")
+        .toLowerCase()// Κάνει lowercase
+        .normalize("NFD") // Αφαιρεί ελληνικούς τόνους με Unicode normalization
         .replace(/[\u0300-\u036f]/g, "")
-        .trim();
+        .trim(); // Αφαιρεί κενά στην αρχή/τέλος.
 }
+
 
 const searchAliases = {
     pizza: "πιτσα",
@@ -651,6 +661,9 @@ const searchAliases = {
     dessert: "γλυκο",
     desserts: "γλυκο"
 };
+
+
+// Η αναζήτηση τρέχει είτε με click στο Search είτε με Enter
 
 function searchDishes() {
 

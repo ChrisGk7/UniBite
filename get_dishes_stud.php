@@ -1,5 +1,5 @@
 <?php
-
+// Το endpoint get_dishes_stud.php λειτουργεί ως API.
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 

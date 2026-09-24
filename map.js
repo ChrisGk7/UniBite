@@ -25,6 +25,8 @@ function initFeedMap(containerId) {
     return map;
 }
 
+// Δημιουργία pin και αποθήκευση σε hidden input του form 
+
 function initPickupMap(containerId, latInputId, lngInputId) {
 
     const container = document.getElementById(containerId);
@@ -76,6 +78,8 @@ function initPickupMap(containerId, latInputId, lngInputId) {
     return map;
 }
 
+// Αδεια τοποθεσίας (χρήση μόνο απο Browser) για ταξινόμηση πιάτων 
+
 function centerMapOnCurrentLocation(map, onSuccess) {
 
     if (!("geolocation" in navigator)) {
@@ -105,6 +109,7 @@ function centerMapOnCurrentLocation(map, onSuccess) {
     );
 }
 
+// Υπολογισμός της απόστασης του χρήστη από το κάθε dish 
 
 function haversineDistanceKm(lat1, lng1, lat2, lng2) {
 
@@ -128,6 +133,8 @@ function haversineDistanceKm(lat1, lng1, lat2, lng2) {
 
     return R * c;
 }
+
+// Επαναφορά του χάρτη στην αρχική του μορφή  
 
 function resetFeedMap(map) {
     map.setView([38.2466, 21.7346], 13);
