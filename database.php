@@ -226,7 +226,6 @@
 
     
 
-    // login logic
 
     
     
@@ -486,7 +485,7 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
 
     try {
 
-        // Παίρνουμε και κλειδώνουμε το request
+        // Παίρνουμε και κλειδώνουμε το request......(for update στο)
         $sql = "
             SELECT
                 id,
@@ -538,9 +537,9 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
         }
 
 
-        // -------------------------
+        
         // REJECT
-        // -------------------------
+        
 
         if ($action === "reject") {
 
@@ -580,9 +579,9 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
         }
 
 
-        // -------------------------
+        
         // ACCEPT
-        // -------------------------
+
 
         if ($action === "accept") {
 
@@ -599,9 +598,9 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
                 (int)$request["credit_cost"];
 
 
-            // -------------------------
+            
             // Έλεγχος διαθέσιμων μερίδων
-            // -------------------------
+            
 
             $sql = "
                 SELECT portions
@@ -649,9 +648,9 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
             }
 
 
-            // -------------------------
+        
             // Έλεγχος credits student
-            // -------------------------
+            
 
             $sql = "
                 SELECT credits
@@ -700,10 +699,8 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
                 );
             }
 
-
-            // -------------------------
             // Μείωση διαθέσιμων μερίδων
-            // -------------------------
+        
 
             $sql = "
                 UPDATE dish
@@ -730,9 +727,9 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
             mysqli_stmt_close($stmt);
 
 
-            // -------------------------
+        
             // Αφαίρεση credits student
-            // -------------------------
+
 
             $sql = "
                 UPDATE student
@@ -759,9 +756,9 @@ function respond_to_request($request_id, $cook_username, $action, $conn)
             mysqli_stmt_close($stmt);
 
 
-            // -------------------------
+          
             // Ενημέρωση request
-            // -------------------------
+           
 
             $sql = "
                 UPDATE request
