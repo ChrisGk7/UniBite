@@ -1,4 +1,4 @@
-const DEFAULT_CENTER = [38.2466, 21.7346];
+const DEFAULT_CENTER = [38.2466, 21.7346];// Patras, Greece
 const DEFAULT_ZOOM = 13;
 
 function initFeedMap(containerId) {
